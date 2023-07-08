@@ -1,0 +1,578 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,700;1,700&display=swap");
+@import "./mixins.scss";
+
+// Variables
+$black: #494d5f;
+$grey: #ebecf0c3;
+$white: #eee;
+$red: #9b1c31;
+$orange: #ffb347;
+$blue: #a18aff;
+$blue-darken: #8a70f0;
+$purple: #ca8bfe;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+  text-decoration: none;
+}
+
+// App start
+.app {
+  height: 100vh;
+  display: flex;
+
+  &__right {
+    padding-top: 100px;
+    @include flex(column, center, start);
+    flex-grow: 1;
+    background-color: $blue;
+  }
+}
+// App ends
+
+// Menu starts
+.menu {
+  flex-basis: 350px;
+  flex-shrink: 0;
+  padding: 20px 40px;
+  background-color: $white;
+  @include flex(column, start, space-between);
+
+  &__top {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 20px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      height: 3px;
+      background-color: $blue;
+      width: 80%;
+      top: 120%;
+      left: 10%;
+    }
+
+    &__image {
+      flex-shrink: 0;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  &__middle {
+    &__category {
+      &:not(:last-of-type) {
+        margin-bottom: 40px;
+      }
+    }
+
+    &__title {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      font-size: 28px;
+      svg {
+        color: $blue;
+      }
+      a {
+        color: $black;
+      }
+    }
+  }
+
+  &__list {
+    margin-top: 10px;
+    margin-left: 55px;
+
+    a {
+      text-decoration: none;
+      color: #333;
+    }
+
+    &__link {
+      font-size: 24px;
+      text-transform: capitalize;
+      margin-bottom: 10px;
+      list-style: none;
+      color: $black;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    &__dot {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+    }
+  }
+
+  &__bottom {
+    &__btn {
+      @include flex(row, center, center);
+      gap: 10px;
+      color: $blue;
+      border: none;
+      font-size: 18px;
+
+      svg {
+        color: $blue;
+      }
+
+      span {
+        font-weight: 800;
+      }
+    }
+  }
+}
+// Menu ends
+
+.new-task {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 40px;
+
+  &__wrapper {
+    position: relative;
+    max-width: 950px;
+    width: 100%;
+
+    &__span {
+      position: absolute;
+      display: inline-block;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+
+      &:nth-of-type(1) {
+        background-color: $red;
+        left: 30px;
+      }
+      &:nth-of-type(2) {
+        background-color: $orange;
+        left: 60px;
+      }
+      &:nth-of-type(3) {
+        background-color: $purple;
+        left: 90px;
+      }
+    }
+
+    &__input {
+      outline: none;
+      width: 100%;
+      border: none;
+      height: 70px;
+      border-radius: 30px;
+      padding-left: 140px;
+      font-size: 18px;
+    }
+  }
+}
+
+// Todo Container
+
+.task-wrapper {
+  position: relative;
+  max-width: 900px;
+  width: 100%;
+  &__scrollbar {
+    position: absolute;
+    height: 100%;
+    left: -50px;
+    border-radius: 15px;
+    background-color: $grey;
+    width: 10px;
+    &__thumb {
+      position: absolute;
+      left: 50%;
+      top: 0%;
+      transform: translateX(-50%);
+      background-color: $black;
+      height: 60px;
+      border-radius: 15px;
+      width: 20px;
+    }
+  }
+}
+
+.tasks {
+  max-height: 560px;
+  overflow-y: scroll;
+  width: 100%;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &__task {
+    list-style: none;
+    padding: 15px;
+    background-color: $white;
+    color: $black;
+    font-size: 18px;
+    border-radius: 25px;
+    cursor: pointer;
+
+    &:not(:last-of-type) {
+      margin-bottom: 20px;
+    }
+
+    &__content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &__left {
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+        gap: 20px;
+      }
+
+      &__right {
+        display: flex;
+        gap: 10px;
+        padding-right: 10px;
+      }
+    }
+
+    &__delete {
+      cursor: pointer;
+      color: $red;
+      border: 1px solid $red;
+      padding: 10px 15px;
+      font-size: 18px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+  }
+}
+
+//Auth Page
+.auth {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+
+  &__left {
+    background: $blue;
+    flex-basis: 50%;
+    flex-shrink: 0;
+    @include flex(row, center, center);
+
+    &.register {
+      background-color: transparent;
+    }
+  }
+
+  &__right {
+    flex-basis: 50%;
+    padding: 20px;
+    @include flex(column, center, center);
+
+    &.register {
+      background: $blue;
+    }
+
+    &__content {
+      max-width: 450px;
+      width: 100%;
+    }
+  }
+
+  &__content {
+    width: 60%;
+  }
+
+  &__image {
+    width: 70%;
+
+    &.register {
+      transform: scale(-1, 1);
+    }
+  }
+
+  &__btn {
+    border: none;
+    background-color: $blue;
+    color: $white;
+    height: 40px;
+    width: 220px;
+    border-radius: 5px;
+    cursor: pointer;
+    -webkit-box-shadow: 5px 5px 27px 0px rgba(0, 0, 0, 0.64);
+    -moz-box-shadow: 5px 5px 27px 0px rgba(0, 0, 0, 0.64);
+    box-shadow: 5px 5px 27px 0px rgba(0, 0, 0, 0.64);
+  }
+
+  &__link {
+    color: $blue;
+    margin-left: 5px;
+    text-decoration: underline;
+    font-weight: 700;
+  }
+
+  &__bottom {
+    text-align: end;
+  }
+
+  &__heading {
+    margin-bottom: 20px;
+
+    h1 {
+      color: $blue;
+      font-size: 48px;
+    }
+  }
+
+  &__form > div {
+    margin-bottom: 15px;
+  }
+}
+
+// Settings
+.settings {
+  min-height: 600px;
+  background-color: $white;
+  max-width: 800px;
+  width: 100%;
+  padding: 30px;
+  border-radius: 30px;
+
+  &__section {
+    &:not(:last-of-type) {
+      margin-bottom: 30px;
+    }
+
+    &__list {
+      list-style: none;
+
+      li {
+        cursor: pointer;
+        font-size: 20px;
+        margin-top: 30px;
+
+        &:not(:last-of-type) {
+          margin-bottom: 30px;
+        }
+
+        a {
+          color: $black;
+          @include flex(row, center, space-between);
+        }
+      }
+    }
+
+    &__heading {
+      color: $purple;
+      font-size: 32px;
+      border-bottom: 2px solid rgba(202, 139, 254, 0.5);
+      padding-bottom: 5px;
+      margin-bottom: 5px;
+
+      span {
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+// Checkbox starts
+.checkbox {
+  display: flex;
+
+  &__input {
+    visibility: hidden;
+  }
+
+  &__input:checked + &__label::after {
+    transform: scale(1);
+  }
+
+  &__label {
+    display: block;
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+
+    &::after {
+      position: absolute;
+      content: "";
+      width: 80%;
+      height: 80%;
+      background-color: $purple;
+      border-radius: 50%;
+      left: 10%;
+      top: 10%;
+      transition: 0.2s ease-out;
+      transform: scale(0);
+    }
+  }
+}
+// Checkbox ends
+
+// Input starts
+.input-group {
+  &__label {
+    color: #9b1c31;
+  }
+
+  &__input {
+    width: 100%;
+    border: none;
+    padding: 12px 10px;
+    border-bottom: 2px solid transparent;
+    outline: none;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    -webkit-box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.2);
+
+    &:focus {
+      border-bottom: 2px solid $purple;
+    }
+
+    &.invalid {
+      border-bottom: 2px solid $red;
+    }
+  }
+}
+// Input ends
+
+// Modal starts
+.modal {
+  position: absolute;
+  background-color: transparent;
+  z-index: 999;
+  height: 100vh;
+  width: 100%;
+  top: 0;
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    min-height: 280px;
+    background-color: $white;
+    color: var(--black);
+    -webkit-box-shadow: 10px 10px 27px 0px rgba(0, 0, 0, 0.64);
+    -moz-box-shadow: 10px 10px 27px 0px rgba(0, 0, 0, 0.64);
+    box-shadow: 10px 10px 27px 0px rgba(0, 0, 0, 0.64);
+    border-radius: 15px;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    background-color: $purple;
+    height: 60px;
+    color: $white;
+    border-radius: 15px 15px 0 0;
+
+    h3 {
+      font-weight: 400;
+    }
+  }
+
+  &__body {
+    margin: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    flex-basis: 50%;
+    flex-grow: 1;
+  }
+
+  &__bottom {
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    justify-content: end;
+  }
+
+  &__submit {
+    background-color: $purple;
+    color: $white;
+    width: 110px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+  }
+
+  &__close {
+    background-color: $red;
+    color: $white;
+    width: 110px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+  }
+}
+// Modal ends
+
+.modal-transition-enter {
+  opacity: 0;
+}
+.modal-transition-enter-active {
+  opacity: 1;
+  transition: all 0.3s ease;
+  top: 0;
+}
+.modal-transition-exit {
+  opacity: 1;
+}
+.modal-transition-exit-active {
+  opacity: 0;
+  transition: all 0.3s ease;
+  top: 55%;
+}
+
+.remove-btn {
+  margin-right: 0.5rem;
+}
+
+.tasks__task.item-enter {
+  transform: translateX(200px);
+  opacity: 0;
+}
+.tasks__task.item-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 500ms ease-in;
+}
+.tasks__task.item-exit {
+  opacity: 1;
+}
+.tasks__task.item-exit-active {
+  transform: translateX(-200px);
+  opacity: 0;
+  transition: all 500ms ease-in;
+}
