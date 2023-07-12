@@ -13,11 +13,10 @@ export default function Login() {
     email: "",
     password: "",
   });
-  const navigate = useNavigate();
 
   const onSubmit = () => {
     if (validation()) {
-      navigate("/");
+      localStorage.setItem("user", "test");
     }
   };
   return (
