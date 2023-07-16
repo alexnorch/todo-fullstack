@@ -28,7 +28,7 @@
           align-items: center;
   -webkit-box-pack: start;
       -ms-flex-pack: start;
-          justify-content: start;
+          justify-content: flex-start;
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
@@ -51,7 +51,7 @@
           flex-direction: column;
   -webkit-box-align: start;
       -ms-flex-align: start;
-          align-items: start;
+          align-items: flex-start;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
@@ -270,6 +270,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  gap: 20px;
 }
 .tasks__task__content__left {
   display: -webkit-box;
@@ -282,6 +283,11 @@
       -ms-flex-positive: 1;
           flex-grow: 1;
   gap: 20px;
+}
+.tasks__task__content__left .input-group {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 .tasks__task__content__right {
   display: -webkit-box;
@@ -574,7 +580,7 @@
   gap: 10px;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
-          justify-content: end;
+          justify-content: flex-end;
 }
 .modal__submit {
   background-color: #ca8bfe;
@@ -591,6 +597,63 @@
   height: 30px;
   border: none;
   border-radius: 5px;
+}
+
+.alert {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  max-width: 600px;
+  width: 100%;
+  padding: 15px;
+  border-radius: 9px;
+}
+.alert.alert--info {
+  background-color: #8cd3ff;
+  color: #009dff;
+}
+.alert.alert--danger {
+  background-color: #f46d75;
+  color: #9b1c31;
+}
+.alert.alert--success {
+  background-color: rgba(144, 238, 144, 0.8);
+  color: rgb(30, 70, 32);
+}
+.alert__inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 10px;
+}
+.alert__inner svg {
+  font-size: 24px;
+}
+.alert__inner__close {
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.alert-transition-enter {
+  opacity: 0;
+}
+
+.alert-transition-enter-active {
+  opacity: 1;
+  -webkit-transition: opacity 500ms;
+  -o-transition: opacity 500ms;
+  transition: opacity 500ms;
+}
+
+.alert-transition-exit {
+  opacity: 1;
+}
+
+.alert-transition-exit-active {
+  opacity: 0;
+  -webkit-transition: opacity 500ms;
+  -o-transition: opacity 500ms;
+  transition: opacity 500ms;
 }
 
 .modal-transition-enter {

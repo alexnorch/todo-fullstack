@@ -11,7 +11,7 @@ const TodoList = () => {
   const scrollBar = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
 
-  const todos = useSelector((state: RootState) => state.todo.todos);
+  const todos = useSelector((state: RootState) => state.app.todos);
   const filteredTodo = todos.map((item) => ({ ...item, nodeRef: createRef() }));
 
   const todoItems = filteredTodo.map((item) => (

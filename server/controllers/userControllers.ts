@@ -26,7 +26,17 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
     }
 
     const token = user.generateToken(user._id);
-    res.json({ user, token });
+
+    res.json({
+      user: {
+        name: user.name,
+        email: user.email,
+        id: user._id,
+      },
+      categories: user.categories,
+      tasks: user.tasks,
+      token,
+    });
 
     res.sendStatus(200);
   } catch (error) {}
@@ -54,10 +64,20 @@ const registerUser = async (
       return next(new AppError("User already exists", 409));
     }
 
-    const user = new User({ name, email, password });
-    const registeredUser = await user.save();
+    const newUser = new User({ name, email, password });
+    const user = await newUser.save();
+    const token = user.generateToken(user._id);
 
-    res.json({ registeredUser });
+    res.json({
+      user: {
+        name: user.name,
+        email: user.email,
+        id: user._id,
+      },
+      categories: user.categories,
+      tasks: user.tasks,
+      token,
+    });
   } catch (error) {}
 };
 

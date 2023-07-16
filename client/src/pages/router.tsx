@@ -2,7 +2,6 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-  redirect,
 } from "react-router-dom";
 
 // Main Pages
@@ -19,15 +18,8 @@ import Profile from "./Settings/Profile";
 import Theme from "./Settings/Theme";
 import NewCategory from "./Settings/NewCategory";
 
-const protectRoute = () => {
-  const user = localStorage.getItem("user");
-
-  if (!user) {
-    return redirect("/login");
-  }
-
-  return null;
-};
+// Helpers
+import { protectRoute } from "../helpers";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

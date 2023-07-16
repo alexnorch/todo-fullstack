@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { showAlert } from "../redux/appSlice";
 import { RootState } from "../redux/store";
 
 // Icons
@@ -11,8 +13,10 @@ import personImage from "../assets/images/person.png";
 
 const Menu = () => {
   const categories = useSelector(
-    (state: RootState) => state.todo.tempCategories
+    (state: RootState) => state.app.tempCategories
   );
+
+  const dispatch = useDispatch();
 
   const links = categories.map((link, i) => (
     <li key={i} className="menu__list__link">
@@ -54,6 +58,18 @@ const Menu = () => {
           <GrLogout />
           <span>Log out</span>
         </button>
+        {/* <button
+          onClick={() =>
+            dispatch(
+              showAlert({
+                text: "This is a success alert — check it out!",
+                type: "danger",
+              })
+            )
+          }
+        >
+          Show Alert
+        </button> */}
       </div>
     </>
   );

@@ -11,6 +11,10 @@ $blue: #a18aff;
 $blue-darken: #8a70f0;
 $purple: #ca8bfe;
 
+$red-bright: #f46d75;
+$sky: #009dff;
+$sky-bright: #8cd3ff;
+
 * {
   margin: 0;
   padding: 0;
@@ -26,7 +30,7 @@ $purple: #ca8bfe;
 
   &__right {
     padding-top: 100px;
-    @include flex(column, center, start);
+    @include flex(column, center, flex-start);
     flex-grow: 1;
     background-color: $blue;
   }
@@ -39,7 +43,7 @@ $purple: #ca8bfe;
   flex-shrink: 0;
   padding: 20px 40px;
   background-color: $white;
-  @include flex(column, start, space-between);
+  @include flex(column, flex-start, space-between);
 
   &__top {
     position: relative;
@@ -241,12 +245,17 @@ $purple: #ca8bfe;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 20px;
 
       &__left {
         display: flex;
         align-items: center;
         flex-grow: 1;
         gap: 20px;
+
+        .input-group {
+          flex-grow: 1;
+        }
       }
 
       &__right {
@@ -515,7 +524,7 @@ $purple: #ca8bfe;
     padding: 10px;
     display: flex;
     gap: 10px;
-    justify-content: end;
+    justify-content: flex-end;
   }
 
   &__submit {
@@ -536,8 +545,61 @@ $purple: #ca8bfe;
     border-radius: 5px;
   }
 }
-// Modal ends
 
+.alert {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  max-width: 600px;
+  width: 100%;
+  padding: 15px;
+  border-radius: 9px;
+
+  &.alert--info {
+    background-color: $sky-bright;
+    color: $sky;
+  }
+
+  &.alert--danger {
+    background-color: $red-bright;
+    color: $red;
+  }
+
+  &.alert--success {
+    background-color: rgba(144, 238, 144, 0.8);
+    color: rgb(30, 70, 32);
+  }
+
+  &__inner {
+    display: flex;
+    gap: 10px;
+    svg {
+      font-size: 24px;
+    }
+
+    &__close {
+      cursor: pointer;
+      margin-left: auto;
+    }
+  }
+}
+
+.alert-transition-enter {
+  opacity: 0;
+}
+.alert-transition-enter-active {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+.alert-transition-exit {
+  opacity: 1;
+}
+.alert-transition-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+// Modal ends
 .modal-transition-enter {
   opacity: 0;
 }

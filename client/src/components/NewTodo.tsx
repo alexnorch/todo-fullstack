@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addNewTodo } from "../redux/todoSlice";
+import { addNewTodo } from "../redux/appSlice";
 
 // Components
 import Modal from "./Modal";

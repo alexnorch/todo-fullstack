@@ -1,9 +1,10 @@
 import { useState } from "react";
 
 // Redux
-import { setTodoChecked } from "../redux/todoSlice";
+import { setTodoChecked } from "../redux/appSlice";
 import { useDispatch } from "react-redux";
-import { removeTodo } from "../redux/todoSlice";
+import { showAlert } from "../redux/appSlice";
+import { removeTodo } from "../redux/appSlice";
 
 // Components
 import Checkbox from "./UI/Checkbox";
@@ -14,8 +15,32 @@ const TodoItem: React.FC<ITodo> = ({ id, text, completed }) => {
   const [userValue, setUserValue] = useState<string>(text);
   const dispatch = useDispatch();
 
+  const onEditBegin = () => setIsEditing(true);
+  const onEditEnd = () => {
+    if (userValue.trim().length > 6) {
+      return setIsEditing(false);
+    }
+
+    dispatch(
+      showAlert({ type: "danger", text: "Must be greater than 6 characters" })
+    );
+  };
+
+  const onEditValue: React.KeyboardEventHandler<HTMLInputElement> = (event) => {
+    if (event.keyCode === 13 && userValue.trim().length >= 6) {
+      setIsEditing(false);
+      dispatch(showAlert({ type: "success", text: "Successfully changed" }));
+    } else if (event.keyCode === 13 && userValue.trim().length < 6) {
+      dispatch(
+        showAlert({ type: "danger", text: "Must be greater than 6 characters" })
+      );
+    }
+  };
+
   const TodoContent = isEditing ? (
     <Input
+      handleBlur={onEditEnd}
+      onKeyUp={onEditValue}
       placeholder="Type a new title of task"
       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
         setUserValue(e.target.value)
@@ -23,10 +48,7 @@ const TodoItem: React.FC<ITodo> = ({ id, text, completed }) => {
       value={userValue}
     />
   ) : (
-    <p
-      onClick={() => setIsEditing((state) => !state)}
-      className="tasks__task__content__text"
-    >
+    <p onClick={onEditBegin} className="tasks__task__content__text">
       {userValue}
     </p>
   );
@@ -55,38 +77,3 @@ const TodoItem: React.FC<ITodo> = ({ id, text, completed }) => {
 };
 
 export default TodoItem;
-
-// .edit {
-//   cursor: pointer;
-//   color: var(--orange);
-//   border: 1px solid var(--orange);
-//   padding: 10px 15px;
-//   font-size: 18px;
-//   border-radius: 5px;
-//   transition: all 0.3s ease;
-// }
-
-// .edit:hover {
-//   color: var(--white);
-//   background-color: var(--orange);
-// }
-
-// .delete:hover {
-//   color: var(--white);
-//   background-color: var(--red);
-// }
-
-// .changeInput {
-//   position: relative;
-//   font-size: 18px;
-//   font-family: sans-serif;
-//   border: none;
-//   border: 1px solid rgba(0, 0, 0, 0.3);
-//   padding: 5px 10px;
-//   margin-left: 10px;
-//   width: 90%;
-// }
-
-// .changeInput:focus {
-//   outline: none;
-// }

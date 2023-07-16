@@ -1,9 +1,20 @@
-import { Link } from "react-router-dom";
+import axios, { AxiosError } from "axios";
+import { useRef } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import backgroundImage from "./../assets/images/auth.svg";
-import { useNavigate } from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
+
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, showAlert } from "../redux/appSlice";
+import { RootState } from "../redux/store";
 
 // Components
 import Input from "../components/UI/Input";
+import Alert from "../components/UI/Alert";
+
+// helpers
+import { addToLocalStorage } from "../helpers";
 
 // Hooks
 import useForm from "../hooks/useForm";
@@ -14,9 +25,31 @@ export default function Login() {
     password: "",
   });
 
-  const onSubmit = () => {
-    if (validation()) {
-      localStorage.setItem("user", "test");
+  const { isAlert } = useSelector((state: RootState) => state.app);
+  const nodeRef = useRef(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const onSubmit = async () => {
+    if (!validation()) return;
+    const { email, password } = values;
+
+    try {
+      const { data } = await axios.post("/api/user/login", {
+        email,
+        password,
+      });
+
+      dispatch(loginUser(data));
+      addToLocalStorage(data.token);
+      navigate("/");
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        const errorMessage = err.response?.data.message;
+        dispatch(showAlert({ type: "danger", text: errorMessage }));
+      } else {
+        throw err;
+      }
     }
   };
   return (
@@ -60,6 +93,14 @@ export default function Login() {
           </form>
         </div>
       </div>
+      <CSSTransition
+        nodeRef={nodeRef}
+        in={isAlert}
+        classNames="alert-transition"
+        timeout={500}
+      >
+        <Alert ref={nodeRef} />
+      </CSSTransition>
     </div>
   );
 }
