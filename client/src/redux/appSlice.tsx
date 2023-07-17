@@ -40,7 +40,7 @@ const initialState: AppState = {
   token: null,
   categories: [],
   todos: [],
-  tempCategories: [],
+  tempCategories: categories,
   alertType: "info",
   alertText: null,
   isAlert: false,

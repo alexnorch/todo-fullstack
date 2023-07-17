@@ -1,6 +1,7 @@
 import {
   createBrowserRouter,
   createRoutesFromElements,
+  LoaderFunctionArgs,
   Route,
 } from "react-router-dom";
 
@@ -19,7 +20,7 @@ import Theme from "./Settings/Theme";
 import NewCategory from "./Settings/NewCategory";
 
 // Helpers
-import { protectRoute } from "../helpers";
+import { protectRoute, checkAuth } from "../helpers";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,8 +36,8 @@ const router = createBrowserRouter(
           <Route path="theme" element={<Theme />} />
         </Route>
       </Route>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route loader={checkAuth} path="/login" element={<Login />} />
+      <Route loader={checkAuth} path="/register" element={<Register />} />
     </>
   )
 );

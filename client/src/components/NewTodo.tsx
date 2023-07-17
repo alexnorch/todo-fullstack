@@ -2,18 +2,14 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addNewTodo } from "../redux/appSlice";
 
-// Components
-import Modal from "./Modal";
-import Input from "./UI/Input";
-
 const NewTodo = () => {
   const [value, setValue] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
 
   const dispatch = useDispatch();
 
   const onSubmit = (e: any) => {
     e.preventDefault();
+
     if (value.length > 1) {
       const data = {
         text: value,
@@ -23,10 +19,6 @@ const NewTodo = () => {
 
       dispatch(addNewTodo(data));
       setValue("");
-
-      setErrorMessage("");
-    } else {
-      setErrorMessage("Cannot be empty an empty string");
     }
   };
 
@@ -49,3 +41,5 @@ const NewTodo = () => {
 };
 
 export default NewTodo;
+
+// If user doesn't have any categories he cannot create new task

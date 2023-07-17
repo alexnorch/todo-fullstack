@@ -30,13 +30,33 @@ export const getAlertComponentClass = (
   }
 };
 
-export const protectRoute = () => {
-  const accessToken = localStorage.getItem("accessToken")!;
-  const decoded: { [key: string]: any } = jwt_decode(accessToken);
+export const getAccessToken = (): { [key: string]: any } => {
+  return jwt_decode(localStorage.getItem("accessToken")!);
+};
+
+export const isTokenValid = () => {
+  const token = localStorage.getItem("accessToken")!;
+
+  if (!token) return false;
+
+  const decodedToken: { [key: string]: any } = jwt_decode(token);
   const currentTime = Date.now() / 1000;
 
-  if (currentTime >= decoded.exp) {
+  return currentTime >= decodedToken.exp;
+};
+
+export const protectRoute = () => {
+  if (isTokenValid()) {
     return redirect("/login");
+  }
+
+  return null;
+};
+
+// If user is already logged in he cannot visits Login and Register Page
+export const checkAuth = () => {
+  if (!isTokenValid()) {
+    return redirect("/");
   }
 
   return null;

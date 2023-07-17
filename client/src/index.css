@@ -111,14 +111,14 @@
 }
 .menu__list {
   margin-top: 10px;
-  margin-left: 55px;
+  margin-left: 60px;
 }
 .menu__list a {
   text-decoration: none;
   color: #333;
 }
 .menu__list__link {
-  font-size: 24px;
+  font-size: 20px;
   text-transform: capitalize;
   margin-bottom: 10px;
   list-style: none;
@@ -161,6 +161,35 @@
 }
 .menu__bottom__btn span {
   font-weight: 800;
+}
+
+.add-category {
+  background: none;
+  border: none;
+  font-size: 18px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 17px;
+  cursor: pointer;
+  color: gray;
+  margin-left: -1px;
+}
+.add-category__icon {
+  font-size: 25px;
+}
+.add-category span {
+  font-size: 20px;
 }
 
 .new-task {
