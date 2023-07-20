@@ -1,5 +1,12 @@
 import mongoose from "mongoose";
 
+interface Task extends mongoose.Document {
+  title: string;
+  completed: boolean;
+  category: string;
+  user: string;
+}
+
 const TaskSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -19,4 +26,4 @@ const TaskSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("Task", TaskSchema);
+export default mongoose.model<Task>("Task", TaskSchema);

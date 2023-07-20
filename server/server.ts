@@ -11,10 +11,13 @@ import userRouter from "./routes/userRouter";
 import taskRouter from "./routes/taskRouter";
 import categoryRouter from "./routes/categoryRouter";
 
+// Middlewares
+import authenticate from "./middlewares/authenticate";
+
 app.use(express.json());
 app.use("/api/user", userRouter);
-app.use("/api/task", taskRouter);
-app.use("/api/category", categoryRouter);
+app.use("/api/task", authenticate, taskRouter);
+app.use("/api/category", authenticate, categoryRouter);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello world");

@@ -1,14 +1,15 @@
 import mongoose from "mongoose";
+import { Document, Types } from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-export interface User extends mongoose.Document {
+export interface UserInterface extends Document {
   name: string;
   email: string;
   password: string;
   image: string;
-  categories: [];
-  tasks: [];
+  categories: Types.ObjectId[]; // An array of ObjectIds representing the user's categories
+  tasks: Types.ObjectId[]; // An array of ObjectIds representing the user's tasks
   comparePassword: (candidate: string, hashed: string) => Promise<boolean>;
   generateToken: (userId: string) => Promise<object>;
 }
@@ -26,7 +27,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, "Password is required"],
     minlength: 8,
-    maxlength: 20,
+    // maxlength: 20,
   },
   image: String,
   categories: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
@@ -53,4 +54,4 @@ UserSchema.methods.generateToken = function (userId: string) {
   });
 };
 
-export default mongoose.model<User>("User", UserSchema);
+export default mongoose.model<UserInterface>("User", UserSchema);

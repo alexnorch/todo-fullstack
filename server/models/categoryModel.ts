@@ -1,4 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Types } from "mongoose";
+
+export interface CategoryInterface extends Document {
+  title: string;
+  color: string;
+  user: Types.ObjectId;
+  tasks: Types.ObjectId[];
+}
 
 const CategorySchema = new mongoose.Schema({
   title: {
@@ -13,10 +20,12 @@ const CategorySchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  task: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Task",
-  },
+  tasks: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Task",
+    },
+  ],
 });
 
-export default mongoose.model("Category", CategorySchema);
+export default mongoose.model<CategoryInterface>("Category", CategorySchema);
