@@ -1,7 +1,6 @@
 import {
   createBrowserRouter,
   createRoutesFromElements,
-  LoaderFunctionArgs,
   Route,
 } from "react-router-dom";
 
@@ -10,6 +9,7 @@ import Main from "./Main";
 import Login from "./Login";
 import Register from "./Register";
 import Tasks from "./Tasks";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 // Settings Pages
 import Wrapper from "./Settings/Wrapper";
@@ -20,12 +20,19 @@ import Theme from "./Settings/Theme";
 import NewCategory from "./Settings/NewCategory";
 
 // Helpers
-import { protectRoute, checkAuth } from "../helpers";
+import { checkAuth } from "../helpers";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<Main />} loader={protectRoute}>
+      <Route
+        path="/"
+        element={
+          <ProtectedRoutes>
+            <Main />
+          </ProtectedRoutes>
+        }
+      >
         <Route path="/" element={<Tasks />} />
         <Route path="/:category" element={<Tasks />} />
         <Route path="/settings" element={<Wrapper />}>

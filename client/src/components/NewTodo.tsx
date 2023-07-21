@@ -1,24 +1,29 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addNewTodo } from "../redux/appSlice";
+import { useParams } from "react-router-dom";
+import { AxiosResponse } from "axios";
+
+import useCustomAxios from "../hooks/useCustomAxios";
 
 const NewTodo = () => {
-  const [value, setValue] = useState("");
-
+  const [title, setTitle] = useState("");
+  const { category } = useParams();
+  const axiosInstance = useCustomAxios();
   const dispatch = useDispatch();
 
-  const onSubmit = (e: any) => {
+  const onSubmit = async (e: any) => {
     e.preventDefault();
 
-    if (value.length > 1) {
-      const data = {
-        text: value,
-        id: Math.random().toString(),
-        completed: false,
-      };
-
-      dispatch(addNewTodo(data));
-      setValue("");
+    if (title.length > 6) {
+      const response: AxiosResponse<any> = await axiosInstance.post(
+        "/api/task",
+        { title, categoryName: category }
+      );
+      const { createdTask } = response.data; // Extract the response data from the AxiosResponse object
+      console.log(createdTask);
+      dispatch(addNewTodo(createdTask));
+      setTitle("");
     }
   };
 
@@ -29,8 +34,8 @@ const NewTodo = () => {
         <span className="new-task__wrapper__span"></span>
         <span className="new-task__wrapper__span"></span>
         <input
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           className="new-task__wrapper__input"
           type="text"
           placeholder="What is your next task?"
@@ -41,5 +46,3 @@ const NewTodo = () => {
 };
 
 export default NewTodo;
-
-// If user doesn't have any categories he cannot create new task

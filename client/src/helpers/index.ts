@@ -55,7 +55,7 @@ export const protectRoute = () => {
 
 // If user is already logged in he cannot visits Login and Register Page
 export const checkAuth = () => {
-  if (!isTokenValid()) {
+  if (isTokenValid()) {
     return redirect("/");
   }
 

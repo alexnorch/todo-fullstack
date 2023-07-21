@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import User from "../models/userModel";
+import Task from "../models/taskModel";
 import AppError from "../utils/AppError";
 
 const loginUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -10,7 +11,16 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
       return next(new AppError("Please provide all values", 400));
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email })
+      .populate({
+        path: "tasks",
+        select: "title completed",
+        populate: {
+          path: "category",
+          select: "title color", // Укажите только поле 'title' для категории
+        },
+      })
+      .populate({ path: "categories", select: "title color" });
 
     if (!user) {
       return next(new AppError("An e-mail address doesn't exists", 400));
@@ -28,7 +38,7 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
     const token = user.generateToken(user._id);
 
     res.json({
-      user: {
+      userInfo: {
         name: user.name,
         email: user.email,
         id: user._id,
@@ -39,7 +49,9 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
     });
 
     res.sendStatus(200);
-  } catch (error) {}
+  } catch (error) {
+    // Обработка ошибок
+  }
 };
 
 const registerUser = async (

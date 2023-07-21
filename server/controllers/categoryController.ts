@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 
-const ObjectId = mongoose.Types.ObjectId;
-
 // Models
 import Category, { CategoryInterface } from "../models/categoryModel";
 import User, { UserInterface } from "../models/userModel";
@@ -16,7 +14,7 @@ const createCategory = async (req: Request, res: Response) => {
 
   const user: UserInterface | null = await User.findById(req.userId);
   const category = new Category({
-    title,
+    title: title.toLowerCase(),
     color,
     user: req.userId,
   });

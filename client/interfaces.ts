@@ -1,7 +1,12 @@
 interface ITodo {
   id: string;
-  text: string;
+  title: string;
   completed: boolean;
+  category: {
+    _id: string;
+    title: string;
+    color: string;
+  };
 }
 
 interface ContainerProps {

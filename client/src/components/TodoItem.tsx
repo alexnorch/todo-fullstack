@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useCustomAxios from "../hooks/useCustomAxios";
 
 // Redux
 import { setTodoChecked } from "../redux/appSlice";
@@ -10,10 +11,11 @@ import { removeTodo } from "../redux/appSlice";
 import Checkbox from "./UI/Checkbox";
 import Input from "./UI/Input";
 
-const TodoItem: React.FC<ITodo> = ({ id, text, completed }) => {
+const TodoItem: React.FC<ITodo> = ({ id, title, completed }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [userValue, setUserValue] = useState<string>(text);
+  const [userValue, setUserValue] = useState<string>(title);
   const dispatch = useDispatch();
+  const axiosInstance = useCustomAxios();
 
   const onEditBegin = () => setIsEditing(true);
   const onEditEnd = () => {
@@ -35,6 +37,16 @@ const TodoItem: React.FC<ITodo> = ({ id, text, completed }) => {
         showAlert({ type: "danger", text: "Must be greater than 6 characters" })
       );
     }
+  };
+
+  const onDeleteTask = async () => {
+    try {
+      const deletedTask = await axiosInstance.delete(`/api/task`, {
+        data: { taskId: id },
+      });
+      console.log(deletedTask);
+      dispatch(removeTodo(id));
+    } catch (error) {}
   };
 
   const TodoContent = isEditing ? (
@@ -64,10 +76,7 @@ const TodoItem: React.FC<ITodo> = ({ id, text, completed }) => {
           {TodoContent}
         </div>
         <div className="tasks__task__content__right">
-          <button
-            className="tasks__task__delete"
-            onClick={() => dispatch(removeTodo(id))}
-          >
+          <button className="tasks__task__delete" onClick={onDeleteTask}>
             <i className="fa-solid fa-trash-can"></i>
           </button>
         </div>

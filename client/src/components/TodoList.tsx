@@ -1,29 +1,32 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
 import { useEffect, useRef, createRef } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 // Components
 import TodoItem from "./TodoItem";
 
-const TodoList = () => {
+const TodoList: React.FC<{ tasks: ITodo[] }> = ({ tasks }) => {
   const contentRef = useRef<HTMLUListElement>(null);
   const scrollBar = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
 
-  const todos = useSelector((state: RootState) => state.app.todos);
-  const filteredTodo = todos.map((item) => ({ ...item, nodeRef: createRef() }));
+  const filteredTodo = tasks.map((item) => ({ ...item, nodeRef: createRef() }));
 
-  const todoItems = filteredTodo.map((item) => (
-    <CSSTransition
-      key={item.id}
-      nodeRef={undefined}
-      timeout={500}
-      classNames="item"
-    >
-      <TodoItem key={item.id} {...item} />
-    </CSSTransition>
-  ));
+  const renderTaskItems = () => {
+    if (filteredTodo.length !== 0) {
+      return filteredTodo.map((item) => (
+        <CSSTransition
+          key={item.id}
+          nodeRef={undefined}
+          timeout={500}
+          classNames="item"
+        >
+          <TodoItem key={item.id} {...item} />
+        </CSSTransition>
+      ));
+    } else {
+      return <p>Please create your first task</p>;
+    }
+  };
 
   useEffect(() => {
     const contentEl = contentRef.current!;
@@ -39,7 +42,6 @@ const TodoList = () => {
     }
 
     return () => {
-      console.log("Clean Up");
       contentEl.removeEventListener("scroll", handleScroll);
     };
   });
@@ -73,7 +75,9 @@ const TodoList = () => {
         <div ref={thumbRef} className="task-wrapper__scrollbar__thumb"></div>
       </div>
       <ul ref={contentRef} className="tasks">
-        <TransitionGroup className="todo-list">{todoItems}</TransitionGroup>
+        <TransitionGroup className="todo-list">
+          {renderTaskItems()}
+        </TransitionGroup>
       </ul>
     </div>
   );

@@ -1,23 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-const tempTasks = [
-  { text: "Clean the house", id: "1", completed: false },
-  { text: "Wash the dishes", id: "2", completed: false },
-];
-
-const categories = [
-  { title: "Freelance", color: "#f07857" },
-  { title: "Personal", color: "#4fb06d" },
-  { title: "Hobby", color: "#bf2c34" },
-];
+interface CategoryInterface {
+  title: string;
+  color: string;
+  _id: string;
+}
 
 interface AppState {
   user: {} | null;
   token: string | null;
-  categories: {}[] | [];
+  categories: CategoryInterface[] | [];
   todos: ITodo[];
-  tempCategories: { title: string; color: string }[];
   alertType: "danger" | "success" | "info";
   alertText: string | null;
   isAlert: boolean;
@@ -37,10 +31,9 @@ interface IAlert {
 
 const initialState: AppState = {
   user: null,
-  token: null,
+  token: JSON.parse(localStorage.getItem("accessToken")!) || null,
   categories: [],
   todos: [],
-  tempCategories: categories,
   alertType: "info",
   alertText: null,
   isAlert: false,
@@ -82,6 +75,9 @@ export const appSlice = createSlice({
       state.todos = action.payload.tasks;
       state.categories = action.payload.categories;
     },
+    logoutUser: (state) => {
+      state = initialState;
+    },
   },
 });
 
@@ -93,6 +89,7 @@ export const {
   setTodoChecked,
   loginUser,
   hideAlert,
+  logoutUser,
 } = appSlice.actions;
 
 export default appSlice.reducer;
