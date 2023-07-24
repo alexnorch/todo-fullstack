@@ -1,8 +1,8 @@
 import { useState } from "react";
 import useCustomAxios from "../hooks/useCustomAxios";
+import { TaskItem } from "../types";
 
 // Redux
-import { setTodoChecked } from "../redux/appSlice";
 import { useDispatch } from "react-redux";
 import { showAlert } from "../redux/appSlice";
 import { removeTodo } from "../redux/appSlice";
@@ -11,7 +11,7 @@ import { removeTodo } from "../redux/appSlice";
 import Checkbox from "./UI/Checkbox";
 import Input from "./UI/Input";
 
-const TodoItem: React.FC<ITodo> = ({ _id, title, completed }) => {
+const TodoItem: React.FC<TaskItem> = ({ _id, title, completed }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [userValue, setUserValue] = useState<string>(title);
   const dispatch = useDispatch();
@@ -41,9 +41,8 @@ const TodoItem: React.FC<ITodo> = ({ _id, title, completed }) => {
 
   const onDeleteTask = async () => {
     try {
-      const deletedTask = await axiosInstance.delete(`/api/task/${_id}`);
+      await axiosInstance.delete(`/api/task/${_id}`);
       dispatch(removeTodo(_id));
-      console.log(deletedTask);
     } catch (error) {}
   };
 
@@ -67,10 +66,7 @@ const TodoItem: React.FC<ITodo> = ({ _id, title, completed }) => {
     <li className="tasks__task">
       <div className="tasks__task__content">
         <div className="tasks__task__content__left">
-          <Checkbox
-            checked={completed}
-            onCheck={() => dispatch(setTodoChecked(_id))}
-          />
+          <Checkbox checked={completed} onCheck={() => alert("Checked")} />
           {TodoContent}
         </div>
         <div className="tasks__task__content__right">

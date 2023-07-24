@@ -1,13 +1,4 @@
-interface InputProps {
-  placeholder: string;
-  name?: string;
-  type?: string;
-  onChange: any;
-  value: string;
-  errorMessage?: string;
-  onKeyUp?: React.KeyboardEventHandler<HTMLInputElement>;
-  handleBlur?: React.FocusEventHandler<HTMLInputElement>;
-}
+import { InputProps } from "../../types";
 
 const Input: React.FC<InputProps> = ({
   placeholder,

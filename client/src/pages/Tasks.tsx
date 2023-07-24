@@ -7,7 +7,7 @@ import TodoList from "../components/TodoList";
 import NewTodo from "../components/NewTodo";
 
 export default function Tasks() {
-  const tasks = useSelector((state: RootState) => state.app.todos);
+  const tasks = useSelector((state: RootState) => state.app.tasks);
   const { category } = useParams();
   const filteredTasks = tasks.filter(
     (item) => item.category.title.toLocaleLowerCase() === category

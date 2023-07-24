@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
 import { logoutUser } from "../redux/appSlice";
+import { useNavigate } from "react-router-dom";
 
 // Icons
 import { IoMdSettings } from "react-icons/io";
@@ -20,8 +21,9 @@ const Menu: React.FC<Props> = ({ createNewCategory }) => {
     (state: RootState) => state.app
   );
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const renderCategories = () => {
-    if (categories?.length > 1) {
+    if (categories?.length !== 0) {
       return categories.map((link) => (
         <li key={link._id} className="menu__list__link">
           <span
@@ -36,7 +38,10 @@ const Menu: React.FC<Props> = ({ createNewCategory }) => {
     }
 
     return (
-      <button onClick={createNewCategory} className="add-category">
+      <button
+        onClick={() => navigate("/settings/categories")}
+        className="add-category"
+      >
         <IoMdAddCircleOutline className="add-category__icon" />
         <span>New category</span>
       </button>
@@ -44,8 +49,8 @@ const Menu: React.FC<Props> = ({ createNewCategory }) => {
   };
 
   const onLogoutUser = () => {
-    dispatch(logoutUser());
     localStorage.clear();
+    dispatch(logoutUser());
   };
 
   return (
@@ -62,7 +67,7 @@ const Menu: React.FC<Props> = ({ createNewCategory }) => {
         <div className="menu__middle__category">
           <h2 className="menu__middle__title">
             <FaTasks />
-            <Link to="/tasks">Today tasks</Link>
+            <Link to="/">Today tasks</Link>
           </h2>
           <ul className="menu__list">{renderCategories()}</ul>
         </div>

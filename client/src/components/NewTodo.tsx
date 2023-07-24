@@ -15,15 +15,18 @@ const NewTodo = () => {
   const onSubmit = async (e: any) => {
     e.preventDefault();
 
-    if (title.length > 6) {
-      const response: AxiosResponse<any> = await axiosInstance.post(
-        "/api/task",
-        { title, categoryName: category }
-      );
-      const { createdTask } = response.data; // Extract the response data from the AxiosResponse object
-      console.log(createdTask);
-      dispatch(addNewTodo(createdTask));
-      setTitle("");
+    try {
+      if (title.length > 6) {
+        const response: AxiosResponse<any> = await axiosInstance.post(
+          "/api/task",
+          { title, categoryName: category }
+        );
+        const { createdTask } = response.data; // Extract the response data from the AxiosResponse object
+        dispatch(addNewTodo(createdTask));
+        setTitle("");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

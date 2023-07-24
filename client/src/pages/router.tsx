@@ -14,12 +14,10 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import Overview from "./Overview";
 
 // Settings Pages
-import SettingsWrapper from "./Settings/Wrapper";
-import SettingsIndex from "./Settings/Settings";
-import Password from "./Settings/Password";
+import Wrapper from "./Settings/Wrapper";
 import Profile from "./Settings/Profile";
 import Theme from "./Settings/Theme";
-import NewCategory from "./Settings/NewCategory";
+import Categories from "./Settings/Categories";
 
 // Helpers
 
@@ -36,11 +34,9 @@ const router = createBrowserRouter(
       >
         <Route index element={<Overview />} />
         <Route path="tasks/:category" element={<Tasks />} />
-        <Route path="settings" element={<SettingsWrapper />}>
-          <Route index element={<SettingsIndex />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="password" element={<Password />} />
-          <Route path="category" element={<NewCategory />} />
+        <Route path="settings" element={<Wrapper />}>
+          <Route index element={<Profile />} />
+          <Route path="categories" element={<Categories />} />
           <Route path="theme" element={<Theme />} />
         </Route>
       </Route>

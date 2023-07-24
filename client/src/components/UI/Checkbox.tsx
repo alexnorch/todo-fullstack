@@ -1,3 +1,5 @@
+import { CheckboxProps } from "../../types";
+
 const Checkbox: React.FC<CheckboxProps> = ({ checked, onCheck }) => {
   return (
     <div className="checkbox">

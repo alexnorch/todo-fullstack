@@ -41,11 +41,7 @@ export default function Login() {
       });
 
       dispatch(loginUser(data));
-
       addToLocalStorage("accessToken", data.token);
-      addToLocalStorage("userInfo", data.userInfo);
-      addToLocalStorage("userData", data.userData);
-
       navigate("/");
     } catch (err) {
       if (err instanceof AxiosError) {

@@ -61,24 +61,23 @@ const updateTask = (req: Request, res: Response) => {
 const deleteTask = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id: _id } = req.params;
-    console.log(req.body);
     const userId = req.userId;
 
-    const task = await Task.findOne({ _id });
+    const task = await Task.findOne({ _id, user: userId });
 
     if (!task) {
       return next(new AppError("Task not found", 404));
     }
 
-    if (task.user.toString() !== userId) {
-      return next(new AppError("You are not allowed to do this", 403));
-    }
+    // if (task.user.toString() !== userId) {
+    //   return next(new AppError("You are not allowed to do this", 403));
+    // }
 
     const deletedDocument = await task.deleteOne();
 
     res.status(200).json({
       status: "success",
-      message: "Документ успешно удален",
+      message: "Successfully deleted",
       deletedDocument,
     });
   } catch (error) {}

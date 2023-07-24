@@ -1,30 +1,20 @@
 import { useEffect, useRef, createRef } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { TaskItem } from "../types";
 
 // Components
 import TodoItem from "./TodoItem";
 
-const TodoList: React.FC<{ tasks: ITodo[] }> = ({ tasks }) => {
+const TodoList: React.FC<{ tasks: TaskItem[] }> = ({ tasks }) => {
   const contentRef = useRef<HTMLUListElement>(null);
   const scrollBar = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
 
-  const filteredTodo = tasks.map((item) => ({ ...item, nodeRef: createRef() }));
-
   const renderTaskItems = () => {
-    if (filteredTodo.length !== 0) {
-      return filteredTodo.map((item) => (
-        <CSSTransition
-          key={item._id}
-          nodeRef={undefined}
-          timeout={500}
-          classNames="item"
-        >
-          <TodoItem key={item._id} {...item} />
-        </CSSTransition>
-      ));
+    if (tasks.length !== 0) {
+      return tasks.map((item) => <TodoItem key={item._id} {...item} />);
     } else {
-      return <p>Please create your first task</p>;
+      return <p ref={null}>Please create your first task</p>;
     }
   };
 
@@ -75,9 +65,7 @@ const TodoList: React.FC<{ tasks: ITodo[] }> = ({ tasks }) => {
         <div ref={thumbRef} className="task-wrapper__scrollbar__thumb"></div>
       </div>
       <ul ref={contentRef} className="tasks">
-        <TransitionGroup className="todo-list">
-          {renderTaskItems()}
-        </TransitionGroup>
+        {renderTaskItems()}
       </ul>
     </div>
   );

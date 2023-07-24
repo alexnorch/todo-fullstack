@@ -1,7 +1,7 @@
 import { redirect } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
-export const addToLocalStorage = (key: string, value: string) => {
+export const addToLocalStorage = (key: string, value: any) => {
   localStorage.setItem(key, JSON.stringify(value));
 };
 
