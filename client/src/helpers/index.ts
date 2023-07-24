@@ -1,16 +1,12 @@
 import { redirect } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
-export const addToLocalStorage = (accessToken: string) => {
-  localStorage.setItem("accessToken", JSON.stringify(accessToken));
+export const addToLocalStorage = (key: string, value: string) => {
+  localStorage.setItem(key, JSON.stringify(value));
 };
 
-export const getFromLocalStorage = () => {
-  localStorage.getItem("accessToken");
-};
-
-export const removeFromLocalStorage = () => {
-  localStorage.removeItem("accessToken");
+export const getFromLocalStorage = (key: string) => {
+  return JSON.parse(localStorage.getItem(key)!);
 };
 
 // Return classes for Alert component

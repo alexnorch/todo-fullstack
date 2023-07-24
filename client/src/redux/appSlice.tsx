@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { getFromLocalStorage } from "../helpers";
 
 interface CategoryInterface {
   title: string;
@@ -8,7 +9,7 @@ interface CategoryInterface {
 }
 
 interface AppState {
-  user: {} | null;
+  user: UserInfo | null;
   token: string | null;
   categories: CategoryInterface[] | [];
   todos: ITodo[];
@@ -17,11 +18,21 @@ interface AppState {
   isAlert: boolean;
 }
 
+interface UserData {
+  tasks: ITodo[];
+  categories: CategoryInterface[];
+}
+
+interface UserInfo {
+  email: string;
+  id: string;
+  name: string;
+}
+
 interface AuthPayload {
   token: string;
-  user: {};
-  tasks: [];
-  categories: [];
+  userData: UserData;
+  userInfo: UserInfo;
 }
 
 interface IAlert {
@@ -30,10 +41,10 @@ interface IAlert {
 }
 
 const initialState: AppState = {
-  user: null,
-  token: JSON.parse(localStorage.getItem("accessToken")!) || null,
-  categories: [],
-  todos: [],
+  user: getFromLocalStorage("userInfo") || null,
+  token: getFromLocalStorage("accessToken") || null,
+  categories: getFromLocalStorage("userData")?.categories || [],
+  todos: getFromLocalStorage("userData")?.tasks || [],
   alertType: "info",
   alertText: null,
   isAlert: false,
@@ -52,31 +63,38 @@ export const appSlice = createSlice({
       state.isAlert = false;
       state.alertText = null;
     },
-    clearUserData: (state, action: PayloadAction) => {
-      state = initialState;
-    },
     addNewTodo: (state, action: PayloadAction<ITodo>) => {
       state.todos.push(action.payload);
     },
     removeTodo: (state, action: PayloadAction<string>) => {
-      state.todos = state.todos.filter((item) => item.id !== action.payload);
+      state.todos = state.todos.filter((item) => item._id !== action.payload);
     },
     setTodoChecked: (state, action: PayloadAction<string>) => {
       state.todos.map((item) => {
-        if (item.id === action.payload) {
+        if (item._id === action.payload) {
           item.completed = !item.completed;
         }
         return item;
       });
     },
     loginUser: (state, action: PayloadAction<AuthPayload>) => {
-      state.token = action.payload.token;
-      state.user = action.payload.user;
-      state.todos = action.payload.tasks;
-      state.categories = action.payload.categories;
+      const { token, userData, userInfo } = action.payload;
+      state.token = token;
+      state.user = userInfo;
+      state.todos = userData.tasks;
+      state.categories = userData.categories;
     },
     logoutUser: (state) => {
-      state = initialState;
+      state.token = null;
+      state.user = null;
+      state.todos = [];
+      state.categories = [];
+    },
+    extractFromLocalStorage: (state) => {
+      state.user = getFromLocalStorage("userInfo") || null;
+      state.token = getFromLocalStorage("accessToken") || null;
+      state.categories = getFromLocalStorage("userData")?.categories || [];
+      state.todos = getFromLocalStorage("userData")?.tasks;
     },
   },
 });

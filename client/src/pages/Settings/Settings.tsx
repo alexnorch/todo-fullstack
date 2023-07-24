@@ -35,7 +35,7 @@ export default function Settings() {
         </h3>
         <ul className="settings__section__list">
           <li>
-            <Link to="new-category">
+            <Link to="category">
               <span>Create new category</span>
               <BsChevronRight />
             </Link>

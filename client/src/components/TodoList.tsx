@@ -15,12 +15,12 @@ const TodoList: React.FC<{ tasks: ITodo[] }> = ({ tasks }) => {
     if (filteredTodo.length !== 0) {
       return filteredTodo.map((item) => (
         <CSSTransition
-          key={item.id}
+          key={item._id}
           nodeRef={undefined}
           timeout={500}
           classNames="item"
         >
-          <TodoItem key={item.id} {...item} />
+          <TodoItem key={item._id} {...item} />
         </CSSTransition>
       ));
     } else {

@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import User from "../models/userModel";
-import Task from "../models/taskModel";
 import AppError from "../utils/AppError";
 
 const loginUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -17,7 +16,7 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
         select: "title completed",
         populate: {
           path: "category",
-          select: "title color", // Укажите только поле 'title' для категории
+          select: "title color",
         },
       })
       .populate({ path: "categories", select: "title color" });
@@ -43,8 +42,10 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
         email: user.email,
         id: user._id,
       },
-      categories: user.categories,
-      tasks: user.tasks,
+      userData: {
+        categories: user.categories,
+        tasks: user.tasks,
+      },
       token,
     });
 
@@ -81,13 +82,13 @@ const registerUser = async (
     const token = user.generateToken(user._id);
 
     res.json({
-      user: {
+      userData: {
         name: user.name,
         email: user.email,
         id: user._id,
+        categories: user.categories,
+        tasks: user.tasks,
       },
-      categories: user.categories,
-      tasks: user.tasks,
       token,
     });
   } catch (error) {}

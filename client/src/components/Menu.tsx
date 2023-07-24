@@ -16,17 +16,21 @@ interface Props {
 }
 
 const Menu: React.FC<Props> = ({ createNewCategory }) => {
-  const categories = useSelector((state: RootState) => state.app.categories);
+  const { categories, token, user } = useSelector(
+    (state: RootState) => state.app
+  );
   const dispatch = useDispatch();
   const renderCategories = () => {
-    if (categories.length > 1) {
+    if (categories?.length > 1) {
       return categories.map((link) => (
         <li key={link._id} className="menu__list__link">
           <span
             className="menu__list__dot"
             style={{ backgroundColor: link.color }}
           ></span>
-          <Link to={link.title.toLocaleLowerCase()}>{link.title}</Link>
+          <Link to={`tasks/${link.title.toLocaleLowerCase()}`}>
+            {link.title}
+          </Link>
         </li>
       ));
     }
@@ -40,8 +44,8 @@ const Menu: React.FC<Props> = ({ createNewCategory }) => {
   };
 
   const onLogoutUser = () => {
-    localStorage.removeItem("accessToken");
     dispatch(logoutUser());
+    localStorage.clear();
   };
 
   return (
@@ -51,7 +55,7 @@ const Menu: React.FC<Props> = ({ createNewCategory }) => {
           <img src={personImage} alt="Profile Image" />
         </div>
         <div className={"styles.info"}>
-          <h3 className={"styles.heading"}>Oleksandr Harashchenko</h3>
+          <h3 className={"styles.heading"}>{user?.name}</h3>
         </div>
       </div>
       <div className="menu__middle">

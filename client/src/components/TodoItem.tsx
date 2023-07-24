@@ -11,7 +11,7 @@ import { removeTodo } from "../redux/appSlice";
 import Checkbox from "./UI/Checkbox";
 import Input from "./UI/Input";
 
-const TodoItem: React.FC<ITodo> = ({ id, title, completed }) => {
+const TodoItem: React.FC<ITodo> = ({ _id, title, completed }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [userValue, setUserValue] = useState<string>(title);
   const dispatch = useDispatch();
@@ -41,11 +41,9 @@ const TodoItem: React.FC<ITodo> = ({ id, title, completed }) => {
 
   const onDeleteTask = async () => {
     try {
-      const deletedTask = await axiosInstance.delete(`/api/task`, {
-        data: { taskId: id },
-      });
+      const deletedTask = await axiosInstance.delete(`/api/task/${_id}`);
+      dispatch(removeTodo(_id));
       console.log(deletedTask);
-      dispatch(removeTodo(id));
     } catch (error) {}
   };
 
@@ -71,7 +69,7 @@ const TodoItem: React.FC<ITodo> = ({ id, title, completed }) => {
         <div className="tasks__task__content__left">
           <Checkbox
             checked={completed}
-            onCheck={() => dispatch(setTodoChecked(id))}
+            onCheck={() => dispatch(setTodoChecked(_id))}
           />
           {TodoContent}
         </div>

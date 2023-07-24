@@ -2,6 +2,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
+  Routes,
 } from "react-router-dom";
 
 // Main Pages
@@ -10,21 +11,21 @@ import Login from "./Login";
 import Register from "./Register";
 import Tasks from "./Tasks";
 import ProtectedRoutes from "./ProtectedRoutes";
+import Overview from "./Overview";
 
 // Settings Pages
-import Wrapper from "./Settings/Wrapper";
-import Settings from "./Settings/Settings";
+import SettingsWrapper from "./Settings/Wrapper";
+import SettingsIndex from "./Settings/Settings";
 import Password from "./Settings/Password";
 import Profile from "./Settings/Profile";
 import Theme from "./Settings/Theme";
 import NewCategory from "./Settings/NewCategory";
 
 // Helpers
-import { checkAuth } from "../helpers";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <>
+    <Route>
       <Route
         path="/"
         element={
@@ -33,19 +34,19 @@ const router = createBrowserRouter(
           </ProtectedRoutes>
         }
       >
-        <Route path="/" element={<Tasks />} />
-        <Route path="/:category" element={<Tasks />} />
-        <Route path="/settings" element={<Wrapper />}>
-          <Route path="" element={<Settings />} />
+        <Route index element={<Overview />} />
+        <Route path="tasks/:category" element={<Tasks />} />
+        <Route path="settings" element={<SettingsWrapper />}>
+          <Route index element={<SettingsIndex />} />
           <Route path="profile" element={<Profile />} />
           <Route path="password" element={<Password />} />
-          <Route path="new-category" element={<NewCategory />} />
+          <Route path="category" element={<NewCategory />} />
           <Route path="theme" element={<Theme />} />
         </Route>
       </Route>
-      <Route loader={checkAuth} path="/login" element={<Login />} />
-      <Route loader={checkAuth} path="/register" element={<Register />} />
-    </>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+    </Route>
   )
 );
 
