@@ -7,17 +7,17 @@ import TodoList from "../components/TodoList";
 import NewTodo from "../components/NewTodo";
 
 export default function Tasks() {
-  const tasks = useSelector((state: RootState) => state.app.tasks);
+  const userData = useSelector((state: RootState) => state.app.data);
   const { category } = useParams();
-  // const filteredTasks = tasks.filter(
-  //   (item) => item.category.title.toLocaleLowerCase() === category
-  // );
+  const filteredData = userData.filter(
+    (item) => item.categoryName === category
+  )[0];
 
   return (
     <>
       {/* New page Tasks overview. This page will contain latest categories and latest tasks */}
       <NewTodo />
-      <TodoList tasks={tasks} />
+      <TodoList tasks={filteredData.tasks} />
     </>
   );
 }

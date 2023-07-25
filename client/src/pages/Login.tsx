@@ -35,13 +35,15 @@ export default function Login() {
     const { email, password } = values;
 
     try {
-      const { data } = await axios.post("/api/user/login", {
+      const {
+        data: { result },
+      } = await axios.post("/api/user/login", {
         email,
         password,
       });
 
-      dispatch(loginUser(data));
-      addToLocalStorage("accessToken", data.token);
+      dispatch(loginUser(result));
+      addToLocalStorage("accessToken", result.token);
       navigate("/");
     } catch (err) {
       if (err instanceof AxiosError) {

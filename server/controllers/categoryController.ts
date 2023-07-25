@@ -39,11 +39,7 @@ const createCategory = async (
   user!.data.push(newCategory._id);
   await user!.save();
 
-  res.send({
-    color: newCategory.color,
-    title: newCategory.categoryName,
-    _id: newCategory._id,
-  });
+  res.send(newCategory);
 };
 
 const deleteCategory = async (

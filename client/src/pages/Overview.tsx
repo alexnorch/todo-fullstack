@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 
 const Overview = () => {
-  const tasks = useSelector((state: RootState) => state.app.tasks);
+  const tasks = useSelector((state: RootState) => state.app.data);
   return (
     <div className="overview">
       <div className="heading">
@@ -12,9 +12,9 @@ const Overview = () => {
       </div>
       <section className="overview__tasks">
         <h3>Today you have three tasks</h3>
-        {tasks.map((item) => (
+        {/* {tasks.map((item) => (
           <TodoItem key={item._id} {...item} />
-        ))}
+        ))} */}
       </section>
     </div>
   );

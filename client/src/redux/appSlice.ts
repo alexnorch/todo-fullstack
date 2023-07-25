@@ -1,14 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { getFromLocalStorage } from "../helpers";
-import { TaskItem, AppState, AlertProps, AuthPayload } from "../types";
-import fakeData from "./data";
+import { TaskItem, AppState, AlertProps, CategoryInterface } from "../types";
 
 const initialState: AppState = {
   user: getFromLocalStorage("userInfo") || null,
   token: getFromLocalStorage("accessToken") || null,
-  categories: getFromLocalStorage("userData")?.categories || [],
-  tasks: getFromLocalStorage("userData")?.tasks || [],
+  data: getFromLocalStorage("userData") || [],
   alertType: "info",
   alertText: null,
   isAlert: false,
@@ -28,39 +26,50 @@ export const appSlice = createSlice({
       state.alertText = null;
     },
     addNewTodo: (state, action: PayloadAction<TaskItem>) => {
-      state.tasks.push(action.payload);
+      const { category } = action.payload;
+
+      state.data = state.data.map((item) => {
+        if (item.categoryName === category) {
+          return {
+            ...item,
+            tasks: [...item.tasks, action.payload],
+          };
+        }
+        return item;
+      });
     },
-    addCategory: (
-      state,
-      action: PayloadAction<{
-        title: string;
-        color: string;
-        _id: string;
-      }>
-    ) => {
-      state.categories.push(action.payload);
+    addCategory: (state, action: PayloadAction<CategoryInterface>) => {
+      state.data.push(action.payload);
     },
     deleteCategory: (state, action: PayloadAction<string>) => {
-      state.categories = state.categories.filter(
+      state.data = state.data.filter(
         (category) => category._id !== action.payload
       );
     },
+    removeTodo: (state, action: PayloadAction<TaskItem>) => {
+      const { category, _id } = action.payload;
 
-    removeTodo: (state, action: PayloadAction<string>) => {
-      state.tasks = state.tasks.filter((item) => item._id !== action.payload);
+      state.data = state.data.map((item) => {
+        if (item.categoryName === category) {
+          return {
+            ...item,
+            tasks: item.tasks.filter((task) => task._id !== _id),
+          };
+        }
+
+        return item;
+      });
     },
-    loginUser: (state, action: PayloadAction<AuthPayload>) => {
+    loginUser: (state, action: PayloadAction<any>) => {
       const { token, userData, userInfo } = action.payload;
       state.token = token;
       state.user = userInfo;
-      state.tasks = userData.tasks;
-      state.categories = userData.categories;
+      state.data = userData;
     },
     logoutUser: (state) => {
       state.token = null;
       state.user = null;
-      state.tasks = [];
-      state.categories = [];
+      state.data = [];
     },
   },
 });

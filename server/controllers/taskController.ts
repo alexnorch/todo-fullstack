@@ -53,10 +53,29 @@ const createTask = async (req: Request, res: Response, next: NextFunction) => {
     userCategory.tasks.push(createdTask._id);
 
     await userCategory.save();
-    // await createdTask.populate({ path: 'category',  })
-    // await createdTask.populate({ path: "category", select: "title color" });
 
-    res.send(createdTask);
+    const populatedTask = await Task.aggregate([
+      {
+        $match: { _id: createdTask._id },
+      },
+      {
+        $lookup: {
+          from: "categories",
+          localField: "category",
+          foreignField: "_id",
+          as: "category",
+        },
+      },
+      {
+        $addFields: {
+          category: { $arrayElemAt: ["$category.categoryName", 0] },
+        },
+      },
+    ]);
+
+    const resultTask = populatedTask[0];
+
+    res.send(resultTask);
   } catch (error) {
     console.log(error);
   }
@@ -77,17 +96,33 @@ const deleteTask = async (req: Request, res: Response, next: NextFunction) => {
       return next(new AppError("Task not found", 404));
     }
 
-    // if (task.user.toString() !== userId) {
-    //   return next(new AppError("You are not allowed to do this", 403));
-    // }
+    if (task.user.toString() !== userId) {
+      return next(new AppError("You are not allowed to do this", 403));
+    }
 
-    const deletedDocument = await task.deleteOne();
+    const populatedTask = await Task.aggregate([
+      {
+        $match: { _id: task._id },
+      },
+      {
+        $lookup: {
+          from: "categories",
+          localField: "category",
+          foreignField: "_id",
+          as: "category",
+        },
+      },
+      {
+        $addFields: {
+          category: { $arrayElemAt: ["$category.categoryName", 0] },
+        },
+      },
+    ]);
 
-    res.status(200).json({
-      status: "success",
-      message: "Successfully deleted",
-      deletedDocument,
-    });
+    await task.deleteOne();
+    const populatedResult = populatedTask[0];
+
+    res.status(200).json(populatedResult);
   } catch (error) {}
 };
 

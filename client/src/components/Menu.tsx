@@ -12,26 +12,23 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 
 import personImage from "../assets/images/person.png";
 
-interface Props {
-  createNewCategory: () => void;
-}
-
-const Menu: React.FC<Props> = ({ createNewCategory }) => {
-  const { categories, token, user } = useSelector(
-    (state: RootState) => state.app
-  );
+const Menu: React.FC = () => {
+  const { data, user } = useSelector((state: RootState) => state.app);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  console.log(data);
+
   const renderCategories = () => {
-    if (categories?.length !== 0) {
-      return categories.map((link) => (
-        <li key={link._id} className="menu__list__link">
+    if (data?.length !== 0) {
+      return data.map(({ categoryName, color, _id }) => (
+        <li key={_id} className="menu__list__link">
           <span
             className="menu__list__dot"
-            style={{ backgroundColor: link.color }}
+            style={{ backgroundColor: color }}
           ></span>
-          <Link to={`tasks/${link.title.toLocaleLowerCase()}`}>
-            {link.title}
+          <Link to={`tasks/${categoryName?.toLocaleLowerCase()}`}>
+            {categoryName}
           </Link>
         </li>
       ));
@@ -57,10 +54,11 @@ const Menu: React.FC<Props> = ({ createNewCategory }) => {
     <>
       <div className="menu__top">
         <div className="menu__top__image">
-          <img src={personImage} alt="Profile Image" />
+          <img src={user?.photo} alt="Profile Image" />
         </div>
         <div className={"styles.info"}>
           <h3 className={"styles.heading"}>{user?.name}</h3>
+          <p>{user?.email}</p>
         </div>
       </div>
       <div className="menu__middle">

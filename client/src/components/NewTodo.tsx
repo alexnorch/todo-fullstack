@@ -19,10 +19,10 @@ const NewTodo = () => {
       if (title.length > 6) {
         const response: AxiosResponse<any> = await axiosInstance.post(
           "/api/task",
-          { title, categoryName: category }
+          { title, category }
         );
-        const { createdTask } = response.data; // Extract the response data from the AxiosResponse object
-        dispatch(addNewTodo(createdTask));
+        const result = response.data; // Extract the response data from the AxiosResponse object
+        dispatch(addNewTodo(result));
         setTitle("");
       }
     } catch (error) {

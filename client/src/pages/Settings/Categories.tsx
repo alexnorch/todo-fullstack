@@ -11,7 +11,7 @@ import { AiOutlineClose } from "react-icons/ai";
 export default function NewCategory() {
   const [title, setTitle] = useState<string>("");
   const [color, setColor] = useState<string>("");
-  const categories = useSelector((state: RootState) => state.app.categories);
+  const userData = useSelector((state: RootState) => state.app.data);
   const dispatch = useDispatch();
   const axiosInstance = useCustomAxios();
 
@@ -21,27 +21,31 @@ export default function NewCategory() {
   };
 
   const onAddCategory = async () => {
-    const response = await axiosInstance.post("/api/category", {
-      title,
-      color,
-    });
+    try {
+      const { data } = await axiosInstance.post("/api/category", {
+        title,
+        color,
+      });
 
-    dispatch(addCategory(response.data.createdCategory));
+      dispatch(addCategory(data));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div className="content">
       <h2>List of your categories</h2>
       <ul className="settings-categories">
-        {categories.map((item) => (
+        {userData.map(({ categoryName, color, _id }) => (
           <li
             className="settings-categories__item"
-            style={{ backgroundColor: item.color }}
-            key={item._id}
+            style={{ backgroundColor: color }}
+            key={_id}
           >
-            <p>{item.title}</p>
+            <p>{categoryName}</p>
             <button
-              onClick={() => onDeleteCategory(item._id)}
+              onClick={() => onDeleteCategory(_id)}
               className="settings-categories__btn"
             >
               <AiOutlineClose />

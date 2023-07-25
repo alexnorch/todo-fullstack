@@ -22,29 +22,29 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
       return next(new AppError("An e-mail address doesn't exists", 400));
     }
 
-    // const isPasswordCorrect = await user.comparePassword(
-    //   password,
-    //   user.password
-    // );
+    const isPasswordCorrect = await user.comparePassword(
+      password,
+      user.password
+    );
 
-    // if (!isPasswordCorrect) {
-    //   return next(new AppError("Bad credentials, try again please", 401));
-    // }
+    if (!isPasswordCorrect) {
+      return next(new AppError("Bad credentials, try again please", 401));
+    }
 
     const token = user.generateToken(user._id);
 
-    // res.json({
-    //   userInfo: {
-    //     name: user.name,
-    //     email: user.email,
-    //     id: user._id,
-    //   },
-    //   userData: {
-    //     categories: user.categories,
-    //     tasks: user.tasks,
-    //   },
-    //   token,
-    // });
+    res.json({
+      result: {
+        userInfo: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          photo: user.photo,
+        },
+        userData: user.data,
+        token,
+      },
+    });
 
     res.json({ user, token });
   } catch (error) {

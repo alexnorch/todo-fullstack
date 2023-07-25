@@ -1,39 +1,38 @@
 export interface AppState {
   user: UserInfo | null;
   token: string | null;
-  categories: CategoryInterface[];
-  tasks: TaskItem[];
+  data: UserData[];
   alertType: "danger" | "success" | "info";
   alertText: string | null;
   isAlert: boolean;
 }
 
-export interface CategoryInterface {
-  title: string;
-  color: string;
+export interface UserData {
   _id: string;
+  categoryName: string;
+  color: string;
+  tasks: TaskItem[];
 }
 
-export interface UserData {
+export interface CategoryInterface {
+  categoryName: string;
+  color: string;
+  _id: string;
   tasks: TaskItem[];
-  categories: CategoryInterface[];
 }
 
 export interface UserInfo {
   email: string;
   id: string;
   name: string;
+  photo: string;
 }
 
 export interface TaskItem {
   _id: string;
   title: string;
   completed: boolean;
-  category: {
-    _id: string;
-    title: string;
-    color: string;
-  };
+  category: string;
 }
 
 export interface InputProps {

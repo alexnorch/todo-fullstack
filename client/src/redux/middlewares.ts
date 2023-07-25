@@ -6,9 +6,9 @@ export const localStorageMiddleware: Middleware =
     const result = next(action);
     const state = store.getState();
 
-    const { user, categories, tasks } = state.app;
+    const { user, data } = state.app;
 
-    addToLocalStorage("userData", { categories, tasks });
+    addToLocalStorage("userData", data);
     addToLocalStorage("userInfo", user);
 
     return result;
