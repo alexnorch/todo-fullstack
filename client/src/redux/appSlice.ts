@@ -1,13 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { getFromLocalStorage } from "../helpers";
-import {
-  TaskItem,
-  AppState,
-  AlertProps,
-  AuthPayload,
-  CategoryInterface,
-} from "../types";
+import { TaskItem, AppState, AlertProps, AuthPayload } from "../types";
+import fakeData from "./data";
 
 const initialState: AppState = {
   user: getFromLocalStorage("userInfo") || null,

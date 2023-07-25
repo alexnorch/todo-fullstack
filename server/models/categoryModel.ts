@@ -1,14 +1,14 @@
 import mongoose, { Document, Types } from "mongoose";
 
 export interface CategoryInterface extends Document {
-  title: string;
+  categoryName: string;
   color: string;
   user: Types.ObjectId;
   tasks: Types.ObjectId[];
 }
 
 const CategorySchema = new mongoose.Schema({
-  title: {
+  categoryName: {
     type: String,
     required: [true, "Title is required"],
   },

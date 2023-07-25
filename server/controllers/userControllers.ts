@@ -10,46 +10,43 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
       return next(new AppError("Please provide all values", 400));
     }
 
-    const user = await User.findOne({ email })
-      .populate({
+    const user = await User.findOne({ email }).populate({
+      path: "data",
+      populate: {
         path: "tasks",
         select: "title completed",
-        populate: {
-          path: "category",
-          select: "title color",
-        },
-      })
-      .populate({ path: "categories", select: "title color" });
+      },
+    });
 
     if (!user) {
       return next(new AppError("An e-mail address doesn't exists", 400));
     }
 
-    const isPasswordCorrect = await user.comparePassword(
-      password,
-      user.password
-    );
+    // const isPasswordCorrect = await user.comparePassword(
+    //   password,
+    //   user.password
+    // );
 
-    if (!isPasswordCorrect) {
-      return next(new AppError("Bad credentials, try again please", 401));
-    }
+    // if (!isPasswordCorrect) {
+    //   return next(new AppError("Bad credentials, try again please", 401));
+    // }
 
     const token = user.generateToken(user._id);
 
-    res.json({
-      userInfo: {
-        name: user.name,
-        email: user.email,
-        id: user._id,
-      },
-      userData: {
-        categories: user.categories,
-        tasks: user.tasks,
-      },
-      token,
-    });
+    // res.json({
+    //   userInfo: {
+    //     name: user.name,
+    //     email: user.email,
+    //     id: user._id,
+    //   },
+    //   userData: {
+    //     categories: user.categories,
+    //     tasks: user.tasks,
+    //   },
+    //   token,
+    // });
 
-    res.sendStatus(200);
+    res.json({ user, token });
   } catch (error) {
     // Обработка ошибок
   }
@@ -81,16 +78,7 @@ const registerUser = async (
     const user = await newUser.save();
     const token = user.generateToken(user._id);
 
-    res.json({
-      userData: {
-        name: user.name,
-        email: user.email,
-        id: user._id,
-        categories: user.categories,
-        tasks: user.tasks,
-      },
-      token,
-    });
+    res.json({ user });
   } catch (error) {}
 };
 

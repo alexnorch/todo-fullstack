@@ -7,9 +7,8 @@ export interface UserInterface extends Document {
   name: string;
   email: string;
   password: string;
-  image: string;
-  categories: Types.ObjectId[]; // An array of ObjectIds representing the user's categories
-  tasks: Types.ObjectId[]; // An array of ObjectIds representing the user's tasks
+  photo: string;
+  data: Types.ObjectId[];
   comparePassword: (candidate: string, hashed: string) => Promise<boolean>;
   generateToken: (userId: string) => Promise<object>;
 }
@@ -27,11 +26,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, "Password is required"],
     minlength: 8,
-    // maxlength: 20,
   },
-  image: String,
-  categories: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
-  tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }],
+  photo: {
+    type: String,
+    default: "http://surl.li/jkwuu",
+  },
+  data: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
 });
 
 UserSchema.pre("save", async function () {

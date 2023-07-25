@@ -3,7 +3,7 @@ import AppError from "../utils/AppError";
 
 // models and interfaces
 import Task from "../models/taskModel";
-import Category from "../models/categoryModel";
+import Category, { CategoryInterface } from "../models/categoryModel";
 import User, { UserInterface } from "../models/userModel";
 
 const getTasks = async (req: Request, res: Response) => {
@@ -16,39 +16,47 @@ const getTasks = async (req: Request, res: Response) => {
 };
 
 const createTask = async (req: Request, res: Response, next: NextFunction) => {
-  const { title, categoryName } = req.body;
+  const { title, category } = req.body;
 
   try {
+    if (!title || !category) {
+      return next(new AppError("Please, provide all values", 400));
+    }
+
     const user: UserInterface | null = await User.findById(req.userId);
-    const category = await Category.findOne({ title: categoryName });
+    const userCategory: CategoryInterface | null = await Category.findOne({
+      categoryName: category.toLowerCase(),
+    });
 
     // If user doesn't have any categories, he can't create his task
-    if (user!.categories.length < 1) {
+    if (user!.data.length === 0) {
       return next(
         new AppError("Firstly you have to create your first category", 400)
       );
     }
 
     // If user tries to push the task to non-existent category
-    if (!category)
+    if (!userCategory)
       return next(
         new AppError("Invalid category. Please provide a new category", 400)
       );
 
-    if (!title || !categoryName) {
-      return next(new AppError("Please, provide all values", 400));
-    }
-
     // Creating a new task
-    const task = new Task({ title, category: category._id, user: req.userId });
+    const task = new Task({
+      title,
+      category: userCategory._id,
+      user: req.userId,
+    });
+
     const createdTask = await task.save();
-    user!.tasks.push(createdTask._id);
 
-    // Returning data back to the client
-    await user!.save();
-    await createdTask.populate({ path: "category", select: "title color" });
+    userCategory.tasks.push(createdTask._id);
 
-    res.send({ createdTask });
+    await userCategory.save();
+    // await createdTask.populate({ path: 'category',  })
+    // await createdTask.populate({ path: "category", select: "title color" });
+
+    res.send(createdTask);
   } catch (error) {
     console.log(error);
   }
@@ -83,9 +91,25 @@ const deleteTask = async (req: Request, res: Response, next: NextFunction) => {
   } catch (error) {}
 };
 
+const getTaskById = async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params;
+  try {
+    const task = await Task.findById(id);
+
+    if (!task) {
+      return next(new AppError("There is no such task", 400));
+    }
+
+    res.send({ task });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default {
   getTasks,
   createTask,
   updateTask,
   deleteTask,
+  getTaskById,
 };

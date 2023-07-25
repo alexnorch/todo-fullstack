@@ -9,15 +9,15 @@ import NewTodo from "../components/NewTodo";
 export default function Tasks() {
   const tasks = useSelector((state: RootState) => state.app.tasks);
   const { category } = useParams();
-  const filteredTasks = tasks.filter(
-    (item) => item.category.title.toLocaleLowerCase() === category
-  );
+  // const filteredTasks = tasks.filter(
+  //   (item) => item.category.title.toLocaleLowerCase() === category
+  // );
 
   return (
     <>
       {/* New page Tasks overview. This page will contain latest categories and latest tasks */}
       <NewTodo />
-      <TodoList tasks={filteredTasks} />
+      <TodoList tasks={tasks} />
     </>
   );
 }

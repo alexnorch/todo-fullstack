@@ -2,12 +2,9 @@ import { Request, Response, NextFunction } from "express";
 import AppError from "../utils/AppError";
 
 // Models
+import Task from "../models/taskModel";
 import Category, { CategoryInterface } from "../models/categoryModel";
 import User, { UserInterface } from "../models/userModel";
-
-const getCategories = async (req: Request, res: Response) => {
-  res.send("All categories");
-};
 
 const createCategory = async (
   req: Request,
@@ -20,30 +17,33 @@ const createCategory = async (
     return next(new AppError("Please provide all values", 400));
   }
 
-  const lowerTitle = title.toLowerCase();
-
+  const titleLowerCase = title.toLowerCase();
   const user: UserInterface | null = await User.findById(req.userId);
+  const isAlreadyExists: CategoryInterface | null = await Category.findOne({
+    categoryName: titleLowerCase,
+  });
+
+  if (isAlreadyExists) {
+    return next(new AppError("This category is already exists", 400));
+  }
+
   const category = new Category({
-    title: lowerTitle,
+    categoryName: titleLowerCase,
     color,
     user: req.userId,
   });
 
   const newCategory = await category.save();
-  user?.categories.push(newCategory._id);
+
+  // Saving category in user data
+  user!.data.push(newCategory._id);
   await user!.save();
 
-  const createdCategory = {
+  res.send({
     color: newCategory.color,
-    title: newCategory.title,
+    title: newCategory.categoryName,
     _id: newCategory._id,
-  };
-
-  res.send({ createdCategory });
-};
-
-const updateCategory = (req: Request, res: Response) => {
-  res.send("update Category");
+  });
 };
 
 const deleteCategory = async (
@@ -51,29 +51,35 @@ const deleteCategory = async (
   res: Response,
   next: NextFunction
 ) => {
-  // When user deletes the category, all corresponding tasks also should be deleted
   try {
-    const { id: _id } = req.params;
+    const id = req.params.id;
     const userId = req.userId;
+    const category: CategoryInterface | null = await Category.findById(id);
 
-    const task = await Category.findOne({ _id });
-
-    if (!task) {
-      return next(new AppError("Task not found", 404));
+    if (!category) {
+      return next(new AppError("Category was not found", 404));
     }
 
-    if (task.user.toString() !== userId) {
+    if (category.user.toString() !== userId) {
       return next(new AppError("You are not allowed to do this", 403));
     }
 
-    const deletedDocument = await task.deleteOne();
+    await Task.deleteMany({ user: userId, category: category._id });
+    await category.deleteOne();
 
     res.status(200).json({
       status: "success",
-      message: "Документ успешно удален",
-      deletedDocument,
+      message: "Successfully deleted",
     });
   } catch (error) {}
+};
+
+const getCategories = async (req: Request, res: Response) => {
+  res.send("All categories");
+};
+
+const updateCategory = (req: Request, res: Response) => {
+  res.send("update Category");
 };
 
 export default {
