@@ -10,10 +10,6 @@ import { getAlertComponentClass } from "../../helpers";
 // Icons
 import { AiOutlineCheckCircle, AiOutlineClose } from "react-icons/ai";
 
-interface AlertProps {
-  children: ReactNode;
-}
-
 const Alert = (props: {}, ref: Ref<HTMLDivElement>) => {
   const dispatch = useDispatch();
   const { alertText, alertType, isAlert } = useSelector(

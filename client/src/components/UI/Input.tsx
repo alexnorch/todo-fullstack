@@ -1,6 +1,7 @@
 import { InputProps } from "../../types";
 
 const Input: React.FC<InputProps> = ({
+  label,
   placeholder,
   onChange,
   value,
@@ -18,6 +19,7 @@ const Input: React.FC<InputProps> = ({
 
   return (
     <div className="input-group">
+      <label>{label}</label>
       <input
         onBlur={handleBlur}
         onKeyUp={onKeyUp}
@@ -28,7 +30,7 @@ const Input: React.FC<InputProps> = ({
         onChange={onChange}
         value={value}
       />
-      <label className="input-group__label">{errorMessage}</label>
+      <span className="input-group__label">{errorMessage}</span>
     </div>
   );
 };

@@ -383,65 +383,56 @@ $sky-bright: #8cd3ff;
   background-color: $white;
   width: 80%;
   height: 90%;
-  padding: 30px;
   border-radius: 30px;
+  overflow: hidden;
 
   &__nav {
     @include flex(row, center, space-between);
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    border-bottom: 2px solid rgba(202, 139, 254, 0.5);
 
     &__item {
       list-style: none;
-    }
-
-    &__link {
-      @include flex();
+      font-size: 32px;
+      padding: 20px;
+      @include flex;
       gap: 10px;
-      font-size: 32px;
-      svg {
-        color: $purple;
+      flex-grow: 1;
+      cursor: pointer;
+
+      &.active {
+        position: relative;
+        color: $blue-darken;
+
+        &::after {
+          position: absolute;
+          content: "";
+          width: 60%;
+          height: 5px;
+          background-color: $blue-darken;
+          left: 0;
+          top: 95%;
+          border-radius: 5px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        svg {
+          color: $blue-darken;
+        }
       }
     }
   }
 
-  &__section {
-    &:not(:last-of-type) {
-      margin-bottom: 30px;
-    }
-
-    &__list {
-      list-style: none;
-
-      li {
-        cursor: pointer;
-        font-size: 20px;
-        margin-top: 30px;
-
-        &:not(:last-of-type) {
-          margin-bottom: 30px;
-        }
-
-        a {
-          color: $black;
-          @include flex(row, center, space-between);
-        }
-      }
-    }
-
-    &__heading {
-      color: $purple;
-      font-size: 32px;
-      border-bottom: 2px solid rgba(202, 139, 254, 0.5);
-      padding-bottom: 5px;
-      margin-bottom: 5px;
-
-      span {
-        margin-left: 10px;
-      }
-    }
+  &__content {
+    padding: 20px;
+    background-color: #fbfafa;
+    height: 100%;
+    width: 100%;
   }
+}
+
+.user-settings {
+  display: flex;
+  gap: 20px;
 }
 
 .settings-categories {

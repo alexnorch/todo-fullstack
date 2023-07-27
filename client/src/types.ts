@@ -36,6 +36,7 @@ export interface TaskItem {
 }
 
 export interface InputProps {
+  label?: string;
   placeholder: string;
   name?: string;
   type?: string;

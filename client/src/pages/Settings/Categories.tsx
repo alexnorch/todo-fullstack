@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import { deleteCategory, addCategory } from "../../redux/appSlice";
@@ -11,6 +11,7 @@ import { AiOutlineClose } from "react-icons/ai";
 export default function NewCategory() {
   const [title, setTitle] = useState<string>("");
   const [color, setColor] = useState<string>("");
+  const inputRef = useRef<HTMLInputElement>();
   const userData = useSelector((state: RootState) => state.app.data);
   const dispatch = useDispatch();
   const axiosInstance = useCustomAxios();
@@ -60,7 +61,9 @@ export default function NewCategory() {
         onChange={(e: any) => setTitle(e.target.value)}
       />
       <Input
+        // ref={inputRef}
         value={color}
+        type="color"
         placeholder="Category color (in hex format)"
         onChange={(e: any) => setColor(e.target.value)}
       />
