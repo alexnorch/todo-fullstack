@@ -19,7 +19,7 @@ const Input: React.FC<InputProps> = ({
 
   return (
     <div className="input-group">
-      <label>{label}</label>
+      <label className="input-group__label">{label}</label>
       <input
         onBlur={handleBlur}
         onKeyUp={onKeyUp}

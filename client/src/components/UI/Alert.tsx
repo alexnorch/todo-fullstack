@@ -1,4 +1,4 @@
-import { forwardRef, Ref, ReactNode } from "react";
+import { forwardRef, Ref } from "react";
 import { createPortal } from "react-dom";
 import { hideAlert } from "../../redux/appSlice";
 import { RootState } from "../../redux/store";

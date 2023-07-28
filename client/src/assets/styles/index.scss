@@ -380,13 +380,16 @@ $sky-bright: #8cd3ff;
 
 // Settings
 .settings {
-  background-color: $white;
-  width: 80%;
-  height: 90%;
+  margin-top: -25px;
+  background-color: #fbfafa;
+
+  width: 60%;
+  height: 95%;
   border-radius: 30px;
   overflow: hidden;
 
   &__nav {
+    background-color: $white;
     @include flex(row, center, space-between);
 
     &__item {
@@ -423,43 +426,113 @@ $sky-bright: #8cd3ff;
   }
 
   &__content {
-    padding: 20px;
-    background-color: #fbfafa;
-    height: 100%;
-    width: 100%;
+    padding: 40px;
+  }
+
+  &__section {
+    margin-bottom: 20px;
+
+    &__heading {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    &__descr {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    hr {
+      margin-bottom: 10px;
+    }
+
+    &__form {
+      margin-bottom: 15px;
+      .input-group {
+        margin-bottom: 15px;
+      }
+    }
+
+    &__button {
+      text-align: end;
+    }
   }
 }
 
 .user-settings {
   display: flex;
-  gap: 20px;
-}
+  gap: 30px;
 
-.settings-categories {
-  margin: 20px 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  list-style: none;
-
-  &__item {
-    position: relative;
-    border-radius: 15px;
-    padding: 10px 15px;
-    font-size: 18px;
-    min-width: 150px;
-    text-align: center;
+  &__left {
+    &__picture {
+      width: 300px;
+      height: 300px;
+      margin-bottom: 20px;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    &__buttons {
+      @include flex(column);
+      gap: 10px;
+    }
   }
 
-  &__btn {
-    cursor: pointer;
-    background-color: transparent;
+  &__right {
+    flex-grow: 1;
+  }
+}
+
+.categories-settings {
+  &__list {
+    min-height: 150px;
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    gap: 20px;
+    list-style: none;
+
+    &__item {
+      position: relative;
+      border-radius: 15px;
+      padding: 10px 15px;
+      font-size: 18px;
+      min-width: 150px;
+      text-align: center;
+    }
+  }
+}
+
+// .settings-categories {
+//   &__btn {
+//     cursor: pointer;
+//     background-color: transparent;
+//     border: none;
+//     position: absolute;
+//     top: -10px;
+//     right: -10px;
+//     font-size: 20px;
+//     color: $red;
+//   }
+// }
+
+.color-picker {
+  &__label {
+    @include flex(row, center, start);
+    gap: 10px;
+    width: 100%;
+    padding: 12px 10px;
+    border-radius: 4px;
+    box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.2);
+  }
+
+  &__input {
     border: none;
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    font-size: 20px;
-    color: $red;
+    width: 30px;
+    height: 30px;
   }
 }
 
@@ -502,7 +575,9 @@ $sky-bright: #8cd3ff;
 // Input starts
 .input-group {
   &__label {
-    color: #9b1c31;
+    display: inline-block;
+    margin-bottom: 5px;
+    font-weight: 600;
   }
 
   &__input {
@@ -527,9 +602,20 @@ $sky-bright: #8cd3ff;
     }
   }
 }
-// Input ends
 
-// Modal starts
+.file-uploader {
+  min-width: 64px;
+  padding: 12px 24px;
+  font-size: 18px;
+  border-radius: 7px;
+  color: $white;
+  background-color: $blue-darken;
+  cursor: pointer;
+  &__input {
+    display: none;
+  }
+}
+
 .modal {
   position: absolute;
   background-color: transparent;
@@ -694,4 +780,30 @@ $sky-bright: #8cd3ff;
   transform: translateX(-200px);
   opacity: 0;
   transition: all 500ms ease-in;
+}
+
+.btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  min-width: 64px;
+  padding: 12px 24px;
+  font-size: 18px;
+  border-radius: 7px;
+
+  &.btn--primary {
+    background-color: $blue-darken;
+    color: $white;
+  }
+
+  &.btn--outline {
+    border: 2px solid $blue-darken;
+    color: $blue-darken;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: $white;
+      background-color: $blue-darken;
+    }
+  }
 }

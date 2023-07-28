@@ -1,18 +1,21 @@
-enum ButtonPalette {
-  red = "red",
-  black = "black",
-  purple = "purple",
-}
-
 interface ButtonProps {
+  onClick?: () => void;
+  variant: "outline" | "primary";
   children: React.ReactNode;
   icon?: React.ReactElement;
-  palette?: ButtonPalette;
 }
 
-const Button: React.FC<ButtonProps> = ({ children, icon }) => {
+const Button: React.FC<ButtonProps> = ({
+  children,
+  icon,
+  variant,
+  onClick,
+}) => {
+  let buttonClasses =
+    variant === "primary" ? "btn btn--primary" : "btn btn--outline";
+
   return (
-    <button className={"styles.button"}>
+    <button onClick={onClick} className={buttonClasses}>
       {icon}
       {children}
     </button>

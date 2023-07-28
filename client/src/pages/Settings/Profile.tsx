@@ -4,6 +4,8 @@ import { RootState } from "../../redux/store";
 
 // Components
 import Input from "../../components/UI/Input";
+import Button from "../../components/UI/Button";
+import FileUploader from "../../components/UI/FileUploader";
 
 export default function Profile() {
   const { email, name, photo } = useSelector(
@@ -18,55 +20,69 @@ export default function Profile() {
   return (
     <div className="user-settings">
       <div className="user-settings__left">
-        <div className="user-settings__picture">
+        <div className="user-settings__left__picture">
           <img
-            className="user-settings__picture__img"
+            className="user-settings__left__picture__img"
             src={photo}
             alt="User image"
           />
         </div>
-        <button>Change picture</button>
-        <button>Delete picture</button>
+        <div className="user-settings__left__buttons">
+          <Button variant="outline">Delete picture</Button>
+          <FileUploader text="Import new image" />
+        </div>
       </div>
       <div className="user-settings__right">
-        <section className="user-settings__section">
-          <h3 className="user-settings__heading">User Information</h3>
-          <Input
-            label="Your e-mail"
-            placeholder="Your email"
-            value={userEmail}
-            onChange={(e: any) => setUserEmail(e.target.value)}
-          />
-          <Input
-            label="Your Full Name"
-            placeholder="Your email"
-            value={userName}
-            onChange={(e: any) => setUserName(e.target.value)}
-          />
+        <section className="settings__section">
+          <h3 className="settings__section__heading">User Information</h3>
+          <hr />
+          <form className="settings__section__form">
+            <Input
+              label="Your e-mail"
+              placeholder="Your email"
+              value={userEmail}
+              onChange={(e: any) => setUserEmail(e.target.value)}
+            />
+            <Input
+              label="Your Full Name"
+              placeholder="Your email"
+              value={userName}
+              onChange={(e: any) => setUserName(e.target.value)}
+            />
+          </form>
+          <div className="settings__section__button">
+            <Button variant="outline">Change info</Button>
+          </div>
         </section>
-        <section className="user-settings__section">
-          <h3 className="user-settings__heading">Change Password</h3>
-          <Input
-            type="password"
-            label="Old Password"
-            placeholder="Please provide your current password"
-            value={oldPassword}
-            onChange={(e: any) => setOldPassword(e.target.value)}
-          />
-          <Input
-            type="password"
-            label="New password"
-            placeholder="Provide your new password"
-            value={newPassword}
-            onChange={(e: any) => setNewPassword(e.target.value)}
-          />
-          <Input
-            type="password"
-            label="Confirm New Password"
-            placeholder="Confirm your new password"
-            value={confirmPassword}
-            onChange={(e: any) => setConfirmPassword(e.target.value)}
-          />
+        <section className="settings__section">
+          <h3 className="settings__section__heading">Change Password</h3>
+          <hr />
+          <form className="settings__section__form">
+            <Input
+              type="password"
+              label="Old Password"
+              placeholder="Please provide your current password"
+              value={oldPassword}
+              onChange={(e: any) => setOldPassword(e.target.value)}
+            />
+            <Input
+              type="password"
+              label="New password"
+              placeholder="Provide your new password"
+              value={newPassword}
+              onChange={(e: any) => setNewPassword(e.target.value)}
+            />
+            <Input
+              type="password"
+              label="Confirm New Password"
+              placeholder="Confirm your new password"
+              value={confirmPassword}
+              onChange={(e: any) => setConfirmPassword(e.target.value)}
+            />
+          </form>
+          <div className="settings__section__button">
+            <Button variant="outline">Change password</Button>
+          </div>
         </section>
       </div>
     </div>

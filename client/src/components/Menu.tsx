@@ -10,14 +10,10 @@ import { FaTasks } from "react-icons/fa";
 import { GrLogout } from "react-icons/gr";
 import { IoMdAddCircleOutline } from "react-icons/io";
 
-import personImage from "../assets/images/person.png";
-
 const Menu: React.FC = () => {
   const { data, user } = useSelector((state: RootState) => state.app);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  console.log(data);
 
   const renderCategories = () => {
     if (data?.length !== 0) {

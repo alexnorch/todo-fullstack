@@ -2,19 +2,40 @@ import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import { deleteCategory, addCategory } from "../../redux/appSlice";
-import Input from "../../components/UI/Input";
 import useCustomAxios from "../../hooks/useCustomAxios";
+
+// Components
+import Button from "../../components/UI/Button";
+import ColorPicker from "../../components/UI/ColorPicker";
+import Input from "../../components/UI/Input";
 
 // Icons
 import { AiOutlineClose } from "react-icons/ai";
 
 export default function NewCategory() {
   const [title, setTitle] = useState<string>("");
-  const [color, setColor] = useState<string>("");
-  const inputRef = useRef<HTMLInputElement>();
+  const [color, setColor] = useState<string>("#000000");
   const userData = useSelector((state: RootState) => state.app.data);
   const dispatch = useDispatch();
   const axiosInstance = useCustomAxios();
+
+  const userCategories =
+    userData.length !== 0 &&
+    userData.map(({ categoryName, color, _id }) => (
+      <li
+        className="categories-settings__list__item"
+        style={{ backgroundColor: color }}
+        key={_id}
+      >
+        <p>{categoryName}</p>
+        <button
+          onClick={() => onDeleteCategory(_id)}
+          className="settings-categories__btn"
+        >
+          <AiOutlineClose />
+        </button>
+      </li>
+    ));
 
   const onDeleteCategory = async (_id: string) => {
     await axiosInstance.delete(`/api/category/${_id}`);
@@ -29,45 +50,51 @@ export default function NewCategory() {
       });
 
       dispatch(addCategory(data));
+
+      // Clear input fields
+      setTitle("");
+      setColor("#000000");
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div className="content">
-      <h2>List of your categories</h2>
-      <ul className="settings-categories">
-        {userData.map(({ categoryName, color, _id }) => (
-          <li
-            className="settings-categories__item"
-            style={{ backgroundColor: color }}
-            key={_id}
-          >
-            <p>{categoryName}</p>
-            <button
-              onClick={() => onDeleteCategory(_id)}
-              className="settings-categories__btn"
-            >
-              <AiOutlineClose />
-            </button>
-          </li>
-        ))}
-      </ul>
-      <h2>Create your first category</h2>
-      <Input
-        value={title}
-        placeholder="Category title"
-        onChange={(e: any) => setTitle(e.target.value)}
-      />
-      <Input
-        // ref={inputRef}
-        value={color}
-        type="color"
-        placeholder="Category color (in hex format)"
-        onChange={(e: any) => setColor(e.target.value)}
-      />
-      <button onClick={onAddCategory}>Create</button>
+    <div className="categories-settings">
+      <section className="settings__section">
+        <h3 className="settings__section__heading">My categories:</h3>
+        <hr />
+        <p className="settings__section__descr">
+          Below are listed your categories. If you want to delete or change
+          title of category or color, you can do it right here
+        </p>
+        <ul className="categories-settings__list">{userCategories}</ul>
+      </section>
+      <section className="settings__section">
+        <h3 className="settings__section__heading">Create new category:</h3>
+        <hr />
+        <p className="settings__section__descr">
+          Please provide category name and pick the color. If you don't what
+          category to create. You can chose among these categories: Mind Care,
+          Learning, Chores, Deep Work
+        </p>
+        <form className="settings__section__form">
+          <Input
+            label="Please provide a title of category"
+            value={title}
+            placeholder="Category title"
+            onChange={(e: any) => setTitle(e.target.value)}
+          />
+          <ColorPicker
+            labelText="Please chose the color"
+            color={color}
+            setColor={(e: any) => setColor(e.target.value)}
+          />
+        </form>
+        <Button onClick={onAddCategory} variant="primary">
+          Create category
+        </Button>
+      </section>
     </div>
   );
 }
