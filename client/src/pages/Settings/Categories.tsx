@@ -60,7 +60,7 @@ export default function NewCategory() {
   };
 
   return (
-    <div className="categories-settings">
+    <>
       <section className="settings__section">
         <h3 className="settings__section__heading">My categories:</h3>
         <hr />
@@ -95,6 +95,6 @@ export default function NewCategory() {
           Create category
         </Button>
       </section>
-    </div>
+    </>
   );
 }

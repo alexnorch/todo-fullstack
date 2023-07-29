@@ -29,7 +29,6 @@ $sky-bright: #8cd3ff;
   display: flex;
 
   &__right {
-    padding-top: 100px;
     @include flex(column, center, flex-start);
     flex-grow: 1;
     background-color: $blue;
@@ -170,7 +169,7 @@ $sky-bright: #8cd3ff;
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin-bottom: 40px;
+  margin: 30px 0;
 
   &__wrapper {
     position: relative;
@@ -378,28 +377,33 @@ $sky-bright: #8cd3ff;
   }
 }
 
+.overview {
+  margin-top: 30px;
+}
+
 // Settings
 .settings {
-  margin-top: -25px;
   background-color: #fbfafa;
-
-  width: 60%;
-  height: 95%;
-  border-radius: 30px;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
+  padding: 30px;
+
+  &__heading {
+    h2 {
+      font-size: 32px;
+      padding-bottom: 10px;
+    }
+  }
 
   &__nav {
-    background-color: $white;
-    @include flex(row, center, space-between);
-
+    margin: 30px 0;
+    @include flex(row, flex-start, flex-start);
+    gap: 30px;
     &__item {
       list-style: none;
-      font-size: 32px;
-      padding: 20px;
-      @include flex;
-      gap: 10px;
-      flex-grow: 1;
       cursor: pointer;
+      font-size: 18px;
 
       &.active {
         position: relative;
@@ -409,10 +413,10 @@ $sky-bright: #8cd3ff;
           position: absolute;
           content: "";
           width: 60%;
-          height: 5px;
+          height: 3px;
           background-color: $blue-darken;
           left: 0;
-          top: 95%;
+          top: 110%;
           border-radius: 5px;
           left: 50%;
           transform: translateX(-50%);
@@ -426,7 +430,7 @@ $sky-bright: #8cd3ff;
   }
 
   &__content {
-    padding: 40px;
+    padding-top: 20px;
   }
 
   &__section {
@@ -506,19 +510,6 @@ $sky-bright: #8cd3ff;
   }
 }
 
-// .settings-categories {
-//   &__btn {
-//     cursor: pointer;
-//     background-color: transparent;
-//     border: none;
-//     position: absolute;
-//     top: -10px;
-//     right: -10px;
-//     font-size: 20px;
-//     color: $red;
-//   }
-// }
-
 .color-picker {
   &__label {
     @include flex(row, center, start);
@@ -539,6 +530,7 @@ $sky-bright: #8cd3ff;
 // Checkbox starts
 .checkbox {
   display: flex;
+  cursor: pointer;
 
   &__input {
     visibility: hidden;
@@ -549,6 +541,7 @@ $sky-bright: #8cd3ff;
   }
 
   &__label {
+    cursor: inherit;
     display: block;
     position: relative;
     width: 30px;

@@ -1,33 +1,23 @@
 import { useState } from "react";
 
-// Icons
-import { CgProfile } from "react-icons/cg";
-import { BiCategory } from "react-icons/bi";
-import { BsPalette } from "react-icons/bs";
-
 // Settings tab
 import Profile from "./Profile";
 import Categories from "./Categories";
 import Theme from "./Theme";
 
-const tabs = [
-  { title: "Profile", icon: <CgProfile /> },
-  { title: "Categories", icon: <BiCategory /> },
-  { title: "Theme", icon: <BsPalette /> },
-];
+const tabs = ["Profile", "Categories", "Theme"];
 
 export default function Wrapper() {
   const [tab, setTab] = useState<string>("Profile");
 
-  const renderLinks = tabs.map((link, i) => {
+  const renderLinks = tabs.map((tabName, i) => {
     let tabClasses =
-      tab.toLocaleLowerCase() === link.title.toLocaleLowerCase()
+      tab.toLocaleLowerCase() === tabName.toLocaleLowerCase()
         ? "settings__nav__item active"
         : "settings__nav__item";
     return (
-      <li className={tabClasses} key={i} onClick={() => setTab(link.title)}>
-        {link.title}
-        {link.icon}
+      <li className={tabClasses} key={i} onClick={() => setTab(tabName)}>
+        {tabName}
       </li>
     );
   });
@@ -47,6 +37,10 @@ export default function Wrapper() {
 
   return (
     <div className="settings">
+      <div className="settings__heading">
+        <h2>Settings</h2>
+        <hr />
+      </div>
       <ul className="settings__nav">{renderLinks}</ul>
       <div className="settings__content">{renderTab(tab)}</div>
     </div>

@@ -15,7 +15,6 @@
   display: flex;
 }
 .app__right {
-  padding-top: 100px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -203,7 +202,7 @@
       -ms-flex-pack: center;
           justify-content: center;
   width: 100%;
-  margin-bottom: 40px;
+  margin: 30px 0;
 }
 .new-task__wrapper {
   position: relative;
@@ -433,16 +432,23 @@
   margin-bottom: 15px;
 }
 
+.overview {
+  margin-top: 30px;
+}
+
 .settings {
-  margin-top: -25px;
   background-color: #fbfafa;
-  width: 60%;
-  height: 95%;
-  border-radius: 30px;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
+  padding: 30px;
+}
+.settings__heading h2 {
+  font-size: 32px;
+  padding-bottom: 10px;
 }
 .settings__nav {
-  background-color: #eee;
+  margin: 30px 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -450,35 +456,18 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  gap: 30px;
 }
 .settings__nav__item {
   list-style: none;
-  font-size: 32px;
-  padding: 20px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  gap: 10px;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
   cursor: pointer;
+  font-size: 18px;
 }
 .settings__nav__item.active {
   position: relative;
@@ -488,10 +477,10 @@
   position: absolute;
   content: "";
   width: 60%;
-  height: 5px;
+  height: 3px;
   background-color: #8a70f0;
   left: 0;
-  top: 95%;
+  top: 110%;
   border-radius: 5px;
   left: 50%;
   -webkit-transform: translateX(-50%);
@@ -502,7 +491,7 @@
   color: #8a70f0;
 }
 .settings__content {
-  padding: 40px;
+  padding-top: 20px;
 }
 .settings__section {
   margin-bottom: 20px;
@@ -621,6 +610,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  cursor: pointer;
 }
 .checkbox__input {
   visibility: hidden;
@@ -631,6 +621,7 @@
           transform: scale(1);
 }
 .checkbox__label {
+  cursor: inherit;
   display: block;
   position: relative;
   width: 30px;

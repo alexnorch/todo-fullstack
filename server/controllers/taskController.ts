@@ -81,8 +81,48 @@ const createTask = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const updateTask = (req: Request, res: Response) => {
-  res.send("Update Task");
+const updateTask = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id: _id } = req.params;
+    const { title, completed } = req.body;
+
+    if (!title) {
+      return next(new AppError("Please provide all values", 400));
+    }
+
+    const task = await Task.findOne({ _id, user: req.userId });
+
+    if (!task) {
+      return next(new AppError("Task was not found", 404));
+    }
+
+    task.title = title;
+    task.completed = completed;
+
+    const changedTask = await task.save();
+    const populatedTask = await Task.aggregate([
+      {
+        $match: { _id: changedTask._id },
+      },
+      {
+        $lookup: {
+          from: "categories",
+          localField: "category",
+          foreignField: "_id",
+          as: "category",
+        },
+      },
+      {
+        $addFields: {
+          category: { $arrayElemAt: ["$category.categoryName", 0] },
+        },
+      },
+    ]);
+
+    const resultTask = populatedTask[0];
+
+    res.send(resultTask);
+  } catch (error) {}
 };
 
 const deleteTask = async (req: Request, res: Response, next: NextFunction) => {

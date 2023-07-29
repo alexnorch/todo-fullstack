@@ -38,13 +38,22 @@ export const appSlice = createSlice({
         return item;
       });
     },
-    addCategory: (state, action: PayloadAction<CategoryInterface>) => {
-      state.data.push(action.payload);
-    },
-    deleteCategory: (state, action: PayloadAction<string>) => {
-      state.data = state.data.filter(
-        (category) => category._id !== action.payload
-      );
+    updateTodo: (state, action: PayloadAction<TaskItem>) => {
+      const { category, _id } = action.payload;
+
+      state.data = state.data.map((item) => {
+        if (item.categoryName === category) {
+          return {
+            ...item,
+            tasks: [
+              ...item.tasks.filter((task) => task._id !== _id),
+              action.payload,
+            ],
+          };
+        }
+
+        return item;
+      });
     },
     removeTodo: (state, action: PayloadAction<TaskItem>) => {
       const { category, _id } = action.payload;
@@ -59,6 +68,14 @@ export const appSlice = createSlice({
 
         return item;
       });
+    },
+    addCategory: (state, action: PayloadAction<CategoryInterface>) => {
+      state.data.push(action.payload);
+    },
+    deleteCategory: (state, action: PayloadAction<string>) => {
+      state.data = state.data.filter(
+        (category) => category._id !== action.payload
+      );
     },
     loginUser: (state, action: PayloadAction<any>) => {
       const { token, userData, userInfo } = action.payload;
@@ -83,6 +100,7 @@ export const {
   logoutUser,
   deleteCategory,
   addCategory,
+  updateTodo,
 } = appSlice.actions;
 
 export default appSlice.reducer;
