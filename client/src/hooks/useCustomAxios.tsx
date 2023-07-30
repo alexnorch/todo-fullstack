@@ -1,14 +1,14 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosHeaders } from "axios";
+import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
-import { showAlert } from "../redux/appSlice";
+import { showAlert, logoutUser } from "../redux/appSlice";
 
 const useCustomAxios = () => {
-  const axiosInstance = axios.create();
+  const authAxios = axios.create();
   const accessToken = useSelector((state: RootState) => state.app.token);
   const dispatch = useDispatch();
 
-  axiosInstance.interceptors.request.use(
+  authAxios.interceptors.request.use(
     function (config) {
       if (accessToken) {
         config.headers["Authorization"] = `Bearer ${accessToken}`;
@@ -20,13 +20,13 @@ const useCustomAxios = () => {
     }
   );
 
-  axiosInstance.interceptors.response.use(
+  authAxios.interceptors.response.use(
     function (response) {
       return response;
     },
     function (error) {
       if (error.request.status === 401) {
-        console.log("Log out!");
+        dispatch(logoutUser());
       }
       dispatch(
         showAlert({ type: "danger", text: error.response.data.message })
@@ -36,7 +36,7 @@ const useCustomAxios = () => {
     }
   );
 
-  return axiosInstance;
+  return { authAxios };
 };
 
 export default useCustomAxios;

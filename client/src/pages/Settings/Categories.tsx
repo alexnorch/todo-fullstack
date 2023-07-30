@@ -17,7 +17,7 @@ export default function NewCategory() {
   const [color, setColor] = useState<string>("#000000");
   const userData = useSelector((state: RootState) => state.app.data);
   const dispatch = useDispatch();
-  const axiosInstance = useCustomAxios();
+  const { authAxios } = useCustomAxios();
 
   const userCategories =
     userData.length !== 0 &&
@@ -38,13 +38,13 @@ export default function NewCategory() {
     ));
 
   const onDeleteCategory = async (_id: string) => {
-    await axiosInstance.delete(`/api/category/${_id}`);
+    await authAxios.delete(`/api/category/${_id}`);
     dispatch(deleteCategory(_id));
   };
 
   const onAddCategory = async () => {
     try {
-      const { data } = await axiosInstance.post("/api/category", {
+      const { data } = await authAxios.post("/api/category", {
         title,
         color,
       });

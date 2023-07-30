@@ -14,7 +14,8 @@
   display: -ms-flexbox;
   display: flex;
 }
-.app__right {
+
+.app-content {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -34,7 +35,7 @@
   background-color: #a18aff;
 }
 
-.menu {
+.aside {
   -ms-flex-preferred-size: 350px;
       flex-basis: 350px;
   -ms-flex-negative: 0;
@@ -55,44 +56,39 @@
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
-.menu__top {
-  position: relative;
+.aside__logout {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  gap: 10px;
-  padding-bottom: 20px;
-}
-.menu__top::after {
-  content: "";
-  position: absolute;
-  height: 3px;
-  background-color: #a18aff;
-  width: 80%;
-  top: 120%;
-  left: 10%;
-}
-.menu__top__image {
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-.menu__top__image img {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
 }
-.menu__middle__category:not(:last-of-type) {
+.aside__logout__btn {
+  gap: 10px;
+  color: #a18aff;
+  border: none;
+  font-size: 18px;
+}
+.aside__logout__btn svg {
+  color: #a18aff;
+}
+.aside__logout__btn span {
+  font-weight: 800;
+}
+
+.menu__category:not(:last-of-type) {
   margin-bottom: 40px;
 }
-.menu__middle__title {
+.menu__category__title {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -102,10 +98,10 @@
   gap: 30px;
   font-size: 28px;
 }
-.menu__middle__title svg {
+.menu__category__title svg {
   color: #a18aff;
 }
-.menu__middle__title a {
+.menu__category__title a {
   color: #494d5f;
 }
 .menu__list {
@@ -130,13 +126,14 @@
           align-items: center;
   gap: 20px;
 }
-.menu__list__dot {
+.menu__list__span {
   display: inline-block;
   width: 20px;
   height: 20px;
   border-radius: 50%;
 }
-.menu__bottom__btn {
+
+.logo {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -150,16 +147,13 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  gap: 10px;
-  color: #a18aff;
-  border: none;
-  font-size: 18px;
+  width: 100%;
 }
-.menu__bottom__btn svg {
-  color: #a18aff;
-}
-.menu__bottom__btn span {
-  font-weight: 800;
+.logo__img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .add-category {
@@ -333,6 +327,45 @@
   border-radius: 5px;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
+}
+
+.task-navigation {
+  position: fixed;
+  top: 50%;
+  right: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 10px;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+.task-navigation__btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border: none;
+  color: #8a70f0;
+  background-color: #eee;
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  font-size: 30px;
 }
 
 .auth {

@@ -1,25 +1,29 @@
-import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { useRef } from "react";
 
 // Components
-import Menu from "../components/Menu";
+import Aside from "../components/Aside";
 import Alert from "../components/UI/Alert";
 
 export default function Main() {
   const { isAlert } = useSelector((state: RootState) => state.app);
+  const nodeRef = useRef(null);
 
   return (
     <main className="app">
-      <aside className="menu">
-        <Menu />
-      </aside>
-      <div className="app__right">
+      <Aside />
+      <div className="app-content">
         <Outlet />
       </div>
-      <CSSTransition classNames="alert-transition" timeout={500} in={isAlert}>
+      <CSSTransition
+        nodeRef={nodeRef}
+        classNames="alert-transition"
+        timeout={500}
+        in={isAlert}
+      >
         <Alert />
       </CSSTransition>
     </main>

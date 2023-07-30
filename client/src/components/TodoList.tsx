@@ -11,11 +11,11 @@ const TodoList: React.FC<{ tasks: TaskItem[] }> = ({ tasks }) => {
   const thumbRef = useRef<HTMLDivElement>(null);
 
   const renderTaskItems = () => {
-    if (tasks.length !== 0) {
-      return tasks.map((item) => <TodoItem key={item._id} {...item} />);
-    } else {
-      return <p ref={null}>Please create your first task</p>;
-    }
+    return tasks.length > 0 ? (
+      tasks.map((item) => <TodoItem key={item._id} {...item} />)
+    ) : (
+      <p>Please create your first task</p>
+    );
   };
 
   useEffect(() => {

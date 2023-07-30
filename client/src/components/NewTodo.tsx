@@ -9,7 +9,7 @@ import useCustomAxios from "../hooks/useCustomAxios";
 const NewTodo = () => {
   const [title, setTitle] = useState("");
   const { category } = useParams();
-  const axiosInstance = useCustomAxios();
+  const { authAxios } = useCustomAxios();
   const dispatch = useDispatch();
 
   const onSubmit = async (e: any) => {
@@ -17,10 +17,10 @@ const NewTodo = () => {
 
     try {
       if (title.length > 6) {
-        const response: AxiosResponse<any> = await axiosInstance.post(
-          "/api/task",
-          { title, category }
-        );
+        const response: AxiosResponse<any> = await authAxios.post("/api/task", {
+          title,
+          category,
+        });
         const result = response.data; // Extract the response data from the AxiosResponse object
         dispatch(addNewTodo(result));
         setTitle("");

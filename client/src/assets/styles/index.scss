@@ -27,60 +27,46 @@ $sky-bright: #8cd3ff;
 .app {
   height: 100vh;
   display: flex;
-
-  &__right {
-    @include flex(column, center, flex-start);
-    flex-grow: 1;
-    background-color: $blue;
-  }
 }
-// App ends
 
-// Menu starts
-.menu {
+.app-content {
+  @include flex(column, center, flex-start);
+  flex-grow: 1;
+  background-color: $blue;
+}
+
+.aside {
   flex-basis: 350px;
   flex-shrink: 0;
   padding: 20px 40px;
   background-color: $white;
   @include flex(column, flex-start, space-between);
 
-  &__top {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding-bottom: 20px;
+  &__logout {
+    @include flex(row, center, center);
+    width: 100%;
 
-    &::after {
-      content: "";
-      position: absolute;
-      height: 3px;
-      background-color: $blue;
-      width: 80%;
-      top: 120%;
-      left: 10%;
-    }
+    &__btn {
+      gap: 10px;
+      color: $blue;
+      border: none;
+      font-size: 18px;
 
-    &__image {
-      flex-shrink: 0;
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      overflow: hidden;
+      svg {
+        color: $blue;
+      }
 
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+      span {
+        font-weight: 800;
       }
     }
   }
+}
 
-  &__middle {
-    &__category {
-      &:not(:last-of-type) {
-        margin-bottom: 40px;
-      }
+.menu {
+  &__category {
+    &:not(:last-of-type) {
+      margin-bottom: 40px;
     }
 
     &__title {
@@ -117,33 +103,25 @@ $sky-bright: #8cd3ff;
       gap: 20px;
     }
 
-    &__dot {
+    &__span {
       display: inline-block;
       width: 20px;
       height: 20px;
       border-radius: 50%;
     }
   }
+}
 
-  &__bottom {
-    &__btn {
-      @include flex(row, center, center);
-      gap: 10px;
-      color: $blue;
-      border: none;
-      font-size: 18px;
+.logo {
+  @include flex();
+  width: 100%;
 
-      svg {
-        color: $blue;
-      }
-
-      span {
-        font-weight: 800;
-      }
-    }
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
-// Menu ends
 
 .add-category {
   background: none;
@@ -292,6 +270,27 @@ $sky-bright: #8cd3ff;
       border-radius: 5px;
       transition: all 0.3s ease;
     }
+  }
+}
+
+.task-navigation {
+  position: fixed;
+  top: 50%;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transform: translateY(-50%);
+
+  &__btn {
+    @include flex();
+    border: none;
+    color: $blue-darken;
+    background-color: $white;
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
+    font-size: 30px;
   }
 }
 

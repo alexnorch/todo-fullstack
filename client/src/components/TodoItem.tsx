@@ -19,7 +19,7 @@ import Input from "./UI/Input";
 const TodoItem: React.FC<TaskItem> = ({ _id, title, completed }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [userValue, setUserValue] = useState<string>(title);
-  const axiosInstance = useCustomAxios();
+  const { authAxios } = useCustomAxios();
   const dispatch = useDispatch();
 
   const onEditBegin = () => setIsEditing(true);
@@ -38,7 +38,7 @@ const TodoItem: React.FC<TaskItem> = ({ _id, title, completed }) => {
   ) => {
     try {
       if (event.keyCode === 13 && userValue.trim().length >= 6) {
-        const { data } = await axiosInstance.patch(`/api/task/${_id}`, {
+        const { data } = await authAxios.patch(`/api/task/${_id}`, {
           title: userValue,
           completed,
         });
@@ -59,14 +59,14 @@ const TodoItem: React.FC<TaskItem> = ({ _id, title, completed }) => {
 
   const onDeleteTask = async () => {
     try {
-      const { data } = await axiosInstance.delete(`/api/task/${_id}`);
+      const { data } = await authAxios.delete(`/api/task/${_id}`);
       dispatch(removeTodo(data));
     } catch (error) {}
   };
 
   const onUpdateTask = async () => {
     try {
-      const { data } = await axiosInstance.patch(`/api/task/${_id}`, {
+      const { data } = await authAxios.patch(`/api/task/${_id}`, {
         title: userValue,
         completed: !completed,
       });
