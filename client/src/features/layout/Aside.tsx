@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { logoutUser } from "../redux/appSlice";
+import { logoutUser } from "../../redux/appSlice";
 import { GrLogout } from "react-icons/gr";
 
 // Components

@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
 // Components
-import Input from "../../components/UI/Input";
-import Button from "../../components/UI/Button";
-import FileUploader from "../../components/UI/FileUploader";
+import Input from "../../features/ui/Input";
+import Button from "../../features/ui/Button";
+import FileUploader from "../../features/ui/FileUploader";
 
 export default function Profile() {
   const { email, name, photo } = useSelector(

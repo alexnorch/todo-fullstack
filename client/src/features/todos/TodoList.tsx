@@ -1,6 +1,5 @@
-import { useEffect, useRef, createRef } from "react";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { TaskItem } from "../types";
+import { useEffect, useRef } from "react";
+import { TaskItem } from "./types";
 
 // Components
 import TodoItem from "./TodoItem";

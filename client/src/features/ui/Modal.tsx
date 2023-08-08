@@ -1,4 +1,6 @@
 import { createPortal } from "react-dom";
+import { AiOutlineClose } from "react-icons/ai";
+import Button from "./Button";
 
 interface ModalProps {
   title: string;
@@ -20,15 +22,15 @@ const Modal: React.FC<ModalProps> = ({
       <div className="modal__inner">
         <div className="modal__header">
           <h3>{title}</h3>
+          <button onClick={onToggle} className="modal__close">
+            <AiOutlineClose />
+          </button>
         </div>
         <div className="modal__body">{children}</div>
         <div className="modal__bottom">
-          <button className="modal__submit" onClick={submitter}>
+          <Button onClick={submitter} variant="primary">
             Submit
-          </button>
-          <button className="modal__close" onClick={onToggle}>
-            Close
-          </button>
+          </Button>
         </div>
       </div>
     </div>

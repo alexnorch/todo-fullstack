@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addNewTodo } from "../redux/appSlice";
+import { addNewTodo } from "../../redux/appSlice";
 import { useParams } from "react-router-dom";
 import { AxiosResponse } from "axios";
+import TaskService from "./TaskService";
 
-import useCustomAxios from "../hooks/useCustomAxios";
+import useCustomAxios from "../../hooks/useCustomAxios";
 
 const NewTodo = () => {
   const [title, setTitle] = useState("");
@@ -12,16 +13,14 @@ const NewTodo = () => {
   const { authAxios } = useCustomAxios();
   const dispatch = useDispatch();
 
+  const taskService = new TaskService();
+
   const onSubmit = async (e: any) => {
     e.preventDefault();
 
     try {
-      if (title.length > 6) {
-        const response: AxiosResponse<any> = await authAxios.post("/api/task", {
-          title,
-          category,
-        });
-        const result = response.data; // Extract the response data from the AxiosResponse object
+      const result = await taskService.addTask(title, category!);
+      if (result) {
         dispatch(addNewTodo(result));
         setTitle("");
       }

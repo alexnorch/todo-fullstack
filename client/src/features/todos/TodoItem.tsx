@@ -1,15 +1,15 @@
 import { useState } from "react";
-import useCustomAxios from "../hooks/useCustomAxios";
-import { TaskItem } from "../types";
+import useCustomAxios from "../../hooks/useCustomAxios";
+import { TaskItem } from "./types";
 
 // Redux
 import { useDispatch } from "react-redux";
-import { showAlert } from "../redux/appSlice";
-import { removeTodo, updateTodo } from "../redux/appSlice";
+import { showAlert } from "../../redux/appSlice";
+import { removeTodo, updateTodo } from "../../redux/appSlice";
 
 // Components
-import Checkbox from "./UI/Checkbox";
-import Input from "./UI/Input";
+import Checkbox from "../ui/Checkbox";
+import Input from "../ui/Input";
 
 // Ideas:
 // When user completes the task, it moved to completed section ""
@@ -71,7 +71,6 @@ const TodoItem: React.FC<TaskItem> = ({ _id, title, completed }) => {
         completed: !completed,
       });
 
-      console.log(data);
       dispatch(updateTodo(data));
     } catch (error) {}
   };

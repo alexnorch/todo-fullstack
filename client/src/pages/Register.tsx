@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import Input from "../components/UI/Input";
+import Input from "../features/ui/Input";
 import backgroundImage from "../assets/images/auth.svg";
 
 import useForm from "../hooks/useForm";

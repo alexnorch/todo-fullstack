@@ -10,8 +10,8 @@ import { loginUser, showAlert } from "../redux/appSlice";
 import { RootState } from "../redux/store";
 
 // Components
-import Input from "../components/UI/Input";
-import Alert from "../components/UI/Alert";
+import Input from "../features/ui/Input";
+import Alert from "../features/ui/Alert";
 
 // helpers
 import { addToLocalStorage } from "../helpers";

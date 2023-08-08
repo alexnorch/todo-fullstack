@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 // Redux
 import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { RootState } from "../../redux/store";
 
 // Icons
 import { IoMdSettings, IoIosList, IoMdAddCircleOutline } from "react-icons/io";

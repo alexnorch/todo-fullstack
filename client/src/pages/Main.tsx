@@ -5,8 +5,8 @@ import { RootState } from "../redux/store";
 import { useRef } from "react";
 
 // Components
-import Aside from "../components/Aside";
-import Alert from "../components/UI/Alert";
+import Aside from "../features/layout/Aside";
+import Alert from "../features/ui/Alert";
 
 export default function Main() {
   const { isAlert } = useSelector((state: RootState) => state.app);

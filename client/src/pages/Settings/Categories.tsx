@@ -5,9 +5,9 @@ import { deleteCategory, addCategory } from "../../redux/appSlice";
 import useCustomAxios from "../../hooks/useCustomAxios";
 
 // Components
-import Button from "../../components/UI/Button";
-import ColorPicker from "../../components/UI/ColorPicker";
-import Input from "../../components/UI/Input";
+import Button from "../../features/ui/Button";
+import ColorPicker from "../../features/ui/ColorPicker";
+import Input from "../../features/ui/Input";
 
 // Icons
 import { AiOutlineClose } from "react-icons/ai";

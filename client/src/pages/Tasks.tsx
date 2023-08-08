@@ -3,15 +3,21 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 
-// Components
-import TodoList from "../components/TodoList";
-import NewTodo from "../components/NewTodo";
-import Modal from "../components/Modal";
-import TodoItem from "../components/TodoItem";
-import TaskNavigation from "../components/TaskNavigation";
+// Features todo
+
+import {
+  TodoNew,
+  TodoNavigation,
+  TodoCompleted,
+  TodoList,
+} from "../features/todos";
+
+// UI components
+import { Modal } from "../features/ui";
 
 export default function Tasks() {
-  const [isModal, setIsModal] = useState<boolean>(false);
+  const [showCompleted, setShowCompeted] = useState<boolean>(false);
+  const [showTemplates, setShowTemplates] = useState<boolean>(false);
   const userData = useSelector((state: RootState) => state.app.data);
   const { category } = useParams();
 
@@ -23,6 +29,7 @@ export default function Tasks() {
       tasks: [...item.tasks.filter((task) => !task.completed)],
     }))[0].tasks;
 
+  // Displays only completed tasks for CompletedTask component
   const completedTasks = userData
     .filter((item) => item.categoryName === category)
     .map((item) => ({
@@ -30,24 +37,24 @@ export default function Tasks() {
       tasks: [...item.tasks.filter((task) => task.completed)],
     }))[0].tasks;
 
+  const onToggleCompletedTasks = () => setShowCompeted((prev) => !prev);
+  const onToggleTemplates = () => setShowTemplates((prev) => !prev);
+
   return (
     <>
-      <NewTodo />
+      <TodoNew />
       <TodoList tasks={inCompletedTasks} />
-      <TaskNavigation />
-      <div>
-        Completed tasks: {completedTasks.length}
-        <button onClick={() => setIsModal(true)}>Show completed tasks</button>
-      </div>
+      <TodoNavigation
+        completedTasksLength={completedTasks.length}
+        showCompleted={onToggleCompletedTasks}
+      />
+
       <Modal
-        title="Completed tasks"
-        isOpen={isModal}
-        onToggle={() => setIsModal((prev) => !prev)}
+        title={`${category} | Completed tasks`}
+        isOpen={showCompleted}
+        onToggle={onToggleCompletedTasks}
       >
-        Completed tasks:
-        {completedTasks.map((item) => (
-          <TodoItem key={item._id} {...item} />
-        ))}
+        <TodoCompleted tasks={completedTasks} />
       </Modal>
     </>
   );
