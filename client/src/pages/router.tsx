@@ -9,11 +9,13 @@ import Main from "./Main";
 import Login from "./Login";
 import Register from "./Register";
 import Tasks from "./Tasks";
-import ProtectedRoutes from "./ProtectedRoutes";
 import Overview from "./Overview";
 import Settings from "./Settings/Setting";
 
-// Helpers
+// Protection
+import ProtectedRoutes from "./ProtectedRoutes";
+import ProtectedCategories from "./ProtectedCategories";
+import { NotFound } from "../features/ui";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,11 +29,19 @@ const router = createBrowserRouter(
         }
       >
         <Route index element={<Overview />} />
-        <Route path="tasks/:category" element={<Tasks />} />
+        <Route
+          path="tasks/:category"
+          element={
+            <ProtectedCategories>
+              <Tasks />
+            </ProtectedCategories>
+          }
+        />
         <Route path="settings" element={<Settings />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="*" element={<NotFound />} />
     </Route>
   )
 );

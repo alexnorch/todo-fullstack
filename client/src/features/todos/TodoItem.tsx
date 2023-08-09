@@ -10,15 +10,12 @@ import { removeTodo, updateTodo } from "../../redux/appSlice";
 // Components
 import Checkbox from "../ui/Checkbox";
 import Input from "../ui/Input";
+import TodoActions from "./TodoActions";
 
-// Ideas:
-// When user completes the task, it moved to completed section ""
-//
-//
-
-const TodoItem: React.FC<TaskItem> = ({ _id, title, completed }) => {
+const TodoItem: React.FC<TaskItem> = ({ _id, title, completed, color }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [userValue, setUserValue] = useState<string>(title);
+  const [isActionsActive, setIsActionsActive] = useState<boolean>(false);
   const { authAxios } = useCustomAxios();
   const dispatch = useDispatch();
 
@@ -92,16 +89,22 @@ const TodoItem: React.FC<TaskItem> = ({ _id, title, completed }) => {
   );
 
   return (
-    <li className="tasks__task">
+    <li style={{ borderLeft: `5px solid ${color}` }} className="tasks__task">
       <div className="tasks__task__content">
         <div className="tasks__task__content__left">
           <Checkbox checked={completed} onCheck={onUpdateTask} />
           {TodoContent}
         </div>
         <div className="tasks__task__content__right">
-          <button className="tasks__task__delete" onClick={onDeleteTask}>
+          {/* <button className="tasks__task__delete" onClick={onDeleteTask}>
             <i className="fa-solid fa-trash-can"></i>
-          </button>
+          </button> */}
+          <TodoActions
+            onDelete={onDeleteTask}
+            isActive={isActionsActive}
+            onChange={onEditBegin}
+            onToggle={() => setIsActionsActive((prev) => !prev)}
+          />
         </div>
       </div>
     </li>

@@ -27,8 +27,9 @@ export default function Tasks() {
     .map((item) => ({
       ...item,
       tasks: [...item.tasks.filter((task) => !task.completed)],
-    }))[0].tasks;
+    }))[0];
 
+  console.log(inCompletedTasks);
   // Displays only completed tasks for CompletedTask component
   const completedTasks = userData
     .filter((item) => item.categoryName === category)
@@ -43,7 +44,7 @@ export default function Tasks() {
   return (
     <>
       <TodoNew />
-      <TodoList tasks={inCompletedTasks} />
+      <TodoList data={inCompletedTasks} />
       <TodoNavigation
         completedTasksLength={completedTasks.length}
         showCompleted={onToggleCompletedTasks}
@@ -54,6 +55,7 @@ export default function Tasks() {
         isOpen={showCompleted}
         onToggle={onToggleCompletedTasks}
       >
+        <h1>Test</h1>
         <TodoCompleted tasks={completedTasks} />
       </Modal>
     </>

@@ -1,21 +1,14 @@
 import { useEffect, useRef } from "react";
-import { TaskItem } from "./types";
+import { CategoryInterface } from "../../types";
 
 // Components
 import TodoItem from "./TodoItem";
 
-const TodoList: React.FC<{ tasks: TaskItem[] }> = ({ tasks }) => {
+const TodoList: React.FC<{ data: CategoryInterface }> = (props) => {
+  const { tasks, color } = props.data;
   const contentRef = useRef<HTMLUListElement>(null);
   const scrollBar = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
-
-  const renderTaskItems = () => {
-    return tasks.length > 0 ? (
-      tasks.map((item) => <TodoItem key={item._id} {...item} />)
-    ) : (
-      <p>Please create your first task</p>
-    );
-  };
 
   useEffect(() => {
     const contentEl = contentRef.current!;
@@ -34,6 +27,14 @@ const TodoList: React.FC<{ tasks: TaskItem[] }> = ({ tasks }) => {
       contentEl.removeEventListener("scroll", handleScroll);
     };
   });
+
+  const renderTaskItems = () => {
+    return tasks.length > 0 ? (
+      tasks.map((item) => <TodoItem key={item._id} color={color} {...item} />)
+    ) : (
+      <p>Please create your first task</p>
+    );
+  };
 
   const handleScroll = () => {
     if (contentRef.current && thumbRef.current) {

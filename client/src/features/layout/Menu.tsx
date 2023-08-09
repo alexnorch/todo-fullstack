@@ -37,7 +37,11 @@ const Menu = () => {
       <div className="menu__category">
         <h2 className="menu__category__title">
           <IoIosList />
-          <Link to="/">Today tasks</Link>
+          <Link to="/">Overview</Link>
+        </h2>
+        <h2 className="menu__category__title">
+          <IoIosList />
+          My categories
         </h2>
         <ul className="menu__list">{renderCategories()}</ul>
       </div>
