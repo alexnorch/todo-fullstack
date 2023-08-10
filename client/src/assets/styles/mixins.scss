@@ -5,5 +5,8 @@
   justify-content: $justify;
 }
 
-// Questions:
-// 2. Other cases where I can use mixins?
+@mixin clearButtonStyles() {
+  border: none;
+  background: none;
+  cursor: pointer;
+}

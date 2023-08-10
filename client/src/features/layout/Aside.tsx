@@ -1,31 +1,28 @@
-import { useDispatch } from "react-redux";
-import { logoutUser } from "../../redux/appSlice";
-import { GrLogout } from "react-icons/gr";
-
-// Components
+import { useEffect, useRef } from "react";
 import Menu from "./Menu";
+import { Logo } from "../ui";
 
 const Aside: React.FC = () => {
-  const dispatch = useDispatch();
+  const asideRef = useRef<HTMLElement>(null);
 
-  const onLogoutUser = () => {
-    localStorage.clear();
-    dispatch(logoutUser());
-  };
+  useEffect(() => {
+    const asideElem = asideRef.current!;
+    const addActiveClass = () => asideElem.classList.add("active");
+    const removeActiveClass = () => asideElem.classList.remove("active");
+
+    asideElem.addEventListener("mouseenter", addActiveClass);
+    asideElem.addEventListener("mouseleave", removeActiveClass);
+
+    return () => {
+      asideElem.removeEventListener("mouseenter", addActiveClass);
+      asideElem.removeEventListener("mouseleave", removeActiveClass);
+    };
+  }, []);
 
   return (
-    <aside className="aside">
-      <div className="logo">
-        Logo
-        {/* <img className="logo__img" src={logo} alt="logo" /> */}
-      </div>
+    <aside ref={asideRef} className="aside">
+      <Logo />
       <Menu />
-      <div className="aside__logout">
-        <button onClick={onLogoutUser} className="menu__bottom__btn">
-          <GrLogout />
-          <span>Log out</span>
-        </button>
-      </div>
     </aside>
   );
 };

@@ -57,3 +57,24 @@ export const checkAuth = () => {
 
   return null;
 };
+
+export const addZeroToNumber = (n: number) => {
+  return n <= 9 && n !== 0 ? `0${n}` : n;
+};
+
+export const capitalizeFirstLetter = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+export const getButtonClasses = (buttonClass: string) => {
+  switch (buttonClass) {
+    case "outline":
+      return "btn btn--outline";
+    case "primary":
+      return "btn btn--primary";
+    case "transparent":
+      return "btn btn--transparent";
+    default:
+      return "btn btn-primary";
+  }
+};

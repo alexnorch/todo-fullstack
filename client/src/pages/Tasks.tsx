@@ -55,7 +55,6 @@ export default function Tasks() {
         isOpen={showCompleted}
         onToggle={onToggleCompletedTasks}
       >
-        <h1>Test</h1>
         <TodoCompleted tasks={completedTasks} />
       </Modal>
     </>

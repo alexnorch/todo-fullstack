@@ -13,7 +13,7 @@ export default function Register() {
     email: "",
   });
 
-  const onSumbit = () => {
+  const onSubmit = () => {
     validation();
   };
 
@@ -63,7 +63,7 @@ export default function Register() {
               onChange={onChange}
             />
             <div className="auth__bottom">
-              <button type="button" onClick={onSumbit} className="auth__btn">
+              <button type="button" onClick={onSubmit} className="auth__btn">
                 Submit
               </button>
             </div>

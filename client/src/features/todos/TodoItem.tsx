@@ -15,7 +15,6 @@ import TodoActions from "./TodoActions";
 const TodoItem: React.FC<TaskItem> = ({ _id, title, completed, color }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [userValue, setUserValue] = useState<string>(title);
-  const [isActionsActive, setIsActionsActive] = useState<boolean>(false);
   const { authAxios } = useCustomAxios();
   const dispatch = useDispatch();
 
@@ -83,9 +82,7 @@ const TodoItem: React.FC<TaskItem> = ({ _id, title, completed, color }) => {
       value={userValue}
     />
   ) : (
-    <p onClick={onEditBegin} className="tasks__task__content__text">
-      {userValue}
-    </p>
+    <p className="tasks__task__content__text">{userValue}</p>
   );
 
   return (
@@ -96,15 +93,7 @@ const TodoItem: React.FC<TaskItem> = ({ _id, title, completed, color }) => {
           {TodoContent}
         </div>
         <div className="tasks__task__content__right">
-          {/* <button className="tasks__task__delete" onClick={onDeleteTask}>
-            <i className="fa-solid fa-trash-can"></i>
-          </button> */}
-          <TodoActions
-            onDelete={onDeleteTask}
-            isActive={isActionsActive}
-            onChange={onEditBegin}
-            onToggle={() => setIsActionsActive((prev) => !prev)}
-          />
+          <TodoActions onDelete={onDeleteTask} onChange={onEditBegin} />
         </div>
       </div>
     </li>

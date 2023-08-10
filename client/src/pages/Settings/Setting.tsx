@@ -3,9 +3,8 @@ import { useState } from "react";
 // Settings tab
 import Profile from "./Profile";
 import Categories from "./Categories";
-import Theme from "./Theme";
 
-const tabs = ["Profile", "Categories", "Theme"];
+const tabs = ["Profile", "Categories"];
 
 export default function Wrapper() {
   const [tab, setTab] = useState<string>("Profile");
@@ -28,8 +27,6 @@ export default function Wrapper() {
         return <Profile />;
       case "categories":
         return <Categories />;
-      case "theme":
-        return <Theme />;
       default:
         return <Profile />;
     }

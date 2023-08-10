@@ -1,6 +1,10 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
+import { logoutUser } from "../../redux/appSlice";
+
+// Icons
+import { IoExitOutline } from "react-icons/io5";
 
 // Components
 import Input from "../../features/ui/Input";
@@ -17,6 +21,8 @@ export default function Profile() {
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
 
+  const dispatch = useDispatch();
+
   return (
     <div className="user-settings">
       <div className="user-settings__left">
@@ -30,6 +36,15 @@ export default function Profile() {
         <div className="user-settings__left__buttons">
           <Button variant="outline">Delete picture</Button>
           <FileUploader text="Import new image" />
+        </div>
+        <div className="user-settings__logout">
+          <Button
+            onClick={() => dispatch(logoutUser())}
+            icon={<IoExitOutline />}
+            variant="transparent"
+          >
+            Log out
+          </Button>
         </div>
       </div>
       <div className="user-settings__right">

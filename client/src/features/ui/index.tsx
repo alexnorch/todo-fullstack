@@ -6,6 +6,7 @@ import ColorPicker from "./ColorPicker";
 import FileUploader from "./FileUploader";
 import Input from "./Input";
 import NotFound from "./NotFound";
+import Logo from "./Logo";
 
 export {
   Modal,
@@ -16,4 +17,5 @@ export {
   FileUploader,
   Input,
   NotFound,
+  Logo,
 };

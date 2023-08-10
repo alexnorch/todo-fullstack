@@ -7,6 +7,7 @@ import { AxiosResponse } from "axios";
 import useCustomAxios from "../../hooks/useCustomAxios";
 
 const NewTodo = () => {
+  const [time, setTime] = useState("");
   const [title, setTitle] = useState("");
   const { category } = useParams();
   const { authAxios } = useCustomAxios();
