@@ -5,6 +5,7 @@ import AppError from "../utils/AppError";
 import Task from "../models/taskModel";
 import Category, { CategoryInterface } from "../models/categoryModel";
 import User, { UserInterface } from "../models/userModel";
+import { populateTask } from "../utils/helpers";
 
 const getTasks = async (req: Request, res: Response) => {
   const tasks = await Task.find({ user: req.userId }).populate({
@@ -46,6 +47,7 @@ const createTask = async (req: Request, res: Response, next: NextFunction) => {
       title,
       category: userCategory._id,
       user: req.userId,
+      color: userCategory.color,
     });
 
     const createdTask = await task.save();
@@ -54,28 +56,9 @@ const createTask = async (req: Request, res: Response, next: NextFunction) => {
 
     await userCategory.save();
 
-    const populatedTask = await Task.aggregate([
-      {
-        $match: { _id: createdTask._id },
-      },
-      {
-        $lookup: {
-          from: "categories",
-          localField: "category",
-          foreignField: "_id",
-          as: "category",
-        },
-      },
-      {
-        $addFields: {
-          category: { $arrayElemAt: ["$category.categoryName", 0] },
-        },
-      },
-    ]);
+    const result = await populateTask(createdTask._id);
 
-    const resultTask = populatedTask[0];
-
-    res.send(resultTask);
+    res.send(result);
   } catch (error) {
     console.log(error);
   }
@@ -100,26 +83,7 @@ const updateTask = async (req: Request, res: Response, next: NextFunction) => {
     task.completed = completed;
 
     const changedTask = await task.save();
-    const populatedTask = await Task.aggregate([
-      {
-        $match: { _id: changedTask._id },
-      },
-      {
-        $lookup: {
-          from: "categories",
-          localField: "category",
-          foreignField: "_id",
-          as: "category",
-        },
-      },
-      {
-        $addFields: {
-          category: { $arrayElemAt: ["$category.categoryName", 0] },
-        },
-      },
-    ]);
-
-    const resultTask = populatedTask[0];
+    const resultTask = await populateTask(changedTask._id);
 
     res.send(resultTask);
   } catch (error) {}

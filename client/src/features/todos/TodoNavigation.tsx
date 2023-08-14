@@ -1,5 +1,5 @@
 // Icons
-import { HiTemplate, HiCheckCircle } from "react-icons/hi";
+import { HiCheckCircle } from "react-icons/hi";
 
 interface TaskNavigationProps {
   showCompleted: () => void;
@@ -12,10 +12,6 @@ const TaskNavigation: React.FC<TaskNavigationProps> = ({
 }) => {
   return (
     <div className="task-navigation">
-      <button className="task-navigation__btn">
-        <HiTemplate />
-        <span className="task-navigation__btn__span">0</span>
-      </button>
       <button onClick={showCompleted} className="task-navigation__btn">
         <HiCheckCircle />
         <span className="task-navigation__btn__span">

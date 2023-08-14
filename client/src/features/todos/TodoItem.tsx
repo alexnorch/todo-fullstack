@@ -5,7 +5,8 @@ import { TaskItem } from "./types";
 // Redux
 import { useDispatch } from "react-redux";
 import { showAlert } from "../../redux/appSlice";
-import { removeTodo, updateTodo } from "../../redux/appSlice";
+import { updateTodo } from "../../redux/appSlice";
+import useTaskServices from "./useTaskServices";
 
 // Components
 import Checkbox from "../ui/Checkbox";
@@ -16,6 +17,7 @@ const TodoItem: React.FC<TaskItem> = ({ _id, title, completed, color }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [userValue, setUserValue] = useState<string>(title);
   const { authAxios } = useCustomAxios();
+  const { onUpdateTask, onDeleteTask } = useTaskServices();
   const dispatch = useDispatch();
 
   const onEditBegin = () => setIsEditing(true);
@@ -38,6 +40,7 @@ const TodoItem: React.FC<TaskItem> = ({ _id, title, completed, color }) => {
           title: userValue,
           completed,
         });
+
         setIsEditing(false);
 
         dispatch(updateTodo(data));
@@ -50,24 +53,6 @@ const TodoItem: React.FC<TaskItem> = ({ _id, title, completed, color }) => {
           })
         );
       }
-    } catch (error) {}
-  };
-
-  const onDeleteTask = async () => {
-    try {
-      const { data } = await authAxios.delete(`/api/task/${_id}`);
-      dispatch(removeTodo(data));
-    } catch (error) {}
-  };
-
-  const onUpdateTask = async () => {
-    try {
-      const { data } = await authAxios.patch(`/api/task/${_id}`, {
-        title: userValue,
-        completed: !completed,
-      });
-
-      dispatch(updateTodo(data));
     } catch (error) {}
   };
 
@@ -86,14 +71,20 @@ const TodoItem: React.FC<TaskItem> = ({ _id, title, completed, color }) => {
   );
 
   return (
-    <li style={{ borderLeft: `5px solid ${color}` }} className="tasks__task">
+    <li style={{ borderLeft: `7px solid ${color}` }} className="tasks__task">
       <div className="tasks__task__content">
         <div className="tasks__task__content__left">
-          <Checkbox checked={completed} onCheck={onUpdateTask} />
+          <Checkbox
+            checked={completed}
+            onCheck={() => onUpdateTask(_id, { title, completed })}
+          />
           {TodoContent}
         </div>
         <div className="tasks__task__content__right">
-          <TodoActions onDelete={onDeleteTask} onChange={onEditBegin} />
+          <TodoActions
+            onDelete={() => onDeleteTask(_id)}
+            onChange={onEditBegin}
+          />
         </div>
       </div>
     </li>

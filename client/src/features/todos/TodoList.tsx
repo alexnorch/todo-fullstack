@@ -1,11 +1,10 @@
 import { useEffect, useRef } from "react";
-import { CategoryInterface } from "../../types";
+import { TaskItem } from "../../types";
 
 // Components
 import TodoItem from "./TodoItem";
 
-const TodoList: React.FC<{ data: CategoryInterface }> = (props) => {
-  const { tasks, color } = props.data;
+const TodoList: React.FC<{ tasks: TaskItem[] }> = ({ tasks }) => {
   const contentRef = useRef<HTMLUListElement>(null);
   const scrollBar = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
@@ -30,7 +29,7 @@ const TodoList: React.FC<{ data: CategoryInterface }> = (props) => {
 
   const renderTaskItems = () => {
     return tasks.length > 0 ? (
-      tasks.map((item) => <TodoItem key={item._id} color={color} {...item} />)
+      tasks.map((item) => <TodoItem key={item._id} {...item} />)
     ) : (
       <p>Please create your first task</p>
     );

@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 // Settings tab
-import Profile from "./Profile";
-import Categories from "./Categories";
+import Profile from "../features/tabs/Profile";
+import Categories from "../features/tabs/Categories";
 
 const tabs = ["Profile", "Categories"];
 

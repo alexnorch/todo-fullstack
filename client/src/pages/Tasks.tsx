@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { CSSTransition } from "react-transition-group";
+import { capitalizeFirstLetter } from "../helpers";
+import useTaskServices from "../features/todos/useTaskServices";
 
 // Features todo
 
@@ -12,51 +13,47 @@ import {
   TodoList,
 } from "../features/todos";
 
-// UI components
-import { Modal } from "../features/ui";
-
 export default function Tasks() {
   const [showCompleted, setShowCompeted] = useState<boolean>(false);
-  const [showTemplates, setShowTemplates] = useState<boolean>(false);
-  const userData = useSelector((state: RootState) => state.app.data);
+  const { getTaskByCategory } = useTaskServices();
   const { category } = useParams();
-
-  // Displays only uncompleted tasks and tasks that refers to the specific category
-  const inCompletedTasks = userData
-    .filter((item) => item.categoryName === category)
-    .map((item) => ({
-      ...item,
-      tasks: [...item.tasks.filter((task) => !task.completed)],
-    }))[0];
-
-  console.log(inCompletedTasks);
-  // Displays only completed tasks for CompletedTask component
-  const completedTasks = userData
-    .filter((item) => item.categoryName === category)
-    .map((item) => ({
-      ...item,
-      tasks: [...item.tasks.filter((task) => task.completed)],
-    }))[0].tasks;
+  const nodeRef = useRef<HTMLDivElement>(null);
 
   const onToggleCompletedTasks = () => setShowCompeted((prev) => !prev);
-  const onToggleTemplates = () => setShowTemplates((prev) => !prev);
+
+  const completedTasks = getTaskByCategory({
+    category,
+    isCompleted: true,
+  });
+
+  const inCompletedTasks = getTaskByCategory({
+    category,
+    isCompleted: false,
+  });
 
   return (
     <>
+      <h1>Current category - {capitalizeFirstLetter(category!)}</h1>
       <TodoNew />
-      <TodoList data={inCompletedTasks} />
+      <TodoList tasks={inCompletedTasks} />
       <TodoNavigation
         completedTasksLength={completedTasks.length}
         showCompleted={onToggleCompletedTasks}
       />
-
-      <Modal
-        title={`${category} | Completed tasks`}
-        isOpen={showCompleted}
-        onToggle={onToggleCompletedTasks}
+      <CSSTransition
+        unmountOnExit
+        timeout={1000}
+        in={showCompleted}
+        classNames="completed-tasks"
+        nodeRef={nodeRef}
       >
-        <TodoCompleted tasks={completedTasks} />
-      </Modal>
+        <TodoCompleted
+          onToggle={onToggleCompletedTasks}
+          isActive={showCompleted}
+          ref={nodeRef}
+          tasks={completedTasks}
+        />
+      </CSSTransition>
     </>
   );
 }

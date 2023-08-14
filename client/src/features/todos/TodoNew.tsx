@@ -2,34 +2,21 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addNewTodo, showAlert } from "../../redux/appSlice";
 import { useParams } from "react-router-dom";
-import { AxiosResponse } from "axios";
+import useTaskServices from "./useTaskServices";
 
 import useCustomAxios from "../../hooks/useCustomAxios";
 
 const NewTodo = () => {
-  const [time, setTime] = useState("");
   const [title, setTitle] = useState("");
   const { category } = useParams();
-  const { authAxios } = useCustomAxios();
-  const dispatch = useDispatch();
+  const { onCreateTask } = useTaskServices();
+
+  const clearInput = () => setTitle("");
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
-
-    try {
-      if (title.length > 6) {
-        const response: AxiosResponse<any> = await authAxios.post("/api/task", {
-          title,
-          category,
-        });
-        const result = response.data;
-        dispatch(addNewTodo(result));
-        dispatch(showAlert({ type: "success", text: "New task was created" }));
-        setTitle("");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    onCreateTask(title, category, clearInput);
+    setTitle("");
   };
 
   return (

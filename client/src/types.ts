@@ -33,6 +33,7 @@ export interface TaskItem {
   title: string;
   completed: boolean;
   category: string;
+  color: string;
 }
 
 export interface InputProps {
@@ -54,6 +55,7 @@ export interface AuthPayload {
 }
 
 export interface AlertProps {
+  duration?: number;
   text: string;
   type: "danger" | "success" | "info";
 }

@@ -7,9 +7,9 @@ import { logoutUser } from "../../redux/appSlice";
 import { IoExitOutline } from "react-icons/io5";
 
 // Components
-import Input from "../../features/ui/Input";
-import Button from "../../features/ui/Button";
-import FileUploader from "../../features/ui/FileUploader";
+import Input from "../ui/Input";
+import Button from "../ui/Button";
+import FileUploader from "../ui/FileUploader";
 
 export default function Profile() {
   const { email, name, photo } = useSelector(

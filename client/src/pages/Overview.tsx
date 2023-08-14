@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import { TodoItem } from "../features/todos";
 import { RootState } from "../redux/store";
 import { TaskItem } from "../types";
 import { addZeroToNumber } from "../helpers";
+import { TodoItemReadOnly } from "../features/todos";
 
 const Overview = () => {
   const { data, user } = useSelector((state: RootState) => state.app);
@@ -11,7 +11,7 @@ const Overview = () => {
   const completedTasks = allTasks.filter((task) => task.completed);
   const uncompletedTasks = allTasks.filter((task) => !task.completed);
   const todoItems = allTasks.map((task) => (
-    <TodoItem key={task._id} {...task} />
+    <TodoItemReadOnly key={task._id} {...task} />
   ));
 
   return (
