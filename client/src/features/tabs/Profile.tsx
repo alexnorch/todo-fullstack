@@ -23,6 +23,11 @@ export default function Profile() {
 
   const dispatch = useDispatch();
 
+  const onLogoutUser = () => {
+    dispatch(logoutUser());
+    localStorage.removeItem("accessToken");
+  };
+
   return (
     <div className="user-settings">
       <div className="user-settings__left">
@@ -39,7 +44,7 @@ export default function Profile() {
         </div>
         <div className="user-settings__logout">
           <Button
-            onClick={() => dispatch(logoutUser())}
+            onClick={onLogoutUser}
             icon={<IoExitOutline />}
             variant="transparent"
           >

@@ -8,13 +8,13 @@ const ProtectedRoutes: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const accessToken = useSelector((state: RootState) => state.app.token);
 
-  if (!accessToken) return <Navigate replace to="/login" />;
+  if (!accessToken) return <Navigate replace to="/auth" />;
 
   const decodedToken: { [key: string]: any } = jwtDecode(accessToken);
   const currentTime = Date.now() / 1000;
 
   if (currentTime >= decodedToken.exp) {
-    return <Navigate replace to="/login" />;
+    return <Navigate replace to="/auth" />;
   }
 
   return children;

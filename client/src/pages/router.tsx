@@ -6,11 +6,10 @@ import {
 
 // Main Pages
 import Main from "./Main";
-import Login from "./Login";
-import Register from "./Register";
 import Tasks from "./Tasks";
 import Overview from "./Overview";
 import Settings from "./Setting";
+import Auth from "./Auth";
 
 // Protection
 import ProtectedRoutes from "./ProtectedRoutes";
@@ -39,8 +38,7 @@ const router = createBrowserRouter(
         />
         <Route path="settings" element={<Settings />} />
       </Route>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route path="/auth" element={<Auth />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )

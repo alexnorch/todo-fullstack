@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import { capitalizeFirstLetter } from "../helpers";
-import useTaskServices from "../features/todos/useTaskServices";
+import useTaskServices from "../features/todos/useTodoServices";
 
 // Features todo
 

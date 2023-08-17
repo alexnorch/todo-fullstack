@@ -5,7 +5,7 @@ import { RootState } from "../../redux/store";
 import { updateTodo, removeTodo, addNewTodo } from "../../redux/appSlice";
 import { useMemo } from "react";
 
-const useTaskServices = () => {
+const useTodoServices = () => {
   const { data } = useSelector((state: RootState) => state.app);
   const { authAxios } = useCustomAxios();
   const dispatch = useDispatch();
@@ -89,4 +89,4 @@ const useTaskServices = () => {
   return { onUpdateTask, onDeleteTask, getTaskByCategory, onCreateTask };
 };
 
-export default useTaskServices;
+export default useTodoServices;

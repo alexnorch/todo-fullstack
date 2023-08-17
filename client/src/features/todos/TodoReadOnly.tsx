@@ -1,6 +1,7 @@
 import { TaskItem } from "./types";
 
-const TodoItemReadOnly: React.FC<TaskItem> = ({ title, completed, color }) => {
+const TodoReadOnly: React.FC<TaskItem> = ({ title, completed, color }) => {
+  console.log(color);
   return (
     <li style={{ borderLeft: `7px solid ${color}` }} className="tasks__task">
       <div className="tasks__task__content">
@@ -12,4 +13,4 @@ const TodoItemReadOnly: React.FC<TaskItem> = ({ title, completed, color }) => {
   );
 };
 
-export default TodoItemReadOnly;
+export default TodoReadOnly;

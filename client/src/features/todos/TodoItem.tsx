@@ -6,7 +6,7 @@ import { TaskItem } from "./types";
 import { useDispatch } from "react-redux";
 import { showAlert } from "../../redux/appSlice";
 import { updateTodo } from "../../redux/appSlice";
-import useTaskServices from "./useTaskServices";
+import useTaskServices from "./useTodoServices";
 
 // Components
 import Checkbox from "../ui/Checkbox";

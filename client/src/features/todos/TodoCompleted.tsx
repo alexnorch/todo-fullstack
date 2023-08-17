@@ -3,13 +3,16 @@ import { BsArrowReturnLeft, BsXLg } from "react-icons/bs";
 import { TaskItem } from "./types";
 
 // Hooks
-import useTaskServices from "./useTaskServices";
+import useTaskServices from "./useTodoServices";
 
 interface CompletedTasksProps {
   tasks: TaskItem[];
   onToggle: () => void;
   isActive: boolean;
 }
+
+// Добавити пункт коли саме був виконаний таск
+// На страниці Overview добавити позначку що таск виконаний (Checked icon)
 
 const CompletedTasks = forwardRef<HTMLDivElement, CompletedTasksProps>(
   ({ tasks, isActive, onToggle }, ref) => {

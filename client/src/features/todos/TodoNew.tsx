@@ -1,10 +1,6 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addNewTodo, showAlert } from "../../redux/appSlice";
 import { useParams } from "react-router-dom";
-import useTaskServices from "./useTaskServices";
-
-import useCustomAxios from "../../hooks/useCustomAxios";
+import useTaskServices from "./useTodoServices";
 
 const NewTodo = () => {
   const [title, setTitle] = useState("");

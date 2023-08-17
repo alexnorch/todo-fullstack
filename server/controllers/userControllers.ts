@@ -14,7 +14,7 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
       path: "data",
       populate: {
         path: "tasks",
-        select: "title completed",
+        select: "title completed color",
       },
     });
 
@@ -78,7 +78,7 @@ const registerUser = async (
     const user = await newUser.save();
     const token = user.generateToken(user._id);
 
-    res.json({ user });
+    res.json({ user, token });
   } catch (error) {}
 };
 

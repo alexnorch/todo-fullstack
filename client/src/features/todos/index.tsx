@@ -3,7 +3,7 @@ import TodoItem from "./TodoItem";
 import TodoList from "./TodoList";
 import TodoNew from "./TodoNew";
 import TodoNavigation from "./TodoNavigation";
-import TodoItemReadOnly from "./TodoItemReadOnly";
+import TodoReadOnly from "./TodoReadOnly";
 
 export {
   TodoCompleted,
@@ -11,5 +11,5 @@ export {
   TodoNavigation,
   TodoList,
   TodoItem,
-  TodoItemReadOnly,
+  TodoReadOnly,
 };
