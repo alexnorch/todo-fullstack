@@ -54,6 +54,24 @@
   width: 300px;
 }
 
+.page-heading {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
 .menu {
   width: 300px;
   margin-top: 300px;
@@ -261,13 +279,22 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   gap: 20px;
+}
+.tasks__task__content__icon {
+  width: 25px;
+  height: 25px;
+  color: green;
 }
 .tasks__task__content__left {
   display: -webkit-box;
@@ -991,9 +1018,23 @@
           transform: translate(-50%, -50%);
   background-color: #eee;
   color: var(--black);
-  -webkit-box-shadow: 10px 10px 27px 0px rgba(0, 0, 0, 0.64);
-  box-shadow: 10px 10px 27px 0px rgba(0, 0, 0, 0.64);
+  -webkit-box-shadow: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
+  box-shadow: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
   border-radius: 15px;
+}
+.modal__inner.fade-up-enter {
+  opacity: 0;
+  -webkit-transform: translate(-50%, -40%);
+      -ms-transform: translate(-50%, -40%);
+          transform: translate(-50%, -40%);
+}
+.modal__inner.fade-up-enter-active {
+  opacity: 1;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 .modal__header {
   display: -webkit-box;
@@ -1012,12 +1053,12 @@
   border-radius: 15px 15px 0 0;
 }
 .modal__header h3 {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 400;
 }
 .modal__body {
   margin: 20px;
-  padding-bottom: 10px;
+  padding: 30px 0px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   -ms-flex-preferred-size: 50%;
       flex-basis: 50%;
@@ -1030,7 +1071,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  gap: 10px;
+  gap: 20px;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;

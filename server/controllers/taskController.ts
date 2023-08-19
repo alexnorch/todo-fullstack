@@ -60,7 +60,7 @@ const createTask = async (req: Request, res: Response, next: NextFunction) => {
 
     res.send(result);
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 
@@ -104,29 +104,10 @@ const deleteTask = async (req: Request, res: Response, next: NextFunction) => {
       return next(new AppError("You are not allowed to do this", 403));
     }
 
-    const populatedTask = await Task.aggregate([
-      {
-        $match: { _id: task._id },
-      },
-      {
-        $lookup: {
-          from: "categories",
-          localField: "category",
-          foreignField: "_id",
-          as: "category",
-        },
-      },
-      {
-        $addFields: {
-          category: { $arrayElemAt: ["$category.categoryName", 0] },
-        },
-      },
-    ]);
-
+    const deletedTask = await populateTask(task._id);
     await task.deleteOne();
-    const populatedResult = populatedTask[0];
 
-    res.status(200).json(populatedResult);
+    res.status(200).json(deletedTask);
   } catch (error) {}
 };
 

@@ -33,7 +33,12 @@ export default function Tasks() {
 
   return (
     <>
-      <h1>Current category - {capitalizeFirstLetter(category!)}</h1>
+      <div className="page-heading">
+        <p className="page-heading__subtitle">Current category</p>
+        <h1 className="page-heading__title">
+          {capitalizeFirstLetter(category!)}
+        </h1>
+      </div>
       <TodoNew />
       <TodoList tasks={inCompletedTasks} />
       <TodoNavigation

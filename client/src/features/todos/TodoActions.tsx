@@ -2,11 +2,11 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState, useRef, useEffect } from "react";
 
 interface TodoActionsProps {
-  onChange: () => void;
-  onDelete: () => void;
+  onEdit: () => void;
+  onRemove: () => void;
 }
 
-const TodoActions: React.FC<TodoActionsProps> = ({ onDelete, onChange }) => {
+const TodoActions: React.FC<TodoActionsProps> = ({ onRemove, onEdit }) => {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLUListElement>(null);
 
@@ -27,6 +27,7 @@ const TodoActions: React.FC<TodoActionsProps> = ({ onDelete, onChange }) => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [showMenu]);
+
   return (
     <div className="todo-actions">
       <button
@@ -37,10 +38,22 @@ const TodoActions: React.FC<TodoActionsProps> = ({ onDelete, onChange }) => {
       </button>
       {showMenu && (
         <ul ref={menuRef} className="todo-actions__menu">
-          <li className="todo-actions__menu__item" onClick={onDelete}>
+          <li
+            className="todo-actions__menu__item"
+            onClick={() => {
+              onRemove();
+              setShowMenu(false);
+            }}
+          >
             Remove
           </li>
-          <li className="todo-actions__menu__item" onClick={onChange}>
+          <li
+            className="todo-actions__menu__item"
+            onClick={() => {
+              onEdit();
+              setShowMenu(false);
+            }}
+          >
             Edit
           </li>
         </ul>

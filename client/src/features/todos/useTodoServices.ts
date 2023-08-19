@@ -61,15 +61,28 @@ const useTodoServices = () => {
 
   const onUpdateTask = async (
     id: string,
-    userData: { title: string; completed: boolean }
+    userData: { title: string; completed: boolean },
+    onEditEnd?: () => void
   ) => {
     try {
-      const { data } = await authAxios.patch(`/api/task/${id}`, {
-        title: userData.title,
-        completed: !userData.completed,
-      });
+      if (userData.title && userData.title.trim().length > 6) {
+        const { data } = await authAxios.patch(`/api/task/${id}`, {
+          title: userData.title,
+          completed: userData.completed,
+        });
 
-      dispatch(updateTodo(data));
+        dispatch(showAlert({ type: "success", text: "Successfully changed" }));
+        dispatch(updateTodo(data));
+
+        onEditEnd && onEditEnd();
+      } else {
+        dispatch(
+          showAlert({
+            type: "danger",
+            text: "Must be greater than 6 characters",
+          })
+        );
+      }
     } catch (error) {}
   };
 
@@ -86,7 +99,32 @@ const useTodoServices = () => {
     } catch (error) {}
   };
 
-  return { onUpdateTask, onDeleteTask, getTaskByCategory, onCreateTask };
+  const onCompleteTask = async (
+    id: string,
+    userData: { title: string; completed: boolean }
+  ) => {
+    const { data } = await authAxios.patch(`/api/task/${id}`, {
+      title: userData.title,
+      completed: !userData.completed,
+    });
+
+    dispatch(updateTodo(data));
+    dispatch(
+      showAlert({
+        type: "success",
+        text: `You have completed the task "${userData.title}"`,
+        duration: 3000,
+      })
+    );
+  };
+
+  return {
+    onUpdateTask,
+    onDeleteTask,
+    getTaskByCategory,
+    onCreateTask,
+    onCompleteTask,
+  };
 };
 
 export default useTodoServices;

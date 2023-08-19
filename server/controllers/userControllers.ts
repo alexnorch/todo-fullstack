@@ -3,14 +3,12 @@ import User from "../models/userModel";
 import AppError from "../utils/AppError";
 
 const loginUser = async (req: Request, res: Response, next: NextFunction) => {
-  const { email, password } = req.body;
-
   try {
-    if (!email || !password) {
+    if (!req.body.email || !req.body.password) {
       return next(new AppError("Please provide all values", 400));
     }
 
-    const user = await User.findOne({ email }).populate({
+    const user = await User.findOne({ email: req.body.email }).populate({
       path: "data",
       populate: {
         path: "tasks",
@@ -23,7 +21,7 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
     }
 
     const isPasswordCorrect = await user.comparePassword(
-      password,
+      req.body.password,
       user.password
     );
 
@@ -33,22 +31,19 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
 
     const token = user.generateToken(user._id);
 
+    const { _id, name, email, photo, data } = user;
+
     res.json({
       result: {
-        userInfo: {
-          _id: user._id,
-          name: user.name,
-          email: user.email,
-          photo: user.photo,
-        },
-        userData: user.data,
+        userInfo: { _id, name, email, photo },
+        userData: data,
         token,
       },
     });
 
     res.json({ user, token });
   } catch (error) {
-    // Обработка ошибок
+    next(error);
   }
 };
 
@@ -79,7 +74,9 @@ const registerUser = async (
     const token = user.generateToken(user._id);
 
     res.json({ user, token });
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 };
 
 const updateUser = (req: Request, res: Response) => {
