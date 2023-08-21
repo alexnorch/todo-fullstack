@@ -1,3 +1,5 @@
+import { Button } from "../../ui";
+
 interface AuthHeadingProps {
   isLoginForm: boolean;
   onToggleLoginForm: () => void;
@@ -15,7 +17,9 @@ const AuthHeading: React.FC<AuthHeadingProps> = ({
           <p>Welcome back! Please enter your details</p>
           <p>
             <span> Don't have an account?</span>
-            <button onClick={onToggleLoginForm}> Register</button>
+            <Button variant="transparent" onClick={onToggleLoginForm}>
+              Register
+            </Button>
           </p>
         </>
       ) : (
@@ -24,7 +28,9 @@ const AuthHeading: React.FC<AuthHeadingProps> = ({
           <p>Please, fill up the form to create your first account</p>
           <p>
             <span> Already have an account?</span>
-            <button onClick={onToggleLoginForm}>Login</button>
+            <Button variant="transparent" onClick={onToggleLoginForm}>
+              Log In
+            </Button>
           </p>
         </>
       )}

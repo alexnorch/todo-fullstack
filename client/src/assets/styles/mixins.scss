@@ -10,3 +10,9 @@
   background: none;
   cursor: pointer;
 }
+
+@mixin rounded($size) {
+  border-radius: 50%;
+  width: $size;
+  height: $size;
+}

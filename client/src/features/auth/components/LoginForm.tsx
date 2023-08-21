@@ -1,10 +1,13 @@
-import { Input } from "../../ui";
+import { useState } from "react";
+import { Input, TextField, IconButton } from "../../ui";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 // Custom hooks
 import useForm from "../useForm";
 import useAuth from "../useAuth";
 
 const LoginForm = () => {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const { values, onChange, validation, errors } = useForm({
     email: "",
     password: "",
@@ -26,13 +29,18 @@ const LoginForm = () => {
         value={values.email}
         onChange={onChange}
       />
-      <Input
-        type="password"
+      <TextField
+        type={showPassword ? "text" : "password"}
         name="password"
         errorMessage={errors.password}
         placeholder="Your password"
         value={values.password}
         onChange={onChange}
+        adornment={
+          <IconButton onClick={() => setShowPassword((prev) => !prev)}>
+            {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+          </IconButton>
+        }
       />
       <div className="auth__bottom">
         <button type="button" onClick={onSubmit} className="auth__btn">

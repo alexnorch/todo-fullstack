@@ -8,8 +8,12 @@ import {
 import Main from "./Main";
 import Tasks from "./Tasks";
 import Overview from "./Overview";
-import Settings from "./Setting";
 import Auth from "./Auth";
+
+// Settings
+import SettingsWrapper from "./Settings/SettingsWrapper";
+import Profile from "./Settings/Profile";
+import Categories from "./Settings/Categories";
 
 // Protection
 import ProtectedRoutes from "./ProtectedRoutes";
@@ -36,7 +40,10 @@ const router = createBrowserRouter(
             </ProtectedCategories>
           }
         />
-        <Route path="settings" element={<Settings />} />
+        <Route path="settings" element={<SettingsWrapper />}>
+          <Route index element={<Profile />} />
+          <Route path="categories" element={<Categories />} />
+        </Route>
       </Route>
       <Route path="/auth" element={<Auth />} />
       <Route path="*" element={<NotFound />} />

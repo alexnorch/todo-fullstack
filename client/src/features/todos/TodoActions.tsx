@@ -1,5 +1,6 @@
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState, useRef, useEffect } from "react";
+import useOutsideClick from "../../hooks/useOutsideClick";
 
 interface TodoActionsProps {
   onEdit: () => void;
@@ -7,42 +8,30 @@ interface TodoActionsProps {
 }
 
 const TodoActions: React.FC<TodoActionsProps> = ({ onRemove, onEdit }) => {
-  const [showMenu, setShowMenu] = useState(false);
-  const menuRef = useRef<HTMLUListElement>(null);
+  const [isShown, setIsShown] = useState(false);
+  const nodeRef = useRef<HTMLUListElement>(null);
 
-  useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setShowMenu(false);
-      }
-    };
+  const onHide = () => setIsShown(false);
+  const onToggle = () => setIsShown((prev) => !prev);
 
-    if (showMenu) {
-      document.addEventListener("mousedown", handleOutsideClick);
-    } else {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, [showMenu]);
+  useOutsideClick({
+    isShown,
+    nodeRef,
+    onHide,
+  });
 
   return (
     <div className="todo-actions">
-      <button
-        onClick={() => setShowMenu((prev) => !prev)}
-        className="todo-actions__btn"
-      >
+      <button onClick={onToggle} className="todo-actions__btn">
         <BsThreeDotsVertical />
       </button>
-      {showMenu && (
-        <ul ref={menuRef} className="todo-actions__menu">
+      {isShown && (
+        <ul ref={nodeRef} className="todo-actions__menu">
           <li
             className="todo-actions__menu__item"
             onClick={() => {
               onRemove();
-              setShowMenu(false);
+              onHide();
             }}
           >
             Remove
@@ -51,7 +40,7 @@ const TodoActions: React.FC<TodoActionsProps> = ({ onRemove, onEdit }) => {
             className="todo-actions__menu__item"
             onClick={() => {
               onEdit();
-              setShowMenu(false);
+              onHide();
             }}
           >
             Edit

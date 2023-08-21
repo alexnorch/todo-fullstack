@@ -8,8 +8,6 @@ const Input: React.FC<InputProps> = ({
   errorMessage,
   name,
   type,
-  onKeyUp,
-  handleBlur,
 }) => {
   let classes = "input-group__input";
 
@@ -21,8 +19,6 @@ const Input: React.FC<InputProps> = ({
     <div className="input-group">
       <label className="input-group__label">{label}</label>
       <input
-        onBlur={handleBlur}
-        onKeyUp={onKeyUp}
         type={type}
         name={name}
         className={classes}

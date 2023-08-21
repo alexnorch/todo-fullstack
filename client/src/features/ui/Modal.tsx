@@ -1,4 +1,5 @@
-import { forwardRef } from "react";
+import { CSSTransition } from "react-transition-group";
+import { forwardRef, useRef } from "react";
 import { createPortal } from "react-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import Button from "./Button";
@@ -11,13 +12,12 @@ interface ModalProps {
   submitter?: () => void;
 }
 
-// React.FC<ModalProps>
-
 const Modal = forwardRef<HTMLDivElement, ModalProps>(
   ({ children, isOpen, onToggle, title, submitter }, ref) => {
+    const nodeRef = useRef(null);
     const modalContent = isOpen && (
       <div className="modal">
-        <div ref={ref} className="modal__inner">
+        <div ref={nodeRef} className="modal__inner">
           <div className="modal__header">
             <h3>{title}</h3>
             <button onClick={onToggle} className="modal__close">

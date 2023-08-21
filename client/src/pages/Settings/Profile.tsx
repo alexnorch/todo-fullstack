@@ -5,11 +5,16 @@ import { logoutUser } from "../../redux/appSlice";
 
 // Icons
 import { IoExitOutline } from "react-icons/io5";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 // Components
-import Input from "../ui/Input";
-import Button from "../ui/Button";
-import FileUploader from "../ui/FileUploader";
+import {
+  Input,
+  Button,
+  FileUploader,
+  IconButton,
+  TextField,
+} from "../../features/ui";
 
 export default function Profile() {
   const { email, name, photo } = useSelector(
@@ -20,6 +25,7 @@ export default function Profile() {
   const [oldPassword, setOldPassword] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const dispatch = useDispatch();
 
@@ -78,26 +84,41 @@ export default function Profile() {
           <h3 className="settings__section__heading">Change Password</h3>
           <hr />
           <form className="settings__section__form">
-            <Input
-              type="password"
+            <TextField
+              type={showPassword ? "text" : "password"}
               label="Old Password"
-              placeholder="Please provide your current password"
+              placeholder="Old password"
               value={oldPassword}
               onChange={(e: any) => setOldPassword(e.target.value)}
+              adornment={
+                <IconButton onClick={() => setShowPassword((prev) => !prev)}>
+                  {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+                </IconButton>
+              }
             />
-            <Input
-              type="password"
+            <TextField
+              type={showPassword ? "text" : "password"}
               label="New password"
-              placeholder="Provide your new password"
+              placeholder="New password"
               value={newPassword}
               onChange={(e: any) => setNewPassword(e.target.value)}
+              adornment={
+                <IconButton onClick={() => setShowPassword((prev) => !prev)}>
+                  {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+                </IconButton>
+              }
             />
-            <Input
-              type="password"
+            <TextField
+              type={showPassword ? "text" : "password"}
               label="Confirm New Password"
               placeholder="Confirm your new password"
               value={confirmPassword}
               onChange={(e: any) => setConfirmPassword(e.target.value)}
+              adornment={
+                <IconButton onClick={() => setShowPassword((prev) => !prev)}>
+                  {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+                </IconButton>
+              }
             />
           </form>
           <div className="settings__section__button">

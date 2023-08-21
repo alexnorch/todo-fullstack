@@ -7,6 +7,8 @@ import FileUploader from "./FileUploader";
 import Input from "./Input";
 import NotFound from "./NotFound";
 import Logo from "./Logo";
+import TextField from "./TextField";
+import IconButton from "./IconButton";
 
 export {
   Modal,
@@ -18,4 +20,6 @@ export {
   Input,
   NotFound,
   Logo,
+  TextField,
+  IconButton,
 };

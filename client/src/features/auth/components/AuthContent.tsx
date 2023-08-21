@@ -3,7 +3,7 @@ import { useState } from "react";
 import { AuthHeading, RegisterForm, LoginForm } from ".";
 
 const AuthContent = () => {
-  const [isLoginForm, setIsLoginForm] = useState<boolean>(false);
+  const [isLoginForm, setIsLoginForm] = useState<boolean>(true);
   const renderedForm = isLoginForm ? <LoginForm /> : <RegisterForm />;
   const onToggleLoginForm = () => setIsLoginForm((prev) => !prev);
 
