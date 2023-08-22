@@ -69,6 +69,13 @@ export const appSlice = createSlice({
         return item;
       });
     },
+    updateCategory: (state, action: PayloadAction<CategoryInterface>) => {
+      state.data = [
+        ...state.data.filter((item) => item._id !== action.payload._id),
+        action.payload,
+      ];
+    },
+
     addCategory: (state, action: PayloadAction<CategoryInterface>) => {
       state.data.push(action.payload);
     },
@@ -101,6 +108,7 @@ export const {
   deleteCategory,
   addCategory,
   updateTodo,
+  updateCategory,
 } = appSlice.actions;
 
 export default appSlice.reducer;

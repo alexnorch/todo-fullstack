@@ -1,25 +1,27 @@
-import { useState } from "react";
 import { TextField, ColorPicker } from "../../ui";
+import { CategoryFormProps } from "../types";
 
-const NewCategory = () => {
-  const [title, setTitle] = useState<string>("");
-  const [color, setColor] = useState<string>("#000000");
-
+const CategoryForm: React.FC<CategoryFormProps> = ({
+  title,
+  color,
+  setColor,
+  setTitle,
+}) => {
   return (
     <form className="new-category-form">
       <TextField
         label="Please provide a title of category"
         value={title}
         placeholder="Category title"
-        onChange={(e: any) => setTitle(e.target.value)}
+        onChange={setTitle}
       />
       <ColorPicker
         labelText="Please chose the color"
         color={color}
-        setColor={(e: any) => setColor(e.target.value)}
+        setColor={setColor}
       />
     </form>
   );
 };
 
-export default NewCategory;
+export default CategoryForm;

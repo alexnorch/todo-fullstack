@@ -1,14 +1,14 @@
 import { useState, useRef } from "react";
-import { TaskItem } from "./types";
+import { TaskItem } from "../types";
 import { CSSTransition } from "react-transition-group";
 
-import useTaskServices from "./useTodoServices";
+import useTaskServices from "../useTodoServices";
 
 // Components
-import Checkbox from "../ui/Checkbox";
-import Input from "../ui/Input";
+import Checkbox from "../../ui/Checkbox";
+import Input from "../../ui/Input";
 import TodoActions from "./TodoActions";
-import { Modal } from "../ui";
+import { Modal } from "../../ui";
 
 const TodoItem: React.FC<TaskItem> = ({ _id, title, completed, color }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -58,25 +58,17 @@ const TodoItem: React.FC<TaskItem> = ({ _id, title, completed, color }) => {
           </div>
         </div>
       </li>
-      <CSSTransition
-        nodeRef={nodeRef}
-        in={isDeletingTask}
-        classNames="fade-up"
-        timeout={500}
+      <Modal
+        submitter={() => onDeleteTask(_id)}
+        onToggle={() => setIsDeletingTask((prev) => !prev)}
+        isOpen={isDeletingTask}
+        title="Are your sure you want to delete this task?"
       >
-        <Modal
-          ref={nodeRef}
-          submitter={() => onDeleteTask(_id)}
-          onToggle={() => setIsDeletingTask((prev) => !prev)}
-          isOpen={isDeletingTask}
-          title="Are your sure you want to delete this task?"
-        >
-          <p>
-            This will be delete this task permanently. You cannot undo this
-            action.
-          </p>
-        </Modal>
-      </CSSTransition>
+        <p>
+          This will be delete this task permanently. You cannot undo this
+          action.
+        </p>
+      </Modal>
     </>
   );
 };

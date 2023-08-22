@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import useTaskServices from "./useTodoServices";
+import useTaskServices from "../useTodoServices";
 
 const NewTodo = () => {
   const [title, setTitle] = useState("");

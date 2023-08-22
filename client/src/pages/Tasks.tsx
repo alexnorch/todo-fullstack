@@ -11,7 +11,7 @@ import {
   TodoNavigation,
   TodoCompleted,
   TodoList,
-} from "../features/todos";
+} from "../features/todos/components";
 
 export default function Tasks() {
   const [showCompleted, setShowCompeted] = useState<boolean>(false);

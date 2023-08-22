@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { TaskItem } from "../types";
 import { addZeroToNumber } from "../helpers";
-import { TodoReadOnly } from "../features/todos";
+import { TodoReadOnly } from "../features/todos/components";
 
 const Overview = () => {
   const { data, user } = useSelector((state: RootState) => state.app);

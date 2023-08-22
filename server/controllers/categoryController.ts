@@ -5,6 +5,7 @@ import AppError from "../utils/AppError";
 import Task from "../models/taskModel";
 import Category, { CategoryInterface } from "../models/categoryModel";
 import User, { UserInterface } from "../models/userModel";
+import { populateTask } from "../utils/helpers";
 
 const createCategory = async (
   req: Request,
@@ -70,12 +71,52 @@ const deleteCategory = async (
   } catch (error) {}
 };
 
-const getCategories = async (req: Request, res: Response) => {
-  res.send("All categories");
+const getCategories = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const categories = await Category.find({ user: req.userId })
+      .select("categoryName color tasks")
+      .populate({ path: "tasks", select: "completed title color" });
+
+    if (!categories) {
+      return next(new AppError("The category wasn't found", 404));
+    }
+    res.send(categories);
+  } catch (error) {}
 };
 
-const updateCategory = (req: Request, res: Response) => {
-  res.send("update Category");
+const updateCategory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const { title, color } = req.body;
+    const category: CategoryInterface | null = await Category.findOne({
+      _id: id,
+      user: req.userId,
+    });
+
+    if (!title || !color) {
+      return next(new AppError("Please provide all values", 400));
+    }
+
+    if (!category) {
+      return next(new AppError("Category was not found", 404));
+    }
+
+    category.categoryName = title.toLowerCase();
+    category.color = color;
+
+    const updatedCategory = await category.save();
+    const populatedTasks = await updatedCategory.populate("tasks");
+
+    res.send(populatedTasks);
+  } catch (error) {}
 };
 
 export default {

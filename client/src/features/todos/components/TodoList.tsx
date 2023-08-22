@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { TaskItem } from "../../types";
+import { TaskItem } from "../../../types";
 
 // Components
 import TodoItem from "./TodoItem";

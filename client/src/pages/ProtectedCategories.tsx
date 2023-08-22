@@ -9,6 +9,7 @@ interface ProtectedProps {
 const ProtectedCategories: React.FC<ProtectedProps> = ({ children }) => {
   const { category } = useParams();
   const userData = useSelector((state: RootState) => state.app.data);
+  console.log(userData);
   const currentCategory = userData.filter(
     (data) => data.categoryName === category
   )[0];

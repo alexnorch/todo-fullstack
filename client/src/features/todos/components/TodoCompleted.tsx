@@ -1,9 +1,9 @@
 import { forwardRef, useEffect } from "react";
 import { BsArrowReturnLeft, BsXLg } from "react-icons/bs";
-import { TaskItem } from "./types";
+import { TaskItem } from "../types";
 
 // Hooks
-import useTaskServices from "./useTodoServices";
+import useTaskServices from "../useTodoServices";
 
 interface CompletedTasksProps {
   tasks: TaskItem[];

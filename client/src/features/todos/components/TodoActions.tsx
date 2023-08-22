@@ -1,6 +1,6 @@
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState, useRef, useEffect } from "react";
-import useOutsideClick from "../../hooks/useOutsideClick";
+import useOutsideClick from "../../../hooks/useOutsideClick";
 
 interface TodoActionsProps {
   onEdit: () => void;

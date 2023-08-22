@@ -1,11 +1,23 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import {
+  configureStore,
+  getDefaultMiddleware,
+  combineReducers,
+} from "@reduxjs/toolkit";
 import { localStorageMiddleware, autoHideAlertMiddleware } from "./middlewares";
+
+// Reducers
+import categorySlice from "../features/categories/categorySlice";
+import todoSlice from "../features/todos/todoSlice";
 import appSlice from "./appSlice";
 
+const rootReducer = combineReducers({
+  todo: todoSlice,
+  categories: categorySlice,
+  app: appSlice,
+});
+
 export const store = configureStore({
-  reducer: {
-    app: appSlice,
-  },
+  reducer: rootReducer,
   middleware: [
     ...getDefaultMiddleware(),
     localStorageMiddleware,

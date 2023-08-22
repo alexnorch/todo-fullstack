@@ -7,10 +7,12 @@ import Category, { CategoryInterface } from "../models/categoryModel";
 import User, { UserInterface } from "../models/userModel";
 import { populateTask } from "../utils/helpers";
 
-const getTasks = async (req: Request, res: Response) => {
-  const tasks = await Task.find({ user: req.userId }).populate({
+const getTasks = async (req: Request, res: Response, next: NextFunction) => {
+  const tasks = await Task.find({
+    user: req.userId,
+  }).populate({
     path: "category",
-    select: "title color",
+    select: "categoryName color",
   });
 
   res.send({ tasks });
