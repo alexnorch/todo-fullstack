@@ -48,4 +48,22 @@ const CategoryActions: React.FC<CategoryActionsProps> = ({
   );
 };
 
+// const onSubmit = () => {
+//   switch (categoryAction) {
+//     case "update":
+//       onUpdateCategory(_id, {
+//         title: newCategoryTitle,
+//         color: newCategoryColor,
+//       });
+//     case "delete":
+//       if (categoryAction === "delete") {
+//         onDeleteCategory(_id);
+//       }
+//   }
+
+//   if (alertType !== "danger") {
+//     onModalToggle();
+//   }
+// };
+
 export default CategoryActions;

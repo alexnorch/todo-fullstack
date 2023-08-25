@@ -5,3 +5,9 @@ export interface TaskItem {
   category: string;
   color: string;
 }
+
+export interface CompletedTasksProps {
+  tasks: TaskItem[];
+  onToggle: () => void;
+  isActive: boolean;
+}

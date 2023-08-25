@@ -1,6 +1,6 @@
 import CategoryItem from "./CategoryItem";
 import CategoryMenu from "./CategoryActions";
-import CategoriesContainer from "./CategoriesContainer";
-import NewCategory from "./CategoryForm";
+import CategoriesList from "./CategoriesList";
+import CategoryForm from "./CategoryForm";
 
-export { CategoryItem, CategoryMenu, CategoriesContainer, NewCategory };
+export { CategoryItem, CategoryMenu, CategoriesList, CategoryForm };

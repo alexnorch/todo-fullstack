@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import { capitalizeFirstLetter } from "../helpers";
@@ -17,7 +17,6 @@ export default function Tasks() {
   const [showCompleted, setShowCompeted] = useState<boolean>(false);
   const { getTaskByCategory } = useTaskServices();
   const { category } = useParams();
-  const nodeRef = useRef<HTMLDivElement>(null);
 
   const onToggleCompletedTasks = () => setShowCompeted((prev) => !prev);
 
@@ -45,20 +44,11 @@ export default function Tasks() {
         completedTasksLength={completedTasks.length}
         showCompleted={onToggleCompletedTasks}
       />
-      <CSSTransition
-        unmountOnExit
-        timeout={1000}
-        in={showCompleted}
-        classNames="completed-tasks"
-        nodeRef={nodeRef}
-      >
-        <TodoCompleted
-          onToggle={onToggleCompletedTasks}
-          isActive={showCompleted}
-          ref={nodeRef}
-          tasks={completedTasks}
-        />
-      </CSSTransition>
+      <TodoCompleted
+        onToggle={onToggleCompletedTasks}
+        isActive={showCompleted}
+        tasks={completedTasks}
+      />
     </>
   );
 }

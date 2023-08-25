@@ -1,8 +1,11 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import CategoryItem from "./CategoryItem";
+import { IconButton } from "../../ui";
 
-const CategoriesContainer = () => {
+import { AiOutlinePlus } from "react-icons/ai";
+
+const CategoriesList = () => {
   const data = useSelector((state: RootState) => state.app.data);
   return (
     <div className="categories-container">
@@ -13,4 +16,4 @@ const CategoriesContainer = () => {
   );
 };
 
-export default CategoriesContainer;
+export default CategoriesList;

@@ -4,8 +4,8 @@ import { AiOutlinePlus } from "react-icons/ai";
 
 // Components
 import {
-  CategoriesContainer,
-  NewCategory,
+  CategoriesList,
+  CategoryForm,
 } from "../../features/categories/components";
 import useCategoryServices from "../../features/categories/useCategoryServices";
 
@@ -19,9 +19,9 @@ export default function Categories() {
 
   return (
     <div className="categories-settings">
-      <CategoriesContainer />
+      <CategoriesList />
 
-      <div className="new-category">
+      <div className="new-category-btn">
         <IconButton onClick={toggleModal}>
           <AiOutlinePlus />
         </IconButton>
@@ -35,7 +35,7 @@ export default function Categories() {
           onAddCategory({ title: categoryTitle, color: categoryColor })
         }
       >
-        <NewCategory
+        <CategoryForm
           setTitle={(e: any) => setCategoryTitle(e.target.value)}
           setColor={(e: any) => setCategoryColor(e.target.value)}
           title={categoryTitle}

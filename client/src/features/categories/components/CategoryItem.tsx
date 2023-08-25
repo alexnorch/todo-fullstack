@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { RootState } from "../../../redux/store";
+import { useSelector } from "react-redux";
 import useCategoryServices from "../useCategoryServices";
 import CategoryMenu from "./CategoryActions";
 import { capitalizeFirstLetter } from "../../../helpers";
@@ -6,49 +8,58 @@ import { capitalizeFirstLetter } from "../../../helpers";
 import { Modal } from "../../ui";
 import CategoryForm from "./CategoryForm";
 
+type CategoryAction = "delete" | "update" | null;
+
 const CategoryItem: React.FC<any> = ({ tasks, color, categoryName, _id }) => {
   const [isModal, setIsModal] = useState<boolean>(false);
-  const [action, setAction] = useState<"delete" | "update" | null>(null);
-  const [newCategoryTitle, setNewCategoryTitle] =
-    useState<string>(categoryName);
-  const [newCategoryColor, setNewCategoryColor] = useState<string>(color);
+  const [categoryAction, setCategoryAction] = useState<CategoryAction>(null);
+  const [newTitle, setNewTitle] = useState<string>(categoryName);
+  const [newColor, setNewColor] = useState<string>(color);
+  const alertType = useSelector((state: RootState) => state.app.alertType);
 
   const { onDeleteCategory, onUpdateCategory } = useCategoryServices();
-  const onModalToggle = () => {
-    setIsModal((prev) => !prev);
-  };
+  const onModalToggle = () => setIsModal((prev) => !prev);
+
+  const updatingModalTitle = "Updating the category data";
+  const deletingModalTitle = `Deleting the category ${categoryName}`;
 
   const onSubmit = () => {
-    if (action === "update") {
-      onUpdateCategory(_id, {
-        title: newCategoryTitle,
-        color: newCategoryColor,
-      });
+    switch (categoryAction) {
+      case "update":
+        onUpdateCategory(_id, {
+          title: newTitle,
+          color: newColor,
+        });
+      case "delete":
+        if (categoryAction === "delete") {
+          onDeleteCategory(_id);
+        }
     }
 
-    if (action === "delete") {
-      onDeleteCategory(_id);
+    if (alertType !== "danger") {
+      onModalToggle();
     }
-
-    onModalToggle();
   };
 
-  const modalTitle =
-    action === "update"
-      ? "Updating the category data"
-      : `Deleting the category ${categoryName}`;
+  // If the user clicks "Update" button, it will generate a form for creating a new category in Modal component, otherwise
+  // it will show a confirm message for deleting the chosen category
 
-  const modalContent =
-    action === "update" ? (
-      <CategoryForm
-        setTitle={(e: any) => setNewCategoryTitle(e.target.value)}
-        setColor={(e: any) => setNewCategoryColor(e.target.value)}
-        title={newCategoryTitle}
-        color={newCategoryColor}
-      />
-    ) : (
-      <p>Are your sure you want to delete this category?</p>
-    );
+  const getCategoryActionContent = () => {
+    if (categoryAction === "update") {
+      return (
+        <CategoryForm
+          setTitle={(e: any) => setNewTitle(e.target.value)}
+          setColor={(e: any) => setNewColor(e.target.value)}
+          title={newTitle}
+          color={newColor}
+        />
+      );
+    } else if (categoryAction === "delete") {
+      return <p>Are your sure you want to delete this category?</p>;
+    }
+
+    return null;
+  };
 
   return (
     <>
@@ -58,11 +69,11 @@ const CategoryItem: React.FC<any> = ({ tasks, color, categoryName, _id }) => {
       >
         <CategoryMenu
           onTitleDelete={() => {
-            setAction("delete");
+            setCategoryAction("delete");
             onModalToggle();
           }}
           onTitleEdit={() => {
-            setAction("update");
+            setCategoryAction("update");
             onModalToggle();
           }}
         />
@@ -77,10 +88,12 @@ const CategoryItem: React.FC<any> = ({ tasks, color, categoryName, _id }) => {
       <Modal
         isOpen={isModal}
         onToggle={onModalToggle}
-        title={modalTitle}
+        title={
+          categoryAction === "update" ? updatingModalTitle : deletingModalTitle
+        }
         submitter={onSubmit}
       >
-        {modalContent}
+        {getCategoryActionContent()}
       </Modal>
     </>
   );

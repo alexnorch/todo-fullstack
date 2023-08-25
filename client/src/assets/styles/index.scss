@@ -1087,7 +1087,7 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
   justify-content: space-between;
 }
 
-.new-category {
+.new-category-btn {
   @include flex();
   @include rounded(70px);
   background-color: $blue;
@@ -1096,6 +1096,20 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
   right: 50px;
   color: #fff;
   box-shadow: $shadow-sm;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+
+  > button {
+    transition: none;
+    color: #fff;
+
+    &:hover {
+      background-color: inherit;
+    }
+  }
 }
 
 .new-category-form {

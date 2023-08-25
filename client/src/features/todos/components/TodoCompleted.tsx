@@ -1,77 +1,60 @@
-import { forwardRef, useEffect } from "react";
+import { useRef } from "react";
 import { BsArrowReturnLeft, BsXLg } from "react-icons/bs";
-import { TaskItem } from "../types";
+import useOutsideClick from "../../../hooks/useOutsideClick";
+import { CSSTransition } from "react-transition-group";
+import { CompletedTasksProps } from "../types";
 
 // Hooks
 import useTaskServices from "../useTodoServices";
 
-interface CompletedTasksProps {
-  tasks: TaskItem[];
-  onToggle: () => void;
-  isActive: boolean;
-}
+const CompletedTasks: React.FC<CompletedTasksProps> = ({
+  tasks,
+  isActive,
+  onToggle,
+}) => {
+  const { onUpdateTask } = useTaskServices();
+  const nodeRef = useRef<HTMLDivElement>(null);
 
-// Добавити пункт коли саме був виконаний таск
-// На страниці Overview добавити позначку що таск виконаний (Checked icon)
+  useOutsideClick({ isShown: isActive, onHide: onToggle, nodeRef });
 
-const CompletedTasks = forwardRef<HTMLDivElement, CompletedTasksProps>(
-  ({ tasks, isActive, onToggle }, ref) => {
-    const { onUpdateTask } = useTaskServices();
+  const completedTasks = tasks?.map((item) => (
+    <li key={item._id} className="completed-tasks__list__item">
+      <p className="completed-tasks__list__item__text">{item.title}</p>
+      <button
+        onClick={() => onUpdateTask(item._id, item)}
+        className="completed-tasks__list__item__btn"
+      >
+        <BsArrowReturnLeft />
+      </button>
+    </li>
+  ));
 
-    useEffect(() => {
-      const handleOutsideClick = (event: MouseEvent) => {
-        if (
-          ref &&
-          "current" in ref &&
-          ref.current &&
-          !ref.current.contains(event.target as Node)
-        ) {
-          onToggle();
-        }
-      };
-
-      if (isActive) {
-        document.addEventListener("mousedown", handleOutsideClick);
-      } else {
-        document.removeEventListener("mousedown", handleOutsideClick);
-      }
-
-      return () => {
-        document.removeEventListener("mousedown", handleOutsideClick);
-      };
-    }, [isActive]);
-
-    const completedTasks =
-      tasks.length > 0 ? (
-        tasks.map((item) => (
-          <li key={item._id} className="completed-tasks__list__item">
-            <p className="completed-tasks__list__item__text">{item.title}</p>
-            <button
-              onClick={() => onUpdateTask(item._id, item)}
-              className="completed-tasks__list__item__btn"
-            >
-              <BsArrowReturnLeft />
-            </button>
-          </li>
-        ))
-      ) : (
-        <p>No completed tasks to show</p>
-      );
-
-    return (
-      isActive && (
-        <div className="completed-tasks" ref={ref}>
-          <div className="completed-tasks__top">
-            <h2 className="completed-tasks__top__title">Completed tasks</h2>
-            <button onClick={onToggle} className="completed-tasks__top__btn">
-              <BsXLg />
-            </button>
+  return (
+    <CSSTransition
+      unmountOnExit
+      timeout={1000}
+      in={isActive}
+      classNames="completed-tasks"
+      nodeRef={nodeRef}
+    >
+      <>
+        {isActive ? (
+          <div className="completed-tasks" ref={nodeRef}>
+            <div className="completed-tasks__top">
+              <h2 className="completed-tasks__top__title">Completed tasks</h2>
+              <button onClick={onToggle} className="completed-tasks__top__btn">
+                <BsXLg />
+              </button>
+            </div>
+            <ul className="completed-tasks__list">
+              {completedTasks}
+              {!completedTasks.length && <p>No completed task to show</p>}
+            </ul>
           </div>
-          <ul className="completed-tasks__list">{completedTasks}</ul>
-        </div>
-      )
-    );
-  }
-);
+        ) : null}
+      </>
+    </CSSTransition>
+  );
+};
 
 export default CompletedTasks;

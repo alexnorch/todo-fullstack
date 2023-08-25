@@ -8,7 +8,7 @@ import { useRef } from "react";
 import Aside from "../features/layout/Aside";
 import Alert from "../features/ui/Alert";
 
-export default function Main() {
+const Main = () => {
   const { isAlert } = useSelector((state: RootState) => state.app);
   const nodeRef = useRef(null);
 
@@ -28,4 +28,6 @@ export default function Main() {
       </CSSTransition>
     </main>
   );
-}
+};
+
+export default Main;
