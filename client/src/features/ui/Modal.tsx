@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 import { AiOutlineClose } from "react-icons/ai";
 import { Button } from ".";
+import { MouseEvent } from "../../types";
 
 interface ModalProps {
   title: string;
@@ -24,8 +25,10 @@ const Modal: React.FC<ModalProps> = ({
   const modalContent = (
     <div
       className="modal"
-      onClick={(e: any) => {
-        if (e.target.classList.contains("modal")) {
+      onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+        const targetElement = e.target as HTMLElement;
+
+        if (targetElement.classList.contains("modal")) {
           onToggle();
         }
       }}

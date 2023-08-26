@@ -3,7 +3,6 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
   todos: [],
-  completedTodos: [],
 };
 
 const taskSlice = createSlice({

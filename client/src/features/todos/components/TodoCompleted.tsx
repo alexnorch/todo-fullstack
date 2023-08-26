@@ -12,7 +12,7 @@ const CompletedTasks: React.FC<CompletedTasksProps> = ({
   isActive,
   onToggle,
 }) => {
-  const { onUpdateTask } = useTaskServices();
+  const { onCompleteTask } = useTaskServices();
   const nodeRef = useRef<HTMLDivElement>(null);
 
   useOutsideClick({ isShown: isActive, onHide: onToggle, nodeRef });
@@ -21,7 +21,7 @@ const CompletedTasks: React.FC<CompletedTasksProps> = ({
     <li key={item._id} className="completed-tasks__list__item">
       <p className="completed-tasks__list__item__text">{item.title}</p>
       <button
-        onClick={() => onUpdateTask(item._id, item)}
+        onClick={() => onCompleteTask(item._id, item)}
         className="completed-tasks__list__item__btn"
       >
         <BsArrowReturnLeft />

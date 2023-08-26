@@ -1,5 +1,7 @@
+import { ChangeEvent } from "../../types";
+
 interface ColorPickerProps {
-  setColor: (e: any) => void;
+  setColor: (e: ChangeEvent) => void;
   color: string;
   labelText: string;
 }

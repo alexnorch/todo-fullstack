@@ -27,6 +27,7 @@ const TextField: React.FC<InputProps> = ({
       <label className={labelClass}>{value.length > 0 && label}</label>
       <div className="text-field__input">
         <input
+          required
           type={type}
           name={name}
           placeholder={placeholder}

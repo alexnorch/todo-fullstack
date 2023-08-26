@@ -1,8 +1,13 @@
+export type FormEvent = React.FormEvent<HTMLFormElement>;
+export type MouseEvent = React.MouseEvent<HTMLButtonElement>;
+export type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
+export type AlertTypes = "danger" | "success" | "info";
+
 export interface AppState {
   user: UserInfo | null;
   token: string | null;
   data: UserData[];
-  alertType: "danger" | "success" | "info";
+  alertType: AlertTypes;
   alertText: string | null;
   isAlert: boolean;
 }
@@ -57,7 +62,7 @@ export interface AuthPayload {
 export interface AlertProps {
   duration?: number;
   text: string;
-  type: "danger" | "success" | "info";
+  type: AlertTypes;
 }
 
 export interface ContainerProps {

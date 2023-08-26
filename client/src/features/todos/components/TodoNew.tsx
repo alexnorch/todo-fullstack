@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import useTaskServices from "../useTodoServices";
+import { FormEvent } from "../../../types";
 
 const NewTodo = () => {
   const [title, setTitle] = useState("");
@@ -9,7 +10,7 @@ const NewTodo = () => {
 
   const clearInput = () => setTitle("");
 
-  const onSubmit = async (e: any) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     onCreateTask(title, category, clearInput);
     setTitle("");

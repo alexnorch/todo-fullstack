@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Modal, IconButton } from "../../features/ui";
 import { AiOutlinePlus } from "react-icons/ai";
+import { ChangeEvent } from "../../types";
 
 // Components
 import {
@@ -36,8 +37,8 @@ export default function Categories() {
         }
       >
         <CategoryForm
-          setTitle={(e: any) => setCategoryTitle(e.target.value)}
-          setColor={(e: any) => setCategoryColor(e.target.value)}
+          setTitle={(e: ChangeEvent) => setCategoryTitle(e.target.value)}
+          setColor={(e: ChangeEvent) => setCategoryColor(e.target.value)}
           title={categoryTitle}
           color={categoryColor}
         />

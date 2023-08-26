@@ -4,11 +4,22 @@ import { showAlert } from "../../redux/appSlice";
 import { RootState } from "../../redux/store";
 import { updateTodo, removeTodo, addNewTodo } from "../../redux/appSlice";
 import { useMemo } from "react";
+import { TaskItem } from "./types";
+
+const filterTasks = (tasks: TaskItem[], isCompleted: boolean) =>
+  tasks.filter((task) => task.completed === isCompleted);
 
 const useTodoServices = () => {
-  const { data } = useSelector((state: RootState) => state.app);
   const { authAxios } = useCustomAxios();
+  const { data } = useSelector((state: RootState) => state.app);
+
+  const allTasks: TaskItem[] = data.flatMap(({ tasks }) => tasks);
+  const completedTasks = filterTasks(allTasks, true);
+  const uncompletedTasks = filterTasks(allTasks, false);
+
   const dispatch = useDispatch();
+
+  // Recreate this function on the server side
 
   const getTaskByCategory = useMemo(() => {
     return (params: { category: string | undefined; isCompleted: boolean }) => {
@@ -119,6 +130,9 @@ const useTodoServices = () => {
   };
 
   return {
+    completedTasks,
+    allTasks,
+    uncompletedTasks,
     onUpdateTask,
     onDeleteTask,
     getTaskByCategory,

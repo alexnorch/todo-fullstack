@@ -11,3 +11,8 @@ export interface CompletedTasksProps {
   onToggle: () => void;
   isActive: boolean;
 }
+
+export interface TaskNavigationProps {
+  showCompleted: () => void;
+  completedTasksLength: number;
+}

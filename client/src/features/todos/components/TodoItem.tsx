@@ -1,6 +1,6 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { TaskItem } from "../types";
-import { CSSTransition } from "react-transition-group";
+import { FormEvent, ChangeEvent } from "../../../types";
 
 import useTaskServices from "../useTodoServices";
 
@@ -15,23 +15,24 @@ const TodoItem: React.FC<TaskItem> = ({ _id, title, completed, color }) => {
   const [userValue, setUserValue] = useState<string>(title);
   const [isDeletingTask, setIsDeletingTask] = useState<boolean>(false);
   const { onUpdateTask, onDeleteTask, onCompleteTask } = useTaskServices();
-  const nodeRef = useRef<HTMLDivElement>(null);
 
   const onEditBegin = () => setIsEditing(true);
   const onEditEnd = () => setIsEditing(false);
 
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    onUpdateTask(_id, { title: userValue, completed }, onEditEnd);
+  };
+
+  const handleInputChange = (e: ChangeEvent) => {
+    setUserValue(e.target.value);
+  };
+
   const TodoContent = isEditing ? (
-    <form
-      onSubmit={(e: any) => {
-        e.preventDefault();
-        onUpdateTask(_id, { title: userValue, completed }, onEditEnd);
-      }}
-    >
+    <form onSubmit={handleSubmit}>
       <Input
         placeholder="Type a new title of task"
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          setUserValue(e.target.value)
-        }
+        onChange={handleInputChange}
         value={userValue}
       />
     </form>

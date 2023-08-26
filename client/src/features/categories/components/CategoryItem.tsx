@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { RootState } from "../../../redux/store";
 import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 import useCategoryServices from "../useCategoryServices";
 import CategoryMenu from "./CategoryActions";
 import { capitalizeFirstLetter } from "../../../helpers";
+import { ChangeEvent } from "../../../types";
 
 import { Modal } from "../../ui";
 import CategoryForm from "./CategoryForm";
@@ -44,12 +45,12 @@ const CategoryItem: React.FC<any> = ({ tasks, color, categoryName, _id }) => {
   // If the user clicks "Update" button, it will generate a form for creating a new category in Modal component, otherwise
   // it will show a confirm message for deleting the chosen category
 
-  const getCategoryActionContent = () => {
+  const getModalContent = () => {
     if (categoryAction === "update") {
       return (
         <CategoryForm
-          setTitle={(e: any) => setNewTitle(e.target.value)}
-          setColor={(e: any) => setNewColor(e.target.value)}
+          setTitle={(e: ChangeEvent) => setNewTitle(e.target.value)}
+          setColor={(e: ChangeEvent) => setNewColor(e.target.value)}
           title={newTitle}
           color={newColor}
         />
@@ -93,7 +94,7 @@ const CategoryItem: React.FC<any> = ({ tasks, color, categoryName, _id }) => {
         }
         submitter={onSubmit}
       >
-        {getCategoryActionContent()}
+        {getModalContent()}
       </Modal>
     </>
   );

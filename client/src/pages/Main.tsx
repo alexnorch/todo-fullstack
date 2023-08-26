@@ -10,7 +10,7 @@ import Alert from "../features/ui/Alert";
 
 const Main = () => {
   const { isAlert } = useSelector((state: RootState) => state.app);
-  const nodeRef = useRef(null);
+  const nodeRef = useRef<HTMLDivElement>(null);
 
   return (
     <main className="app">

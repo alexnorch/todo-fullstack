@@ -1,10 +1,7 @@
+import { TaskNavigationProps } from "../types";
+
 // Icons
 import { HiCheckCircle } from "react-icons/hi";
-
-interface TaskNavigationProps {
-  showCompleted: () => void;
-  completedTasksLength: number;
-}
 
 const TaskNavigation: React.FC<TaskNavigationProps> = ({
   showCompleted,

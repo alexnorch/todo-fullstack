@@ -1,48 +1,69 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { TaskItem } from "../types";
+import moment from "moment";
 import { addZeroToNumber } from "../helpers";
 import { TodoReadOnly } from "../features/todos/components";
+import useTodoServices from "../features/todos/useTodoServices";
+import { TaskItem } from "../types";
+
+const OverviewStatsCard: React.FC<{ title: string; count: number }> = ({
+  title,
+  count,
+}) => {
+  return (
+    <div className="overview-stats-card">
+      <p className="overview-stats-card__count">{addZeroToNumber(count)}</p>
+      <h3 className="overview-stats-card__text">{title}</h3>
+    </div>
+  );
+};
+
+const OverviewTasksBlock: React.FC<{
+  title: string;
+  tasks: React.ReactNode;
+}> = ({ title, tasks }) => {
+  return (
+    <div className="overview-tasks__block">
+      <h2 className="overview-tasks__heading">{title}</h2>
+      <div className="overview-tasks__container">{tasks}</div>
+    </div>
+  );
+};
 
 const Overview = () => {
-  const { data, user } = useSelector((state: RootState) => state.app);
-  const allTasks: TaskItem[] = data.flatMap(({ tasks }) => tasks);
+  const currentDate = moment(Date.now()).format("MMMM Do");
+  const { user } = useSelector((state: RootState) => state.app);
+  const { allTasks, completedTasks, uncompletedTasks } = useTodoServices();
 
-  const completedTasks = allTasks.filter((task) => task.completed);
-  const uncompletedTasks = allTasks.filter((task) => !task.completed);
-  const todoItems = allTasks.map((task) => (
-    <TodoReadOnly key={task._id} {...task} />
-  ));
+  const mapTasksToComponents = (tasks: TaskItem[]) =>
+    tasks.map((task) => <TodoReadOnly key={task._id} {...task} />);
 
   return (
     <div className="overview">
       <div className="overview-heading">
         <h1>Hello {user!.name}</h1>
-        <h2>Today is 24 June</h2>
+        <h2>Today is {currentDate}</h2>
       </div>
-      <section className="overview-cards">
-        <div className="overview-card">
-          <p className="overview-card__text">
-            {addZeroToNumber(allTasks.length)}
-          </p>
-          <h3 className="overview-card__heading">All tasks</h3>
-        </div>
-        <div className="overview-card">
-          <p className="overview-card__text">
-            {addZeroToNumber(completedTasks.length)}
-          </p>
-          <h3 className="overview-card__heading">Completed tasks</h3>
-        </div>
-        <div className="overview-card">
-          <p className="overview-card__text">
-            {addZeroToNumber(uncompletedTasks.length)}
-          </p>
-          <h3 className="overview-card__heading">Uncompleted tasks</h3>
-        </div>
+      <section className="overview-stats">
+        <OverviewStatsCard title="All tasks" count={allTasks.length} />
+        <OverviewStatsCard
+          title="Completed tasks"
+          count={completedTasks.length}
+        />
+        <OverviewStatsCard
+          title="Uncompleted tasks"
+          count={uncompletedTasks.length}
+        />
       </section>
       <section className="overview-tasks">
-        <h2 className="overview-tasks__heading">All tasks:</h2>
-        <div className="overview-tasks__container">{todoItems}</div>
+        <OverviewTasksBlock
+          title="Uncompleted tasks"
+          tasks={mapTasksToComponents(uncompletedTasks)}
+        />
+        <OverviewTasksBlock
+          title="Completed tasks"
+          tasks={mapTasksToComponents(completedTasks)}
+        />
       </section>
     </div>
   );
