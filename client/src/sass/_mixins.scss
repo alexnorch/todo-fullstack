@@ -1,0 +1,18 @@
+@mixin flex($direction: row, $align: center, $justify: center) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+@mixin clearButtonStyles() {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+@mixin rounded($size) {
+  border-radius: 50%;
+  width: $size;
+  height: $size;
+}

@@ -1,0 +1,37 @@
+@import "../../../sass/variables";
+
+.checkbox {
+  display: flex;
+  cursor: pointer;
+
+  &__input {
+    visibility: hidden;
+  }
+
+  &__input:checked + &__label::after {
+    transform: scale(1);
+  }
+
+  &__label {
+    cursor: inherit;
+    display: block;
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+
+    &::after {
+      position: absolute;
+      content: "";
+      width: 80%;
+      height: 80%;
+      background-color: $purple;
+      border-radius: 50%;
+      left: 10%;
+      top: 10%;
+      transition: 0.2s ease-out;
+      transform: scale(0);
+    }
+  }
+}

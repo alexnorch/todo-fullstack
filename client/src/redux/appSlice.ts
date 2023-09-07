@@ -70,10 +70,10 @@ export const appSlice = createSlice({
       });
     },
     updateCategory: (state, action: PayloadAction<CategoryInterface>) => {
-      state.data = [
-        ...state.data.filter((item) => item._id !== action.payload._id),
-        action.payload,
-      ];
+      state.data = state.data.map((item) => {
+        if (item._id === action.payload._id) return action.payload;
+        return item;
+      });
     },
 
     addCategory: (state, action: PayloadAction<CategoryInterface>) => {

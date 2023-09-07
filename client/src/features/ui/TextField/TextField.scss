@@ -1,0 +1,55 @@
+@import "../../../sass/mixins";
+@import "../../../sass/variables";
+
+.text-field {
+  &__label {
+    display: inline-block;
+    visibility: hidden;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.5s ease;
+    font-size: 14px;
+
+    &.visible {
+      visibility: visible;
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  &__input {
+    @include flex(row, center, space-between);
+    position: relative;
+    gap: 10px;
+    background-color: #fff;
+    box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.2);
+    margin-top: 5px;
+    border-radius: 4px;
+    padding: 0 10px;
+    transition: all 0.3s ease;
+    -webkit-box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.2);
+
+    input {
+      flex-grow: 1;
+      font-size: 14px;
+      border: none;
+      padding: 12px 0px;
+      border-bottom: 2px solid transparent;
+      outline: none;
+    }
+
+    &:focus {
+      border-bottom: 2px solid $purple;
+    }
+
+    &.invalid {
+      border-bottom: 2px solid $red;
+    }
+  }
+
+  &__adornment {
+    flex-shrink: 0;
+  }
+}

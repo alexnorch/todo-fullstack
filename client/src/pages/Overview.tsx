@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
 import moment from "moment";
+import { RootState } from "../redux/store";
 import { addZeroToNumber } from "../helpers";
-import { TodoReadOnly } from "../features/todos/components";
+import { TodoReadOnly } from "../features/todos";
 import useTodoServices from "../features/todos/useTodoServices";
 import { TaskItem } from "../types";
 
@@ -11,9 +11,9 @@ const OverviewStatsCard: React.FC<{ title: string; count: number }> = ({
   count,
 }) => {
   return (
-    <div className="overview-stats-card">
-      <p className="overview-stats-card__count">{addZeroToNumber(count)}</p>
-      <h3 className="overview-stats-card__text">{title}</h3>
+    <div className="overview-stats__column">
+      <p className="overview-stats__count">{addZeroToNumber(count)}</p>
+      <h3 className="overview-stats__text">{title}</h3>
     </div>
   );
 };

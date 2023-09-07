@@ -1,14 +1,15 @@
-import Modal from "./Modal";
-import Alert from "./Alert";
-import Button from "./Button";
-import Checkbox from "./Checkbox";
-import ColorPicker from "./ColorPicker";
-import FileUploader from "./FileUploader";
-import Input from "./Input";
-import NotFound from "./NotFound";
-import Logo from "./Logo";
-import TextField from "./TextField";
-import IconButton from "./IconButton";
+import Modal from "./Modal/Modal";
+import Alert from "./Alert/Alert";
+import Button from "./Button/Button";
+import Checkbox from "./Checkbox/Checkbox";
+import ColorPicker from "./ColorPicker/ColorPicker";
+import FileUploader from "./FileUploader/FileUploader";
+import Input from "./Input/Input";
+import NotFound from "./NotFound/NotFound";
+import Logo from "./Logo/Logo";
+import TextField from "./TextField/TextField";
+import IconButton from "./IconButton/IconButton";
+import ActionsMenu from "./ActionsMenu/ActionsMenu";
 
 export {
   Modal,
@@ -22,4 +23,5 @@ export {
   Logo,
   TextField,
   IconButton,
+  ActionsMenu,
 };

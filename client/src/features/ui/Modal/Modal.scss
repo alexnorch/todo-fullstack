@@ -1,0 +1,86 @@
+@import "../../../sass/mixins";
+@import "../../../sass/variables";
+
+.modal {
+  position: absolute;
+  background-color: transparent;
+  z-index: 999;
+  height: 100vh;
+  width: 100%;
+  top: 0;
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $white;
+    color: var(--black);
+    -webkit-box-shadow: $shadow-sm;
+    -moz-box-shadow: $shadow-sm;
+    box-shadow: $shadow-sm;
+    border-radius: 15px;
+
+    &.fade-up-enter {
+      opacity: 0;
+      transform: translate(-50%, -40%);
+    }
+
+    &.fade-up-enter-active {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+      transition: all 0.3s ease;
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $purple;
+    padding: 0 30px;
+    height: 80px;
+    color: $white;
+    border-radius: 15px 15px 0 0;
+
+    h3 {
+      font-size: 20px;
+      font-weight: 400;
+    }
+  }
+
+  &__body {
+    margin: 20px;
+    padding: 20px 0px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    flex-basis: 50%;
+    flex-grow: 1;
+  }
+
+  &__bottom {
+    padding: 10px;
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+  }
+
+  &__submit {
+    background-color: $purple;
+    color: $white;
+    width: 110px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+  }
+
+  &__close {
+    cursor: pointer;
+    color: $white;
+    font-size: 24px;
+    background: none;
+    border: none;
+    border-radius: 5px;
+  }
+}

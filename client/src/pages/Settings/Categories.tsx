@@ -1,13 +1,10 @@
 import { useState } from "react";
-import { Modal, IconButton } from "../../features/ui";
 import { AiOutlinePlus } from "react-icons/ai";
+import { Modal, IconButton } from "../../features/ui";
 import { ChangeEvent } from "../../types";
 
 // Components
-import {
-  CategoriesList,
-  CategoryForm,
-} from "../../features/categories/components";
+import { CategoriesList, CategoryForm } from "../../features/categories";
 import useCategoryServices from "../../features/categories/useCategoryServices";
 
 export default function Categories() {
@@ -19,15 +16,13 @@ export default function Categories() {
   const toggleModal = () => setIsModal((prev) => !prev);
 
   return (
-    <div className="categories-settings">
+    <>
       <CategoriesList />
-
       <div className="new-category-btn">
         <IconButton onClick={toggleModal}>
           <AiOutlinePlus />
         </IconButton>
       </div>
-
       <Modal
         title="Create new category"
         isOpen={isModal}
@@ -43,6 +38,6 @@ export default function Categories() {
           color={categoryColor}
         />
       </Modal>
-    </div>
+    </>
   );
 }

@@ -1,0 +1,62 @@
+@import "../../../sass/mixins";
+@import "../../../sass/variables";
+
+.menu {
+  width: 300px;
+  margin-top: 300px;
+  list-style: none;
+
+  &__item {
+    margin-bottom: 20px;
+    @include flex(row, center, flex-start);
+    gap: 20px;
+  }
+
+  &__text,
+  &__link {
+    color: $white;
+    font-size: 22px;
+  }
+
+  &__icon {
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: $white;
+
+    svg {
+      width: 25px;
+      height: 25px;
+      color: $black;
+    }
+  }
+}
+
+.menu-categories {
+  align-items: flex-start;
+
+  &__list {
+    list-style: none;
+  }
+
+  &__link {
+    color: #fff;
+  }
+
+  &__item {
+    margin-top: 10px;
+    font-size: 18px;
+  }
+
+  &__dot {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+}

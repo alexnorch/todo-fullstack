@@ -1,0 +1,50 @@
+@import "../../../sass/mixins";
+@import "../../../sass/variables";
+
+.new-task {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 30px 0;
+
+  &__form {
+    position: relative;
+    max-width: 950px;
+    width: 100%;
+  }
+
+  &__input {
+    outline: none;
+    width: 100%;
+    border: none;
+    height: 70px;
+    border-radius: 30px;
+    padding-left: 140px;
+    font-size: 18px;
+    border-bottom: 3px solid $blue-darken;
+  }
+
+  &__span {
+    position: absolute;
+    display: inline-block;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+
+    &:nth-of-type(1) {
+      background-color: $red;
+      left: 30px;
+    }
+    &:nth-of-type(2) {
+      background-color: $orange;
+      left: 60px;
+    }
+    &:nth-of-type(3) {
+      background-color: $purple;
+      left: 90px;
+    }
+  }
+}

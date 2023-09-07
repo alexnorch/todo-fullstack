@@ -1,21 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,700;1,700&display=swap");
 @import "./mixins.scss";
-
-// Variables
-$black: #494d5f;
-$grey: #ebecf0c3;
-$white: #eee;
-$red: #9b1c31;
-$orange: #ffb347;
-$blue: #a18aff;
-$blue-darken: #8a70f0;
-$purple: #ca8bfe;
-
-$red-bright: #f46d75;
-$sky: #009dff;
-$sky-bright: #8cd3ff;
-
-$shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
+@import "./variables.scss";
 
 * {
   margin: 0;
@@ -72,66 +57,62 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
     margin-bottom: 20px;
     @include flex(row, center, flex-start);
     gap: 20px;
+  }
 
-    &.categories {
-      align-items: flex-start;
-    }
+  &__text,
+  &__link {
+    color: $white;
+    font-size: 22px;
+  }
 
-    &__text,
-    &__link {
-      color: $white;
-      font-size: 22px;
-    }
+  &__icon {
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: $white;
 
-    &__icon {
-      cursor: pointer;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      width: 50px;
-      height: 50px;
-      border-radius: 10px;
-      background-color: $white;
-
-      svg {
-        width: 25px;
-        height: 25px;
-        color: $black;
-      }
+    svg {
+      width: 25px;
+      height: 25px;
+      color: $black;
     }
   }
 }
 
-.category-list {
-  list-style: none;
+.menu-categories {
+  align-items: flex-start;
+
+  &__list {
+    list-style: none;
+  }
+
+  &__link {
+    color: #fff;
+  }
 
   &__item {
     margin-top: 10px;
     font-size: 18px;
+  }
 
-    a {
-      color: #fff;
-    }
-
-    &__dot {
-      display: inline-block;
-      width: 15px;
-      height: 15px;
-      border-radius: 50%;
-      margin-right: 10px;
-    }
+  &__dot {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 10px;
   }
 }
 
-.tasks-page {
-  width: 100%;
-}
-
 .add-category {
+  @include flex();
   background: none;
   border: none;
   font-size: 18px;
-  @include flex();
   gap: 17px;
   cursor: pointer;
   color: gray;
@@ -153,43 +134,43 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
   width: 100%;
   margin: 30px 0;
 
-  &__wrapper {
+  &__form {
     position: relative;
     max-width: 950px;
     width: 100%;
+  }
 
-    &__span {
-      position: absolute;
-      display: inline-block;
-      top: 50%;
-      transform: translateY(-50%);
-      height: 20px;
-      width: 20px;
-      border-radius: 50%;
+  &__input {
+    outline: none;
+    width: 100%;
+    border: none;
+    height: 70px;
+    border-radius: 30px;
+    padding-left: 140px;
+    font-size: 18px;
+    border-bottom: 3px solid $blue-darken;
+  }
 
-      &:nth-of-type(1) {
-        background-color: $red;
-        left: 30px;
-      }
-      &:nth-of-type(2) {
-        background-color: $orange;
-        left: 60px;
-      }
-      &:nth-of-type(3) {
-        background-color: $purple;
-        left: 90px;
-      }
+  &__span {
+    position: absolute;
+    display: inline-block;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+
+    &:nth-of-type(1) {
+      background-color: $red;
+      left: 30px;
     }
-
-    &__input {
-      outline: none;
-      width: 100%;
-      border: none;
-      height: 70px;
-      border-radius: 30px;
-      padding-left: 140px;
-      font-size: 18px;
-      border-bottom: 3px solid $blue-darken;
+    &:nth-of-type(2) {
+      background-color: $orange;
+      left: 60px;
+    }
+    &:nth-of-type(3) {
+      background-color: $purple;
+      left: 90px;
     }
   }
 }
@@ -200,6 +181,7 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
   position: relative;
   max-width: 900px;
   width: 100%;
+
   &__scrollbar {
     position: absolute;
     height: 100%;
@@ -207,16 +189,17 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
     border-radius: 15px;
     background-color: $grey;
     width: 10px;
-    &__thumb {
-      position: absolute;
-      left: 50%;
-      top: 0%;
-      transform: translateX(-50%);
-      background-color: $black;
-      height: 60px;
-      border-radius: 15px;
-      width: 20px;
-    }
+  }
+
+  &__thumb {
+    position: absolute;
+    left: 50%;
+    top: 0%;
+    transform: translateX(-50%);
+    background-color: $black;
+    height: 60px;
+    border-radius: 15px;
+    width: 20px;
   }
 }
 
@@ -227,58 +210,52 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
   &::-webkit-scrollbar {
     display: none;
   }
+}
 
-  &__task {
-    list-style: none;
-    padding: 15px;
-    background-color: #fff;
-    color: $black;
-    font-size: 18px;
-    border-radius: 10px;
-    box-shadow: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
+.task {
+  list-style: none;
+  padding: 15px;
+  background-color: #fff;
+  color: $black;
+  font-size: 18px;
+  border-radius: 10px;
+  box-shadow: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+
+  &:not(:last-of-type) {
+    margin-bottom: 30px;
+  }
+
+  &__content {
+    @include flex(row, center, space-between);
+    gap: 20px;
+  }
+
+  &__right {
+    display: flex;
+    gap: 10px;
+    padding-right: 10px;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    gap: 20px;
+
+    .input-group {
+      flex-grow: 1;
+    }
+  }
+
+  &__delete {
     cursor: pointer;
-
-    &:not(:last-of-type) {
-      margin-bottom: 30px;
-    }
-
-    &__content {
-      @include flex(row, center, space-between);
-      gap: 20px;
-
-      &__icon {
-        width: 25px;
-        height: 25px;
-        color: green;
-      }
-
-      &__left {
-        display: flex;
-        align-items: center;
-        flex-grow: 1;
-        gap: 20px;
-
-        .input-group {
-          flex-grow: 1;
-        }
-      }
-
-      &__right {
-        display: flex;
-        gap: 10px;
-        padding-right: 10px;
-      }
-    }
-
-    &__delete {
-      cursor: pointer;
-      color: $red;
-      border: 1px solid $red;
-      padding: 10px 15px;
-      font-size: 18px;
-      border-radius: 5px;
-      transition: all 0.3s ease;
-    }
+    color: $red;
+    border: 1px solid $red;
+    padding: 10px 15px;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
   }
 }
 
@@ -293,44 +270,44 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
   min-width: 800px;
   box-shadow: $shadow-sm;
 
+  &__title {
+    color: $white;
+  }
+
+  &__btn {
+    @include clearButtonStyles;
+    font-size: 24px;
+    color: $white;
+  }
+
   &__top {
     padding: 20px 30px;
     background-color: $blue-darken;
     @include flex(row, center, space-between);
+  }
 
-    &__title {
-      color: $white;
-    }
+  &__text {
+    flex-grow: 1;
+    text-decoration: line-through;
+  }
 
-    &__btn {
-      @include clearButtonStyles;
-      font-size: 24px;
-      color: $white;
+  &__btn {
+    @include clearButtonStyles;
+    color: $orange;
+    svg {
+      width: 25px;
+      height: 25px;
     }
+  }
+
+  &__item {
+    @include flex(row, center, space-between);
+    font-size: 18px;
   }
 
   &__list {
     padding: 30px;
     list-style: none;
-
-    &__item {
-      @include flex(row, center, space-between);
-      font-size: 18px;
-
-      &__text {
-        flex-grow: 1;
-        text-decoration: line-through;
-      }
-
-      &__btn {
-        @include clearButtonStyles;
-        color: $orange;
-        svg {
-          width: 25px;
-          height: 25px;
-        }
-      }
-    }
   }
 
   // Transitions
@@ -366,27 +343,28 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
     border-radius: 15px;
     font-size: 30px;
     box-shadow: $shadow-sm;
+  }
 
-    &__span {
-      text-align: center;
-      line-height: 25px;
-      width: 25px;
-      height: 25px;
-      border-radius: 50%;
-      position: absolute;
-      color: $white;
-      font-size: 16px;
-      top: 80%;
-      right: -10%;
-      display: inline-block;
-      background-color: $red;
-    }
+  &__span {
+    text-align: center;
+    line-height: 25px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    position: absolute;
+    color: $white;
+    font-size: 16px;
+    top: 80%;
+    right: -10%;
+    display: inline-block;
+    background-color: $red;
   }
 }
 
 .todo-actions {
   position: relative;
-  &__menu {
+
+  &__list {
     list-style: none;
     position: absolute;
     background-color: $white;
@@ -394,15 +372,15 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
     top: 0;
     box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
+  }
 
-    &__item {
-      padding: 10px 15px;
-      transition: all 0.3s ease;
+  &__item {
+    padding: 10px 15px;
+    transition: all 0.3s ease;
 
-      &:hover {
-        background-color: $orange;
-        color: $white;
-      }
+    &:hover {
+      background-color: $orange;
+      color: $white;
     }
   }
 
@@ -456,7 +434,7 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
   display: flex;
   gap: 30px;
 
-  .overview-stats-card {
+  &__column {
     position: relative;
     height: 250px;
     width: 250px;
@@ -478,23 +456,23 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
     &:nth-of-type(3) {
       background-color: $blue-darken;
     }
+  }
 
-    &__count {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-weight: 700;
-      font-size: 72px;
-      color: #fff;
-    }
+  &__count {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 700;
+    font-size: 72px;
+    color: #fff;
+  }
 
-    &__text {
-      text-align: center;
-      padding: 10px;
-      margin-top: auto;
-      background-color: #fff;
-    }
+  &__text {
+    text-align: center;
+    padding: 10px;
+    margin-top: auto;
+    background-color: #fff;
   }
 }
 
@@ -509,20 +487,12 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
     flex-basis: 50%;
     flex-shrink: 0;
     @include flex(row, center, center);
-
-    &.register {
-      background-color: transparent;
-    }
   }
 
   &__right {
     flex-basis: 50%;
     padding: 20px;
     @include flex(column, center, center);
-
-    &.register {
-      background: $blue;
-    }
 
     &__content {
       max-width: 450px;
@@ -536,10 +506,6 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
 
   &__image {
     width: 70%;
-
-    &.register {
-      transform: scale(-1, 1);
-    }
   }
 
   &__btn {
@@ -591,44 +557,42 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
   overflow: hidden;
   padding: 30px;
 
-  &__heading {
-    h2 {
-      font-size: 32px;
-      padding-bottom: 10px;
-    }
-  }
-
   &__nav {
     margin: 30px 0;
     @include flex(row, flex-start, flex-start);
     gap: 30px;
+  }
 
-    &__item {
-      list-style: none;
-      cursor: pointer;
-      font-size: 18px;
+  &__item {
+    list-style: none;
+    cursor: pointer;
+    font-size: 18px;
+  }
+
+  &__link {
+    position: relative;
+  }
+
+  &__link_active {
+    color: $blue-darken;
+
+    &::after {
+      position: absolute;
+      content: "";
+      width: 60%;
+      height: 3px;
+      background-color: $blue-darken;
+      left: 0;
+      top: 110%;
+      border-radius: 5px;
+      left: 50%;
+      transform: translateX(-50%);
     }
+  }
 
-    &__link {
-      position: relative;
-
-      &.active {
-        color: $blue-darken;
-
-        &::after {
-          position: absolute;
-          content: "";
-          width: 60%;
-          height: 3px;
-          background-color: $blue-darken;
-          left: 0;
-          top: 110%;
-          border-radius: 5px;
-          left: 50%;
-          transform: translateX(-50%);
-        }
-      }
-    }
+  &__title {
+    font-size: 32px;
+    padding-bottom: 10px;
   }
 
   &__section {
@@ -701,44 +665,6 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
     height: 30px;
   }
 }
-
-// Checkbox starts
-.checkbox {
-  display: flex;
-  cursor: pointer;
-
-  &__input {
-    visibility: hidden;
-  }
-
-  &__input:checked + &__label::after {
-    transform: scale(1);
-  }
-
-  &__label {
-    cursor: inherit;
-    display: block;
-    position: relative;
-    width: 30px;
-    height: 30px;
-    border: 2px solid rgba(0, 0, 0, 0.3);
-    border-radius: 50%;
-
-    &::after {
-      position: absolute;
-      content: "";
-      width: 80%;
-      height: 80%;
-      background-color: $purple;
-      border-radius: 50%;
-      left: 10%;
-      top: 10%;
-      transition: 0.2s ease-out;
-      transform: scale(0);
-    }
-  }
-}
-// Checkbox ends
 
 .not-found {
   @include flex(column, center, center);
@@ -891,71 +817,21 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
   }
 }
 
-.alert {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  max-width: 600px;
-  width: 100%;
-  padding: 15px;
-  border-radius: 9px;
-
-  &.alert--info {
-    background-color: $sky-bright;
-    color: $sky;
-  }
-
-  &.alert--danger {
-    background-color: $red-bright;
-    color: $red;
-  }
-
-  &.alert--success {
-    background-color: rgba(144, 238, 144, 0.8);
-    color: rgb(30, 70, 32);
-  }
-
-  &__inner {
-    display: flex;
-    gap: 10px;
-    svg {
-      font-size: 24px;
-    }
-
-    &__close {
-      cursor: pointer;
-      margin-left: auto;
-    }
-  }
-}
-
-.alert-transition-enter {
-  opacity: 0;
-}
-.alert-transition-enter-active {
-  opacity: 1;
-  transition: opacity 500ms;
-}
-.alert-transition-exit {
-  opacity: 1;
-}
-.alert-transition-exit-active {
-  opacity: 0;
-  transition: opacity 500ms;
-}
-
 // Modal ends
 .modal-transition-enter {
   opacity: 0;
 }
+
 .modal-transition-enter-active {
   opacity: 1;
   transition: all 0.3s ease;
   top: 0;
 }
+
 .modal-transition-exit {
   opacity: 1;
 }
+
 .modal-transition-exit-active {
   opacity: 0;
   transition: all 0.3s ease;
@@ -964,24 +840,6 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
 
 .remove-btn {
   margin-right: 0.5rem;
-}
-
-.tasks__task.item-enter {
-  transform: translateX(200px);
-  opacity: 0;
-}
-.tasks__task.item-enter-active {
-  opacity: 1;
-  transform: translateX(0);
-  transition: all 500ms ease-in;
-}
-.tasks__task.item-exit {
-  opacity: 1;
-}
-.tasks__task.item-exit-active {
-  transform: translateX(-200px);
-  opacity: 0;
-  transition: all 500ms ease-in;
 }
 
 .btn {
@@ -1089,11 +947,6 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
   }
 }
 
-.categories-settings {
-  display: flex;
-  justify-content: space-between;
-}
-
 .new-category-btn {
   @include flex();
   @include rounded(70px);
@@ -1123,21 +976,11 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
   width: 400px;
 }
 
-.categories-container {
+.categories-row {
   display: flex;
   gap: 30px;
   flex-wrap: wrap;
   margin-bottom: 30px;
-}
-
-.category-card {
-  position: relative;
-  height: 250px;
-  width: 250px;
-  border-radius: 15px;
-  background-color: #fff;
-  box-shadow: $shadow-sm;
-  @include flex();
 
   &__title {
     font-size: 24px;
@@ -1157,18 +1000,30 @@ $shadow-sm: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
     position: absolute;
     right: 5px;
     top: 5px;
+  }
 
-    &__options {
-      @include flex(column);
-      gap: 10px;
-      background-color: #fff;
-      padding: 10px;
-      box-shadow: $shadow-sm;
-      border-radius: 15px;
-      position: absolute;
-      top: 0;
-      left: 100%;
-      z-index: 999;
-    }
+  // Create only one actions component because its used in multiple components across the app
+
+  &__options {
+    @include flex(column);
+    gap: 10px;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: $shadow-sm;
+    border-radius: 15px;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    z-index: 999;
+  }
+
+  &__column {
+    position: relative;
+    height: 250px;
+    width: 250px;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: $shadow-sm;
+    @include flex();
   }
 }

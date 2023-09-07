@@ -1,0 +1,20 @@
+@import "../../../sass/mixins";
+@import "../../../sass/variables";
+
+.icon-btn {
+  @include clearButtonStyles;
+  padding: 10px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  transition: background-color 0.3s ease;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    background-color: $grey;
+  }
+}

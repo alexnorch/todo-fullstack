@@ -1,17 +1,8 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { CSSTransition } from "react-transition-group";
 import { capitalizeFirstLetter } from "../helpers";
 import useTaskServices from "../features/todos/useTodoServices";
-
-// Features todo
-
-import {
-  TodoNew,
-  TodoNavigation,
-  TodoCompleted,
-  TodoList,
-} from "../features/todos/components";
+import { TodoNew, TodoNav, TodoCompleted, TodoList } from "../features/todos";
 
 export default function Tasks() {
   const [showCompleted, setShowCompeted] = useState<boolean>(false);
@@ -40,7 +31,7 @@ export default function Tasks() {
       </div>
       <TodoNew />
       <TodoList tasks={inCompletedTasks} />
-      <TodoNavigation
+      <TodoNav
         completedTasksLength={completedTasks.length}
         showCompleted={onToggleCompletedTasks}
       />

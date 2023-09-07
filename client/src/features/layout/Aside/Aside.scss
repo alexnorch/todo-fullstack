@@ -1,0 +1,12 @@
+@import "../../../sass/variables";
+
+.aside {
+  width: 90px;
+  padding: 20px;
+  background-color: $blue;
+  transition: all 0.3s ease;
+
+  &.active {
+    width: 300px;
+  }
+}

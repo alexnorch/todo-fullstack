@@ -1,0 +1,32 @@
+@import "../../../sass/mixins";
+@import "../../../sass/variables";
+
+.category-column {
+  position: relative;
+  height: 250px;
+  width: 250px;
+  border-radius: 15px;
+  background-color: #fff;
+  box-shadow: $shadow-sm;
+  @include flex();
+
+  &__title {
+    font-size: 24px;
+  }
+
+  &__text {
+    display: inline-block;
+    margin-top: 10px;
+  }
+
+  &__body {
+    text-align: center;
+    padding: 10px;
+  }
+
+  &__actions {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+}

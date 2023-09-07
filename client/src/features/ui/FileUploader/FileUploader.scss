@@ -1,0 +1,15 @@
+@import "../../../sass/variables";
+
+.file-uploader {
+  min-width: 64px;
+  padding: 12px 24px;
+  font-size: 14px;
+  border-radius: 7px;
+  color: $white;
+  background-color: $blue-darken;
+  cursor: pointer;
+
+  &__input {
+    display: none;
+  }
+}

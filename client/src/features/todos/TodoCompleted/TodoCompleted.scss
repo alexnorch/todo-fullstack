@@ -1,0 +1,54 @@
+@import "../../../sass/mixins";
+@import "../../../sass/variables";
+
+.completed-tasks {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 15px;
+  min-height: 600px;
+  min-width: 800px;
+  box-shadow: $shadow-sm;
+
+  &__title {
+    color: $white;
+  }
+
+  &__btn {
+    @include clearButtonStyles;
+    font-size: 24px;
+    color: $white;
+  }
+
+  &__top {
+    padding: 20px 30px;
+    background-color: $blue-darken;
+    @include flex(row, center, space-between);
+  }
+
+  &__text {
+    flex-grow: 1;
+    text-decoration: line-through;
+  }
+
+  &__btn {
+    @include clearButtonStyles;
+    color: $orange;
+    svg {
+      width: 25px;
+      height: 25px;
+    }
+  }
+
+  &__item {
+    @include flex(row, center, space-between);
+    font-size: 18px;
+  }
+
+  &__list {
+    padding: 30px;
+    list-style: none;
+  }
+}
