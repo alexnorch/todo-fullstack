@@ -24,9 +24,15 @@
 }
 
 .page-heading {
-  @include flex(column);
-  margin-top: 20px;
-  margin-bottom: 10px;
+  margin: 20px 0;
+
+  &__title {
+    font-size: 28px;
+  }
+
+  &__subtitle {
+    font-size: 20px;
+  }
 }
 
 .add-category {
@@ -51,7 +57,6 @@
 // Todo Container
 
 .overview {
-  margin: 30px 0;
   padding: 0 30px;
   width: 100%;
 
@@ -96,8 +101,8 @@
 
   &__column {
     position: relative;
-    height: 250px;
-    width: 250px;
+    height: 200px;
+    width: 200px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -124,12 +129,13 @@
     left: 50%;
     transform: translate(-50%, -50%);
     font-weight: 700;
-    font-size: 72px;
+    font-size: 48px;
     color: #fff;
   }
 
   &__text {
     text-align: center;
+    font-size: 16px;
     padding: 10px;
     margin-top: auto;
     background-color: #fff;
@@ -205,10 +211,6 @@
   }
 }
 
-.overview {
-  margin-top: 30px;
-}
-
 // Settings
 .settings {
   background-color: #fbfafa;
@@ -217,11 +219,27 @@
   overflow: hidden;
   padding: 30px;
 
-  &__nav {
-    margin: 30px 0;
-    @include flex(row, flex-start, flex-start);
-    gap: 30px;
+  &__section {
+    margin-bottom: 20px;
+    width: 50%;
   }
+}
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &__button {
+    text-align: end;
+    margin-top: 10px;
+  }
+}
+
+.settings-nav {
+  @include flex(row, flex-start, flex-start);
+  margin: 30px 0;
+  gap: 30px;
 
   &__item {
     list-style: none;
@@ -231,13 +249,10 @@
 
   &__link {
     position: relative;
-  }
-
-  &__link_active {
-    color: $blue-darken;
 
     &::after {
       position: absolute;
+      opacity: 0;
       content: "";
       width: 60%;
       height: 3px;
@@ -250,24 +265,11 @@
     }
   }
 
-  &__section {
-    margin-bottom: 20px;
-    width: 50%;
+  &__link_active {
+    color: $blue-darken;
 
-    &__descr {
-      color: #333;
-      margin-bottom: 20px;
-    }
-
-    &__form {
-      margin-bottom: 15px;
-      .input-group {
-        margin-bottom: 20px;
-      }
-    }
-
-    &__button {
-      text-align: end;
+    &::after {
+      opacity: 1;
     }
   }
 }

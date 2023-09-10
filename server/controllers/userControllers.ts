@@ -83,10 +83,56 @@ const updateUser = (req: Request, res: Response) => {
   res.send("Update User");
 };
 
+const changePassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { oldPassword, newPassword, confirmPassword } = req.body;
+
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      return next(new AppError("Please provide all values", 400));
+    }
+
+    const user = await User.findById(req.userId);
+    const isPasswordCorrect = await user?.comparePassword(
+      oldPassword,
+      user.password
+    );
+
+    if (newPassword !== confirmPassword) {
+      return next(new AppError("Passwords are not match", 400));
+    }
+
+    if (!isPasswordCorrect) {
+      return next(new AppError("You provide an invalid old password", 400));
+    }
+
+    user!.password = newPassword;
+    await user!.save();
+
+    res.send(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const confirmEmail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+  } catch (error) {}
+};
+
 // Controllers for admins: delete, update
 
 export default {
   loginUser,
   registerUser,
   updateUser,
+  changePassword,
+  confirmEmail,
 };

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import { Modal, IconButton } from "../../features/ui";
 import { ChangeEvent } from "../../types";
+import useCategoryServices from "@features/categories/useCategoryServices";
 
 // Components
-import { CategoriesList, CategoryForm } from "../../features/categories";
-import useCategoryServices from "../../features/categories/useCategoryServices";
+import { Modal, IconButton } from "@ui";
+import { CategoriesList, CategoryForm } from "@features/categories";
 
 export default function Categories() {
   const [isModal, setIsModal] = useState<boolean>(false);

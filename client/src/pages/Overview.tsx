@@ -40,10 +40,11 @@ const Overview = () => {
 
   return (
     <div className="overview">
-      <div className="overview-heading">
-        <h1>Hello {user!.name}</h1>
-        <h2>Today is {currentDate}</h2>
+      <div className="page-heading">
+        <h1 className="page-heading__title">Hello {user!.name}</h1>
+        <h2 className="page-heading__subtitle">Today is {currentDate}</h2>
       </div>
+
       <section className="overview-stats">
         <OverviewStatsCard title="All tasks" count={allTasks.length} />
         <OverviewStatsCard

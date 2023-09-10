@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
 
-import { AuthContent, AuthBackground } from "../features/auth/components";
-import { Alert } from "../features/ui";
+import { RootState } from "../redux/store";
+import { AuthContent, AuthBackground } from "@features/auth";
+import { Alert } from "@features/ui";
 
 const Auth = () => {
   const { isAlert } = useSelector((state: RootState) => state.app);

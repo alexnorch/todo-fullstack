@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { ChangeEvent } from "../../../types";
-import { TextField, IconButton, Button } from "../../ui";
-
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
+
+import useCustomAxios from "@hooks/useCustomAxios";
+import { ChangeEvent } from "../../../types";
+import { TextField, IconButton, Button } from "@features/ui";
+import useUserServices from "../useUserServices";
 
 const UserPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -10,10 +12,17 @@ const UserPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const { onPasswordChange } = useUserServices();
+
+  const onSubmit = (e: any) => {
+    e.preventDefault();
+    onPasswordChange({ oldPassword, newPassword, confirmPassword });
+  };
+
   return (
     <section className="settings__section">
       <h3 className="section-heading">Change Password</h3>
-      <form className="settings-form">
+      <form onSubmit={onSubmit} className="settings-form">
         <TextField
           type={showPassword ? "text" : "password"}
           label="Old Password"
@@ -50,10 +59,10 @@ const UserPassword = () => {
             </IconButton>
           }
         />
+        <div className="settings-form__button">
+          <Button variant="outline">Change password</Button>
+        </div>
       </form>
-      <div className="settings__section__button">
-        <Button variant="outline">Change password</Button>
-      </div>
     </section>
   );
 };

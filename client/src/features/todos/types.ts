@@ -1,3 +1,5 @@
+export type CategoryType = string | undefined;
+
 export interface TaskItem {
   _id: string;
   title: string;
@@ -15,4 +17,14 @@ export interface CompletedTasksProps {
 export interface TaskNavigationProps {
   showCompleted: () => void;
   completedTasksLength: number;
+}
+
+export interface IUserData {
+  title: string;
+  completed: boolean;
+}
+
+export interface GetTasksParams {
+  category: CategoryType;
+  isCompleted: boolean;
 }

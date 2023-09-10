@@ -6,16 +6,15 @@ import "./TodoItem.scss";
 import useTaskServices from "../useTodoServices";
 
 // Components
-import Checkbox from "../../ui/Checkbox/Checkbox";
-import Input from "../../ui/Input/Input";
-import ActionsMenu from "../../ui/ActionsMenu/ActionsMenu";
-import { Modal } from "../../ui";
+import Checkbox from "@features/ui/Checkbox/Checkbox";
+import Input from "@features/ui/Input/Input";
+import ActionsMenu from "@features/ui/ActionsMenu/ActionsMenu";
+import { Modal } from "@features/ui";
 
 const TodoItem: React.FC<TaskItem> = ({ _id, title, completed, color }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [userValue, setUserValue] = useState<string>(title);
   const [isDeletingTask, setIsDeletingTask] = useState<boolean>(false);
-
   const { onUpdateTask, onDeleteTask, onCompleteTask } = useTaskServices();
 
   const onEditBegin = () => setIsEditing(true);

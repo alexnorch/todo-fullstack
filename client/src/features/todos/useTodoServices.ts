@@ -1,10 +1,11 @@
-import useCustomAxios from "../../hooks/useCustomAxios";
+import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+import useCustomAxios from "@hooks/useCustomAxios";
 import { showAlert } from "../../redux/appSlice";
 import { RootState } from "../../redux/store";
 import { updateTodo, removeTodo, addNewTodo } from "../../redux/appSlice";
-import { useMemo } from "react";
-import { TaskItem } from "./types";
+import { TaskItem, IUserData, GetTasksParams, CategoryType } from "./types";
 
 const filterTasks = (tasks: TaskItem[], isCompleted: boolean) =>
   tasks.filter((task) => task.completed === isCompleted);
@@ -19,10 +20,8 @@ const useTodoServices = () => {
 
   const dispatch = useDispatch();
 
-  // Recreate this function on the server side
-
-  const getTaskByCategory = useMemo(() => {
-    return (params: { category: string | undefined; isCompleted: boolean }) => {
+  const getTaskByCategory = useMemo(
+    () => (params: GetTasksParams) => {
       const filteredItems = data.filter(
         (item) => item.categoryName === params.category
       );
@@ -33,87 +32,77 @@ const useTodoServices = () => {
           ? [...item.tasks.filter((task) => task.completed)]
           : [...item.tasks.filter((task) => !task.completed)],
       }))[0].tasks;
-    };
-  }, [data]);
+    },
+    [data]
+  );
 
   const onCreateTask = async (
     title: string,
-    category: string | undefined,
+    category: CategoryType,
     clearField: () => void
   ) => {
-    try {
-      if (title.length > 6) {
-        const { data } = await authAxios.post("/api/task", {
-          title,
-          category,
-        });
+    if (title.length > 6) {
+      const { data } = await authAxios.post("/api/task", {
+        title,
+        category,
+      });
 
-        clearField();
-        dispatch(addNewTodo(data));
-        dispatch(
-          showAlert({
-            type: "success",
-            text: "New task was created",
-            duration: 3000,
-          })
-        );
-      } else {
-        dispatch(
-          showAlert({
-            type: "danger",
-            text: "Must be greater than 6 characters",
-          })
-        );
-      }
-    } catch (error) {
-      console.log(error);
+      clearField();
+      dispatch(addNewTodo(data));
+      dispatch(
+        showAlert({
+          type: "success",
+          text: "New task was created",
+        })
+      );
+    } else {
+      dispatch(
+        showAlert({
+          type: "danger",
+          text: "Must be greater than 6 characters",
+        })
+      );
     }
   };
 
   const onUpdateTask = async (
     id: string,
-    userData: { title: string; completed: boolean },
-    onEditEnd?: () => void
+    userData: IUserData,
+    onEditEnd: () => void
   ) => {
-    try {
-      if (userData.title && userData.title.trim().length > 6) {
-        const { data } = await authAxios.patch(`/api/task/${id}`, {
-          title: userData.title,
-          completed: userData.completed,
-        });
+    if (userData.title && userData.title.trim().length > 6) {
+      const { data } = await authAxios.patch(`/api/task/${id}`, {
+        title: userData.title,
+        completed: userData.completed,
+      });
 
-        dispatch(showAlert({ type: "success", text: "Successfully changed" }));
-        dispatch(updateTodo(data));
+      dispatch(showAlert({ type: "success", text: "Successfully changed" }));
+      dispatch(updateTodo(data));
 
-        onEditEnd && onEditEnd();
-      } else {
-        dispatch(
-          showAlert({
-            type: "danger",
-            text: "Must be greater than 6 characters",
-          })
-        );
-      }
-    } catch (error) {}
+      onEditEnd && onEditEnd();
+    } else {
+      dispatch(
+        showAlert({
+          type: "danger",
+          text: "Must be greater than 6 characters",
+        })
+      );
+    }
   };
 
   const onDeleteTask = async (id: string) => {
-    try {
-      const { data } = await authAxios.delete(`/api/task/${id}`);
-      dispatch(removeTodo(data));
-      dispatch(
-        showAlert({
-          type: "success",
-          text: "The task was successfully deleted",
-        })
-      );
-    } catch (error) {}
+    const { data } = await authAxios.delete(`/api/task/${id}`);
+
+    dispatch(removeTodo(data));
+    dispatch(
+      showAlert({
+        type: "success",
+        text: "The task was successfully deleted",
+      })
+    );
   };
 
-  const onCompleteTask = async (
-    id: string,
-    userData: { title: string; completed: boolean }
-  ) => {
+  const onCompleteTask = async (id: string, userData: IUserData) => {
     const { data } = await authAxios.patch(`/api/task/${id}`, {
       title: userData.title,
       completed: !userData.completed,

@@ -5,7 +5,6 @@ import AppError from "../utils/AppError";
 import Task from "../models/taskModel";
 import Category, { CategoryInterface } from "../models/categoryModel";
 import User, { UserInterface } from "../models/userModel";
-import { populateTask } from "../utils/helpers";
 
 const createCategory = async (
   req: Request,

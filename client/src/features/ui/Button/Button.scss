@@ -15,8 +15,8 @@
   }
 
   &.btn--transparent {
-    border-bottom: 2px solid $blue-darken;
     border-radius: 0;
+    color: $blue-darken;
   }
 
   &.btn--outline {

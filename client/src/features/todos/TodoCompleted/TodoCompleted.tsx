@@ -3,7 +3,7 @@ import { CSSTransition } from "react-transition-group";
 import { BsArrowReturnLeft, BsXLg } from "react-icons/bs";
 import "./TodoCompleted.scss";
 
-import useOutsideClick from "../../../hooks/useOutsideClick";
+import useOutsideClick from "@hooks/useOutsideClick";
 import { CompletedTasksProps } from "../types";
 
 // Hooks

@@ -23,12 +23,7 @@ export default function Tasks() {
 
   return (
     <>
-      <div className="page-heading">
-        <p className="page-heading__subtitle">Current category</p>
-        <h1 className="page-heading__title">
-          {capitalizeFirstLetter(category!)}
-        </h1>
-      </div>
+      <PageHeading title={category} />
       <TodoNew />
       <TodoList tasks={inCompletedTasks} />
       <TodoNav
@@ -43,3 +38,12 @@ export default function Tasks() {
     </>
   );
 }
+
+const PageHeading = (title: any) => {
+  return (
+    <div className="page-heading">
+      <p className="page-heading__subtitle">Current category</p>
+      <h1 className="page-heading__title">{capitalizeFirstLetter(title!)}</h1>
+    </div>
+  );
+};

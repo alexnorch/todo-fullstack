@@ -1,6 +1,6 @@
 import { useState } from "react";
 // Components
-import { AuthHeading, RegisterForm, LoginForm } from ".";
+import { AuthHeading, RegisterForm, LoginForm } from "..";
 
 const AuthContent = () => {
   const [isLoginForm, setIsLoginForm] = useState<boolean>(true);
