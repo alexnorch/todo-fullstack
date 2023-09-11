@@ -1,47 +1,66 @@
 import { Request, Response, NextFunction } from "express";
 import User from "../models/userModel";
+import Task from "../models/taskModel";
 import AppError from "../utils/AppError";
 
 const loginUser = async (req: Request, res: Response, next: NextFunction) => {
+  const { email, password } = req.body;
+
   try {
-    if (!req.body.email || !req.body.password) {
+    if (!email || !password) {
       return next(new AppError("Please provide all values", 400));
     }
 
-    const user = await User.findOne({ email: req.body.email }).populate({
-      path: "data",
-      populate: {
-        path: "tasks",
-        select: "title completed color",
-      },
-    });
+    const user = await User.findOne({ email }).select("+password");
 
     if (!user) {
       return next(new AppError("An e-mail address doesn't exists", 400));
     }
 
     const isPasswordCorrect = await user.comparePassword(
-      req.body.password,
-      user.password
+      password,
+      user.password!
     );
 
     if (!isPasswordCorrect) {
       return next(new AppError("Bad credentials, try again please", 401));
     }
 
+    user.password = undefined;
+
     const token = user.generateToken(user._id);
 
-    const { _id, name, email, photo, data } = user;
+    await user.populate("categories");
+    await user.populate("tasks");
+
+    const tasksWithCategories = await Task.aggregate([
+      {
+        $match: {
+          _id: { $in: user.tasks },
+        },
+      },
+      {
+        $lookup: {
+          from: "categories",
+          localField: "category",
+          foreignField: "_id",
+          as: "categoryInfo",
+        },
+      },
+      {
+        $addFields: {
+          category: { $arrayElemAt: ["$categoryInfo.title", 0] },
+        },
+      },
+      {
+        $project: { categoryInfo: 0 },
+      },
+    ]);
 
     res.json({
-      result: {
-        userInfo: { _id, name, email, photo },
-        userData: data,
-        token,
-      },
+      data: { ...user.toObject(), tasks: tasksWithCategories },
+      token,
     });
-
-    res.json({ user, token });
   } catch (error) {
     next(error);
   }
@@ -98,7 +117,7 @@ const changePassword = async (
     const user = await User.findById(req.userId);
     const isPasswordCorrect = await user?.comparePassword(
       oldPassword,
-      user.password
+      user.password!
     );
 
     if (newPassword !== confirmPassword) {

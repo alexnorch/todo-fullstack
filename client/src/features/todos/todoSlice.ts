@@ -9,25 +9,49 @@ const taskSlice = createSlice({
   initialState,
   name: "tasks",
   reducers: {
-    getTasks: (state, action) => {},
     addNewTask: (state, action: PayloadAction<any>) => {
-      //   state.userCategories.push();
+      const { category } = action.payload;
+
+      // state.tasks = state.tasks.map((item) => {
+      //   if (item.categoryName === category) {
+      //     return {
+      //       ...item,
+      //       tasks: [...item.tasks, action.payload],
+      //     };
+      //   }
+      //   return item;
+      // });
     },
     updateTask: (state, action: PayloadAction<any>) => {
-      // state.userCategories = state.userCategories.filter(
-      //     (category) => category._id !== action.payload
-      //   );
+      // const { category, _id } = action.payload;
+      // state.data = state.data.map((item) => {
+      //   if (item.categoryName === category) {
+      //     return {
+      //       ...item,
+      //       tasks: [
+      //         ...item.tasks.filter((task) => task._id !== _id),
+      //         action.payload,
+      //       ],
+      //     };
+      //   }
+      //   return item;
+      // });
     },
     deleteTask: (state, action: PayloadAction<any>) => {
-      //   state.data = [
-      //     ...state.data.filter((item) => item._id !== action.payload._id),
-      //     action.payload,
-      //   ];
+      // const { category, _id } = action.payload;
+      // state.data = state.data.map((item) => {
+      //   if (item.categoryName === category) {
+      //     return {
+      //       ...item,
+      //       tasks: item.tasks.filter((task) => task._id !== _id),
+      //     };
+      //   }
+      //   return item;
+      // });
     },
   },
 });
 
-export const { getTasks, addNewTask, updateTask, deleteTask } =
-  taskSlice.actions;
+export const { addNewTask, updateTask, deleteTask } = taskSlice.actions;
 
 export default taskSlice.reducer;

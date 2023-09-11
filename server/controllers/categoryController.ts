@@ -3,8 +3,8 @@ import AppError from "../utils/AppError";
 
 // Models
 import Task from "../models/taskModel";
-import Category, { CategoryInterface } from "../models/categoryModel";
-import User, { UserInterface } from "../models/userModel";
+import Category, { ICategory } from "../models/categoryModel";
+import User, { IUser } from "../models/userModel";
 
 const createCategory = async (
   req: Request,
@@ -18,9 +18,10 @@ const createCategory = async (
   }
 
   const titleLowerCase = title.toLowerCase();
-  const user: UserInterface | null = await User.findById(req.userId);
-  const isAlreadyExists: CategoryInterface | null = await Category.findOne({
-    categoryName: titleLowerCase,
+
+  const user: IUser | null = await User.findById(req.userId);
+  const isAlreadyExists: ICategory | null = await Category.findOne({
+    title: titleLowerCase,
   });
 
   if (isAlreadyExists) {
@@ -28,18 +29,18 @@ const createCategory = async (
   }
 
   const category = new Category({
-    categoryName: titleLowerCase,
+    title: titleLowerCase,
     color,
     user: req.userId,
   });
 
-  const newCategory = await category.save();
+  const createdCategory = await category.save();
 
   // Saving category in user data
-  user!.data.push(newCategory._id);
+  user!.categories.push(createdCategory._id);
   await user!.save();
 
-  res.send(newCategory);
+  res.send(createdCategory);
 };
 
 const deleteCategory = async (
@@ -50,7 +51,10 @@ const deleteCategory = async (
   try {
     const id = req.params.id;
     const userId = req.userId;
-    const category: CategoryInterface | null = await Category.findById(id);
+
+    const category: ICategory | null = await Category.findById(id).select(
+      "+user"
+    );
 
     if (!category) {
       return next(new AppError("Category was not found", 404));
@@ -61,13 +65,13 @@ const deleteCategory = async (
     }
 
     await Task.deleteMany({ user: userId, category: category._id });
-    await category.deleteOne();
 
-    res.status(200).json({
-      status: "success",
-      message: "Successfully deleted",
-    });
-  } catch (error) {}
+    const deletedCategory = await category.deleteOne();
+
+    res.send(deletedCategory);
+  } catch (error) {
+    next(error);
+  }
 };
 
 const getCategories = async (
@@ -95,7 +99,7 @@ const updateCategory = async (
   try {
     const { id } = req.params;
     const { title, color } = req.body;
-    const category: CategoryInterface | null = await Category.findOne({
+    const category: ICategory | null = await Category.findOne({
       _id: id,
       user: req.userId,
     });
@@ -108,7 +112,7 @@ const updateCategory = async (
       return next(new AppError("Category was not found", 404));
     }
 
-    category.categoryName = title.toLowerCase();
+    category.title = title.toLowerCase();
     category.color = color;
 
     const updatedCategory = await category.save();

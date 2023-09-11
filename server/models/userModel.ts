@@ -3,12 +3,13 @@ import { Document, Types } from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-export interface UserInterface extends Document {
+export interface IUser extends Document {
   name: string;
   email: string;
-  password: string;
+  password: string | undefined;
   photo: string;
-  data: Types.ObjectId[];
+  categories: Types.ObjectId[];
+  tasks: Types.ObjectId[];
   comparePassword: (candidate: string, hashed: string) => Promise<boolean>;
   generateToken: (userId: string) => Promise<object>;
 }
@@ -26,12 +27,14 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, "Password is required"],
     minlength: 8,
+    select: false,
   },
   photo: {
     type: String,
     default: "http://surl.li/jkwuu",
   },
-  data: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
+  categories: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
+  tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }],
 });
 
 UserSchema.pre("save", async function () {
@@ -54,4 +57,4 @@ UserSchema.methods.generateToken = function (userId: string) {
   });
 };
 
-export default mongoose.model<UserInterface>("User", UserSchema);
+export default mongoose.model<IUser>("User", UserSchema);

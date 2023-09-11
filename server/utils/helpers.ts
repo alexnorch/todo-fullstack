@@ -10,12 +10,15 @@ export const populateTask = async (taskId: string) => {
         from: "categories",
         localField: "category",
         foreignField: "_id",
-        as: "category",
+        as: "categoryInfo",
       },
     },
     {
-      $addFields: {
-        category: { $arrayElemAt: ["$category.categoryName", 0] },
+      $project: {
+        title: 1,
+        category: {
+          $arrayElemAt: ["$categoryInfo.title", 0],
+        },
       },
     },
   ]);

@@ -3,8 +3,8 @@ import AppError from "../utils/AppError";
 
 // models and interfaces
 import Task from "../models/taskModel";
-import Category, { CategoryInterface } from "../models/categoryModel";
-import User, { UserInterface } from "../models/userModel";
+import Category, { ICategory } from "../models/categoryModel";
+import User, { IUser } from "../models/userModel";
 import { populateTask } from "../utils/helpers";
 
 const getTasks = async (req: Request, res: Response, next: NextFunction) => {
@@ -26,13 +26,13 @@ const createTask = async (req: Request, res: Response, next: NextFunction) => {
       return next(new AppError("Please, provide all values", 400));
     }
 
-    const user: UserInterface | null = await User.findById(req.userId);
-    const userCategory: CategoryInterface | null = await Category.findOne({
-      categoryName: category.toLowerCase(),
+    const user: IUser | null = await User.findById(req.userId);
+    const userCategory: ICategory | null = await Category.findOne({
+      title: category.toLowerCase(),
     });
 
     // If user doesn't have any categories, he can't create his task
-    if (user!.data.length === 0) {
+    if (user!.categories.length === 0) {
       return next(
         new AppError("Firstly you have to create your first category", 400)
       );
@@ -54,9 +54,8 @@ const createTask = async (req: Request, res: Response, next: NextFunction) => {
 
     const createdTask = await task.save();
 
-    userCategory.tasks.push(createdTask._id);
-
-    await userCategory.save();
+    user!.tasks.push(createdTask._id);
+    await user!.save();
 
     const result = await populateTask(createdTask._id);
 
