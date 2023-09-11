@@ -10,6 +10,7 @@ import Logo from "./Logo/Logo";
 import TextField from "./TextField/TextField";
 import IconButton from "./IconButton/IconButton";
 import ActionsMenu from "./ActionsMenu/ActionsMenu";
+import ConfirmDialog from "./ConfirmDialog/ConfirmDialog";
 
 export {
   Modal,
@@ -24,4 +25,5 @@ export {
   TextField,
   IconButton,
   ActionsMenu,
+  ConfirmDialog,
 };

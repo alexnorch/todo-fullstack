@@ -65,11 +65,7 @@ const useTodoServices = () => {
     }
   };
 
-  const onUpdateTask = async (
-    id: string,
-    userData: IUserData,
-    onEditEnd: () => void
-  ) => {
+  const onUpdateTask = async (id: string, userData: IUserData) => {
     if (userData.title && userData.title.trim().length > 6) {
       const { data } = await authAxios.patch(`/api/task/${id}`, {
         title: userData.title,
@@ -78,8 +74,6 @@ const useTodoServices = () => {
 
       dispatch(showAlert({ type: "success", text: "Successfully changed" }));
       dispatch(updateTodo(data));
-
-      onEditEnd && onEditEnd();
     } else {
       dispatch(
         showAlert({

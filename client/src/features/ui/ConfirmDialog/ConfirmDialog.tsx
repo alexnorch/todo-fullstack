@@ -1,23 +1,27 @@
+import { FormEvent } from "types";
 import Modal from "../Modal/Modal";
 
 interface ConfirmDialogProps {
-  onOpen: () => void;
   onToggle: () => void;
   isOpen: boolean;
-  title: string;
-  children: React.ReactNode;
+  text: string;
+  submitter: () => void;
 }
 
 const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
-  onOpen,
   isOpen,
   onToggle,
-  title,
-  children,
+  text,
+  submitter,
 }) => {
   return (
-    <Modal title={title} onToggle={onToggle} isOpen={isOpen}>
-      {children}
+    <Modal
+      submitter={submitter}
+      title="Confirm the action"
+      onToggle={onToggle}
+      isOpen={isOpen}
+    >
+      <p>{text}</p>
     </Modal>
   );
 };

@@ -1,27 +1,34 @@
-import { TextField, ColorPicker } from "../../ui";
-import { CategoryFormProps } from "../types";
+import { TextField, ColorPicker } from "@features/ui";
+import { ChangeEvent } from "types";
 import "./CategoryForm.scss";
+
+interface CategoryFormProps {
+  title: string;
+  color: string;
+  onTitleChange: (e: ChangeEvent) => void;
+  onColorChange: (e: ChangeEvent) => void;
+}
 
 const CategoryForm: React.FC<CategoryFormProps> = ({
   title,
   color,
-  setColor,
-  setTitle,
+  onTitleChange,
+  onColorChange,
 }) => {
   return (
-    <form className="new-category-form">
+    <div className="category-form">
       <TextField
-        label="Please provide a title of category"
+        label="New Category Name"
+        placeholder="New Category Name"
         value={title}
-        placeholder="Category title"
-        onChange={setTitle}
+        onChange={onTitleChange}
       />
       <ColorPicker
-        labelText="Please chose the color"
+        labelText="New Category Color"
         color={color}
-        setColor={setColor}
+        setColor={onColorChange}
       />
-    </form>
+    </div>
   );
 };
 

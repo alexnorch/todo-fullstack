@@ -1,8 +1,15 @@
-@import "../../../sass/mixins";
+@import "assets/styles/mixins";
 
 .color-picker {
+  span {
+    display: inline-block;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
   &__label {
     @include flex(row, center, start);
+    font-size: 14px;
     gap: 10px;
     width: 100%;
     padding: 12px 10px;

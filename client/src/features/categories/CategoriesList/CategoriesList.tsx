@@ -5,6 +5,7 @@ import "./CategoriesList.scss";
 
 const CategoriesList = () => {
   const data = useSelector((state: RootState) => state.app.data);
+
   return (
     <div className="categories-row">
       {data.map((item) => (

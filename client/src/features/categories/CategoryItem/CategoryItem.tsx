@@ -1,84 +1,27 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
-import useCategoryServices from "../useCategoryServices";
 import { capitalizeFirstLetter } from "../../../helpers";
-import { ChangeEvent } from "../../../types";
 import "./CategoryItem.scss";
 
-import { Modal, ActionsMenu } from "../../ui";
-import { CategoryForm } from "../";
-
-type CategoryAction = "delete" | "update" | null;
+import { CategoryEditing, CategoryDeleting } from "@features/categories";
+import { ActionsMenu } from "@features/ui";
 
 const CategoryItem: React.FC<any> = ({ tasks, color, categoryName, _id }) => {
-  const [isModal, setIsModal] = useState<boolean>(false);
-  const [categoryAction, setCategoryAction] = useState<CategoryAction>(null);
-  const [newTitle, setNewTitle] = useState<string>(categoryName);
-  const [newColor, setNewColor] = useState<string>(color);
-  const alertType = useSelector((state: RootState) => state.app.alertType);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
-  const { onDeleteCategory, onUpdateCategory } = useCategoryServices();
-  const onModalToggle = () => setIsModal((prev) => !prev);
+  const onDeleteBegin = () => setIsDeleting(true);
+  const onEditBegin = () => setIsEditing(true);
 
-  const updatingModalTitle = "Updating the category data";
-  const deletingModalTitle = `Deleting the category ${categoryName}`;
+  const onConfirmToggle = () => setIsDeleting((isDeleting) => !isDeleting);
+  const onModalToggle = () => setIsEditing((prevState) => !prevState);
 
-  const onSubmit = () => {
-    switch (categoryAction) {
-      case "update":
-        onUpdateCategory(_id, {
-          title: newTitle,
-          color: newColor,
-        });
-      case "delete":
-        if (categoryAction === "delete") {
-          onDeleteCategory(_id);
-        }
-    }
-
-    if (alertType !== "danger") {
-      onModalToggle();
-    }
-  };
-
-  // If the user clicks "Update" button, it will generate a form for creating a new category in Modal component, otherwise
-  // it will show a confirm message for deleting the chosen category
-
-  const getModalContent = () => {
-    if (categoryAction === "update") {
-      return (
-        <CategoryForm
-          setTitle={(e: ChangeEvent) => setNewTitle(e.target.value)}
-          setColor={(e: ChangeEvent) => setNewColor(e.target.value)}
-          title={newTitle}
-          color={newColor}
-        />
-      );
-    } else if (categoryAction === "delete") {
-      return <p>Are your sure you want to delete this category?</p>;
-    }
-
-    return null;
-  };
+  const categoryStyles = { borderBottom: `10px solid ${color}` };
 
   return (
     <>
-      <div
-        style={{ borderBottom: `10px solid ${color}` }}
-        className="category-column"
-      >
+      <div style={categoryStyles} className="category-column">
         <div className="category-column__actions">
-          <ActionsMenu
-            onDelete={() => {
-              setCategoryAction("delete");
-              onModalToggle();
-            }}
-            onEdit={() => {
-              setCategoryAction("update");
-              onModalToggle();
-            }}
-          />
+          <ActionsMenu onDelete={onDeleteBegin} onEdit={onEditBegin} />
         </div>
         <div className="category-column__body">
           <h3 className="category-column__title">
@@ -88,16 +31,20 @@ const CategoryItem: React.FC<any> = ({ tasks, color, categoryName, _id }) => {
           <p className="category-column__text">All tasks: {tasks.length}</p>
         </div>
       </div>
-      <Modal
-        isOpen={isModal}
-        onToggle={onModalToggle}
-        title={
-          categoryAction === "update" ? updatingModalTitle : deletingModalTitle
-        }
-        submitter={onSubmit}
-      >
-        {getModalContent()}
-      </Modal>
+
+      <CategoryDeleting
+        id={_id}
+        onConfirmToggle={onConfirmToggle}
+        isDeleting={isDeleting}
+      />
+
+      <CategoryEditing
+        id={_id}
+        onModalToggle={onModalToggle}
+        categoryName={categoryName}
+        categoryColor={color}
+        isEditing={isEditing}
+      />
     </>
   );
 };

@@ -1,75 +1,70 @@
 import { useState } from "react";
 import { TaskItem } from "../types";
-import { FormEvent, ChangeEvent } from "../../../types";
+import { ChangeEvent } from "../../../types";
 import "./TodoItem.scss";
 
 import useTaskServices from "../useTodoServices";
 
 // Components
-import Checkbox from "@features/ui/Checkbox/Checkbox";
-import Input from "@features/ui/Input/Input";
-import ActionsMenu from "@features/ui/ActionsMenu/ActionsMenu";
-import { Modal } from "@features/ui";
+import {
+  ConfirmDialog,
+  Modal,
+  Input,
+  Checkbox,
+  ActionsMenu,
+} from "@features/ui";
 
 const TodoItem: React.FC<TaskItem> = ({ _id, title, completed, color }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [userValue, setUserValue] = useState<string>(title);
+  const [newTitle, setNewTitle] = useState<string>(title);
   const [isDeletingTask, setIsDeletingTask] = useState<boolean>(false);
+
   const { onUpdateTask, onDeleteTask, onCompleteTask } = useTaskServices();
 
   const onEditBegin = () => setIsEditing(true);
-  const onEditEnd = () => setIsEditing(false);
+  const onEditToggle = () => setIsEditing((prev) => !prev);
+  const onComplete = () => onCompleteTask(_id, { title, completed });
+  const onDeleteStart = () => setIsDeletingTask(true);
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    onUpdateTask(_id, { title: userValue, completed }, onEditEnd);
+  const onSubmit = () => {
+    onUpdateTask(_id, { title: newTitle, completed });
+    setIsEditing(false);
   };
 
-  const handleInputChange = (e: ChangeEvent) => {
-    setUserValue(e.target.value);
-  };
-
-  const TodoContent = isEditing ? (
-    <form onSubmit={handleSubmit}>
-      <Input
-        placeholder="Type a new title of task"
-        onChange={handleInputChange}
-        value={userValue}
-      />
-    </form>
-  ) : (
-    <p className="task__text">{userValue}</p>
-  );
+  const taskStyles = { borderLeft: `7px solid ${color}` };
 
   return (
     <>
-      <li style={{ borderLeft: `7px solid ${color}` }} className="task">
+      <li style={taskStyles} className="task">
         <div className="task__content">
           <div className="task__left">
-            <Checkbox
-              checked={completed}
-              onCheck={() => onCompleteTask(_id, { title, completed })}
-            />
-            {TodoContent}
+            <Checkbox checked={completed} onCheck={onComplete} />
+            <p className="task__text">{title}</p>
           </div>
           <div className="task__right">
-            <ActionsMenu
-              onDelete={() => setIsDeletingTask(true)}
-              onEdit={onEditBegin}
-            />
+            <ActionsMenu onDelete={onDeleteStart} onEdit={onEditBegin} />
           </div>
         </div>
       </li>
-      <Modal
+
+      <ConfirmDialog
         submitter={() => onDeleteTask(_id)}
-        onToggle={() => setIsDeletingTask((prev) => !prev)}
         isOpen={isDeletingTask}
-        title="Are your sure you want to delete this task?"
+        onToggle={() => setIsDeletingTask((prev) => !prev)}
+        text="Are you sure you want to delete this task?"
+      />
+
+      <Modal
+        submitter={onSubmit}
+        onToggle={onEditToggle}
+        title="Editing the task"
+        isOpen={isEditing}
       >
-        <p>
-          This will be delete this task permanently. You cannot undo this
-          action.
-        </p>
+        <Input
+          placeholder="New title"
+          value={newTitle}
+          onChange={(e: ChangeEvent) => setNewTitle(e.target.value)}
+        />
       </Modal>
     </>
   );

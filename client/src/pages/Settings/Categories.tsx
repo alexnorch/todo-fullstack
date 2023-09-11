@@ -32,8 +32,8 @@ export default function Categories() {
         }
       >
         <CategoryForm
-          setTitle={(e: ChangeEvent) => setCategoryTitle(e.target.value)}
-          setColor={(e: ChangeEvent) => setCategoryColor(e.target.value)}
+          onTitleChange={(e: ChangeEvent) => setCategoryTitle(e.target.value)}
+          onColorChange={(e: ChangeEvent) => setCategoryColor(e.target.value)}
           title={categoryTitle}
           color={categoryColor}
         />
