@@ -7,15 +7,30 @@ import Category, { ICategory } from "../models/categoryModel";
 import User, { IUser } from "../models/userModel";
 import { populateTask } from "../utils/helpers";
 
-const getTasks = async (req: Request, res: Response, next: NextFunction) => {
-  const tasks = await Task.find({
-    user: req.userId,
-  }).populate({
-    path: "category",
-    select: "categoryName color",
-  });
+interface IQuery {
+  category?: string;
+  completed?: boolean;
+  user: string;
+}
 
-  res.send({ tasks });
+const getTasks = async (req: Request, res: Response, next: NextFunction) => {
+  const { category, isCompleted } = req.query;
+  const user = req.userId;
+
+  let query: IQuery = { user };
+
+  if (req.query.category) {
+    const userCategory: any = await Category.findOne({ title: category, user });
+    query.category = userCategory._id;
+  }
+
+  if (req.query.isCompleted) {
+    query.completed = Boolean(isCompleted);
+  }
+
+  const tasks = await Task.find(query);
+
+  res.send(tasks);
 };
 
 const createTask = async (req: Request, res: Response, next: NextFunction) => {
@@ -87,7 +102,9 @@ const updateTask = async (req: Request, res: Response, next: NextFunction) => {
     const resultTask = await populateTask(changedTask._id);
 
     res.send(resultTask);
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 };
 
 const deleteTask = async (req: Request, res: Response, next: NextFunction) => {

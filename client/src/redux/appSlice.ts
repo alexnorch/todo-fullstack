@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { getFromLocalStorage } from "../helpers";
-import { TaskItem, AppState, AlertProps, CategoryInterface } from "../types";
+import { AppState, AlertProps, CategoryInterface } from "../types";
 
 const initialState: AppState = {
-  user: getFromLocalStorage("userInfo") || null,
   token: getFromLocalStorage("accessToken") || null,
   data: getFromLocalStorage("userData") || [],
   alertType: "info",
@@ -16,6 +15,9 @@ export const appSlice = createSlice({
   name: "App",
   initialState,
   reducers: {
+    setAccessToken: (state, action) => {
+      state.token = action.payload;
+    },
     showAlert: (state, action: PayloadAction<AlertProps>) => {
       state.isAlert = true;
       state.alertText = action.payload.text;
@@ -25,90 +27,15 @@ export const appSlice = createSlice({
       state.isAlert = false;
       state.alertText = null;
     },
-    addNewTodo: (state, action: PayloadAction<TaskItem>) => {
-      const { category } = action.payload;
 
-      state.data = state.data.map((item) => {
-        if (item.categoryName === category) {
-          return {
-            ...item,
-            tasks: [...item.tasks, action.payload],
-          };
-        }
-        return item;
-      });
-    },
-    updateTodo: (state, action: PayloadAction<TaskItem>) => {
-      const { category, _id } = action.payload;
-
-      state.data = state.data.map((item) => {
-        if (item.categoryName === category) {
-          return {
-            ...item,
-            tasks: [
-              ...item.tasks.filter((task) => task._id !== _id),
-              action.payload,
-            ],
-          };
-        }
-
-        return item;
-      });
-    },
-    removeTodo: (state, action: PayloadAction<TaskItem>) => {
-      const { category, _id } = action.payload;
-
-      state.data = state.data.map((item) => {
-        if (item.categoryName === category) {
-          return {
-            ...item,
-            tasks: item.tasks.filter((task) => task._id !== _id),
-          };
-        }
-
-        return item;
-      });
-    },
-    updateCategory: (state, action: PayloadAction<CategoryInterface>) => {
-      state.data = state.data.map((item) => {
-        if (item._id === action.payload._id) return action.payload;
-        return item;
-      });
-    },
-
-    addCategory: (state, action: PayloadAction<CategoryInterface>) => {
-      state.data.push(action.payload);
-    },
-    deleteCategory: (state, action: PayloadAction<string>) => {
-      state.data = state.data.filter(
-        (category) => category._id !== action.payload
-      );
-    },
-    loginUser: (state, action: PayloadAction<any>) => {
-      const { token, userData, userInfo } = action.payload;
-      state.token = token;
-      state.user = userInfo;
-      state.data = userData;
-    },
     logoutUser: (state) => {
       state.token = null;
-      state.user = null;
       state.data = [];
     },
   },
 });
 
-export const {
-  showAlert,
-  addNewTodo,
-  removeTodo,
-  loginUser,
-  hideAlert,
-  logoutUser,
-  deleteCategory,
-  addCategory,
-  updateTodo,
-  updateCategory,
-} = appSlice.actions;
+export const { setAccessToken, showAlert, hideAlert, logoutUser } =
+  appSlice.actions;
 
 export default appSlice.reducer;

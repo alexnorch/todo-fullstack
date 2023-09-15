@@ -6,14 +6,16 @@ import {
 import { localStorageMiddleware, autoHideAlertMiddleware } from "./middlewares";
 
 // Reducers
-import categorySlice from "../features/categories/categorySlice";
-import todoSlice from "../features/todos/todoSlice";
+import userSlice from "@features/user/userSlice";
+import categorySlice from "@features/categories/categorySlice";
+import todoSlice from "@features/todos/todoSlice";
 import appSlice from "./appSlice";
 
 const rootReducer = combineReducers({
-  todo: todoSlice,
+  tasks: todoSlice,
   categories: categorySlice,
   app: appSlice,
+  user: userSlice,
 });
 
 export const store = configureStore({

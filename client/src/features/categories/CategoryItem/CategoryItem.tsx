@@ -5,7 +5,7 @@ import "./CategoryItem.scss";
 import { CategoryEditing, CategoryDeleting } from "@features/categories";
 import { ActionsMenu } from "@features/ui";
 
-const CategoryItem: React.FC<any> = ({ tasks, color, categoryName, _id }) => {
+const CategoryItem: React.FC<any> = ({ tasks, color, title, _id }) => {
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
@@ -25,10 +25,9 @@ const CategoryItem: React.FC<any> = ({ tasks, color, categoryName, _id }) => {
         </div>
         <div className="category-column__body">
           <h3 className="category-column__title">
-            {capitalizeFirstLetter(categoryName)}
+            {capitalizeFirstLetter(title)}
           </h3>
           <hr />
-          <p className="category-column__text">All tasks: {tasks.length}</p>
         </div>
       </div>
 
@@ -41,7 +40,7 @@ const CategoryItem: React.FC<any> = ({ tasks, color, categoryName, _id }) => {
       <CategoryEditing
         id={_id}
         onModalToggle={onModalToggle}
-        categoryName={categoryName}
+        categoryName={title}
         categoryColor={color}
         isEditing={isEditing}
       />

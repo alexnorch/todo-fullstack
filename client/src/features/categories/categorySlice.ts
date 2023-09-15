@@ -1,32 +1,44 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
-  userCategories: [],
+interface CategoriesState {
+  allCategories: any[];
+}
+
+const initialState: CategoriesState = {
+  allCategories: [],
 };
 
 const categorySlice = createSlice({
   initialState,
   name: "categories",
   reducers: {
-    createCategory: (state, action: PayloadAction<any>) => {
-      //   state.userCategories.push();
+    initializeCategories: (state, action: PayloadAction<any>) => {
+      state.allCategories = action.payload;
     },
-    deleteCategory: (state, action: PayloadAction<any>) => {
-      // state.userCategories = state.userCategories.filter(
-      //     (category) => category._id !== action.payload
-      //   );
+    updateCategory: (state, action: any) => {
+      state.allCategories = state.allCategories.map((item) => {
+        if (item._id === action.payload._id) return action.payload;
+        return item;
+      });
     },
-    updateCategory: (state, action: PayloadAction<any>) => {
-      //   state.data = [
-      //     ...state.data.filter((item) => item._id !== action.payload._id),
-      //     action.payload,
-      //   ];
+
+    addCategory: (state, action: any) => {
+      state.allCategories.push(action.payload);
+    },
+    deleteCategory: (state, action: PayloadAction<string>) => {
+      state.allCategories = state.allCategories.filter(
+        (category) => category._id !== action.payload
+      );
     },
   },
 });
 
-export const { createCategory, deleteCategory, updateCategory } =
-  categorySlice.actions;
+export const {
+  initializeCategories,
+  updateCategory,
+  addCategory,
+  deleteCategory,
+} = categorySlice.actions;
 
 export default categorySlice.reducer;

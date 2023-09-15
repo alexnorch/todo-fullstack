@@ -1,40 +1,31 @@
-import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import useCustomAxios from "@hooks/useCustomAxios";
-import { showAlert } from "../../redux/appSlice";
-import { RootState } from "../../redux/store";
-import { updateTodo, removeTodo, addNewTodo } from "../../redux/appSlice";
-import { TaskItem, IUserData, GetTasksParams, CategoryType } from "./types";
+import useAlert from "@hooks/useAlert";
 
-const filterTasks = (tasks: TaskItem[], isCompleted: boolean) =>
-  tasks.filter((task) => task.completed === isCompleted);
+import { RootState } from "../../redux/store";
+import { updateTask, removeTask, addNewTask } from "./todoSlice";
+import { IUserData, CategoryType } from "./types";
 
 const useTodoServices = () => {
   const { authAxios } = useCustomAxios();
-  const { data } = useSelector((state: RootState) => state.app);
-
-  const allTasks: TaskItem[] = data.flatMap(({ tasks }) => tasks);
-  const completedTasks = filterTasks(allTasks, true);
-  const uncompletedTasks = filterTasks(allTasks, false);
+  const { showDangerAlert, showSuccessAlert } = useAlert();
+  const allTasks = useSelector((state: RootState) => state.tasks.allTasks);
 
   const dispatch = useDispatch();
 
-  const getTaskByCategory = useMemo(
-    () => (params: GetTasksParams) => {
-      const filteredItems = data.filter(
-        (item) => item.categoryName === params.category
-      );
+  const getTasksByCategory = (params: {
+    category: string | undefined;
+    isCompleted: boolean;
+  }) => {
+    return allTasks.filter(
+      (task) =>
+        task.category === params.category &&
+        task.completed === params.isCompleted
+    );
+  };
 
-      return filteredItems.map((item) => ({
-        ...item,
-        tasks: params.isCompleted
-          ? [...item.tasks.filter((task) => task.completed)]
-          : [...item.tasks.filter((task) => !task.completed)],
-      }))[0].tasks;
-    },
-    [data]
-  );
+  const fetchTasks = () => {};
 
   const onCreateTask = async (
     title: string,
@@ -48,20 +39,10 @@ const useTodoServices = () => {
       });
 
       clearField();
-      dispatch(addNewTodo(data));
-      dispatch(
-        showAlert({
-          type: "success",
-          text: "New task was created",
-        })
-      );
+      dispatch(addNewTask(data));
+      showSuccessAlert("New task was created");
     } else {
-      dispatch(
-        showAlert({
-          type: "danger",
-          text: "Must be greater than 6 characters",
-        })
-      );
+      showDangerAlert("Must be greater than 6 characters");
     }
   };
 
@@ -72,28 +53,18 @@ const useTodoServices = () => {
         completed: userData.completed,
       });
 
-      dispatch(showAlert({ type: "success", text: "Successfully changed" }));
-      dispatch(updateTodo(data));
+      showSuccessAlert("The task was successfully changed");
+      dispatch(updateTask(data));
     } else {
-      dispatch(
-        showAlert({
-          type: "danger",
-          text: "Must be greater than 6 characters",
-        })
-      );
+      showDangerAlert("Must be greater than 6 characters");
     }
   };
 
   const onDeleteTask = async (id: string) => {
     const { data } = await authAxios.delete(`/api/task/${id}`);
 
-    dispatch(removeTodo(data));
-    dispatch(
-      showAlert({
-        type: "success",
-        text: "The task was successfully deleted",
-      })
-    );
+    dispatch(removeTask(data));
+    showSuccessAlert("The task was successfully deleted");
   };
 
   const onCompleteTask = async (id: string, userData: IUserData) => {
@@ -102,23 +73,14 @@ const useTodoServices = () => {
       completed: !userData.completed,
     });
 
-    dispatch(updateTodo(data));
-    dispatch(
-      showAlert({
-        type: "success",
-        text: `You have completed the task "${userData.title}"`,
-        duration: 3000,
-      })
-    );
+    dispatch(updateTask(data));
+    showSuccessAlert(`You have completed the task "${userData.title}"`);
   };
 
   return {
-    completedTasks,
-    allTasks,
-    uncompletedTasks,
     onUpdateTask,
     onDeleteTask,
-    getTaskByCategory,
+    getTasksByCategory,
     onCreateTask,
     onCompleteTask,
   };

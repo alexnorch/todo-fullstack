@@ -4,11 +4,13 @@ import CategoryItem from "../CategoryItem/CategoryItem";
 import "./CategoriesList.scss";
 
 const CategoriesList = () => {
-  const data = useSelector((state: RootState) => state.app.data);
+  const categories = useSelector(
+    (state: RootState) => state.categories.allCategories
+  );
 
   return (
     <div className="categories-row">
-      {data.map((item) => (
+      {categories.map((item) => (
         <CategoryItem key={item._id} {...item} />
       ))}
     </div>

@@ -4,7 +4,6 @@ export type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 export type AlertTypes = "danger" | "success" | "info";
 
 export interface AppState {
-  user: UserInfo | null;
   token: string | null;
   data: UserData[];
   alertType: AlertTypes;

@@ -1,25 +1,19 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+
 import { capitalizeFirstLetter } from "../helpers";
-import useTaskServices from "../features/todos/useTodoServices";
-import { TodoNew, TodoNav, TodoCompleted, TodoList } from "../features/todos";
+import useTaskServices from "@features/todos/useTodoServices";
+import { TodoNew, TodoNav, TodoCompleted, TodoList } from "@features/todos";
 
 export default function Tasks() {
   const [showCompleted, setShowCompeted] = useState<boolean>(false);
-  const { getTaskByCategory } = useTaskServices();
+  const { getTasksByCategory } = useTaskServices();
   const { category } = useParams();
 
   const onToggleCompletedTasks = () => setShowCompeted((prev) => !prev);
 
-  const completedTasks = getTaskByCategory({
-    category,
-    isCompleted: true,
-  });
-
-  const inCompletedTasks = getTaskByCategory({
-    category,
-    isCompleted: false,
-  });
+  const inCompletedTasks = getTasksByCategory({ category, isCompleted: false });
+  const completedTasks = getTasksByCategory({ category, isCompleted: true });
 
   return (
     <>
@@ -36,9 +30,9 @@ export default function Tasks() {
         showCompleted={onToggleCompletedTasks}
       />
       <TodoCompleted
-        onToggle={onToggleCompletedTasks}
-        isActive={showCompleted}
         tasks={completedTasks}
+        onToggle={onToggleCompletedTasks}
+        isShown={showCompleted}
       />
     </>
   );

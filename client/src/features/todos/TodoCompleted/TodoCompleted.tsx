@@ -10,14 +10,14 @@ import { CompletedTasksProps } from "../types";
 import useTaskServices from "../useTodoServices";
 
 const TodoCompleted: React.FC<CompletedTasksProps> = ({
-  tasks,
-  isActive,
+  isShown,
   onToggle,
+  tasks,
 }) => {
   const { onCompleteTask } = useTaskServices();
   const nodeRef = useRef<HTMLDivElement>(null);
 
-  useOutsideClick({ isShown: isActive, onHide: onToggle, nodeRef });
+  useOutsideClick({ isShown, onHide: onToggle, nodeRef });
 
   const completedTasks = tasks?.map((item) => (
     <li key={item._id} className="completed-tasks__item">
@@ -35,12 +35,12 @@ const TodoCompleted: React.FC<CompletedTasksProps> = ({
     <CSSTransition
       unmountOnExit
       timeout={1000}
-      in={isActive}
+      in={isShown}
       classNames="completed-tasks"
       nodeRef={nodeRef}
     >
       <>
-        {isActive ? (
+        {isShown ? (
           <div className="completed-tasks" ref={nodeRef}>
             <div className="completed-tasks__top">
               <h2 className="completed-tasks__title">Completed tasks</h2>

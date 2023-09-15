@@ -2,18 +2,18 @@ import express from "express";
 import authenticate from "../middlewares/authenticate";
 
 // Controllers
-import userControllers from "../controllers/userControllers";
+import userController from "../controllers/userController";
 
 const router = express.Router();
 
-router.route("/login").post(userControllers.loginUser);
-router.route("/register").post(userControllers.registerUser);
-router.route("/:id").patch(userControllers.updateUser);
+router.route("/login").post(userController.loginUser);
+router.route("/register").post(userController.registerUser);
+router.route("/:id").patch(userController.updateUser);
 
 router
   .route("/changePassword")
-  .post(authenticate, userControllers.changePassword);
+  .post(authenticate, userController.changePassword);
 
-router.route("/confirmEmail").post(authenticate, userControllers.confirmEmail);
+router.route("/confirmEmail").post(authenticate, userController.confirmEmail);
 
 export default router;

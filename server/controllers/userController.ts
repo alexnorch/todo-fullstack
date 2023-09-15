@@ -57,9 +57,22 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
       },
     ]);
 
-    res.json({
-      data: { ...user.toObject(), tasks: tasksWithCategories },
+    const formattedData = {
+      user: {
+        name: user.name,
+        email: user.email,
+        photo: user.photo,
+        id: user._id,
+      },
+      data: {
+        tasks: tasksWithCategories,
+        categories: user.categories,
+      },
       token,
+    };
+
+    res.json({
+      result: formattedData,
     });
   } catch (error) {
     next(error);

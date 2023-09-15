@@ -32,8 +32,8 @@ const OverviewTasksBlock: React.FC<{
 
 const Overview = () => {
   const currentDate = moment(Date.now()).format("MMMM Do");
-  const { user } = useSelector((state: RootState) => state.app);
-  const { allTasks, completedTasks, uncompletedTasks } = useTodoServices();
+  const user = useSelector((state: RootState) => state.user);
+  const allTasks = useSelector((state: RootState) => state.tasks.allTasks);
 
   const mapTasksToComponents = (tasks: TaskItem[]) =>
     tasks.map((task) => <TodoReadOnly key={task._id} {...task} />);
@@ -47,24 +47,18 @@ const Overview = () => {
 
       <section className="overview-stats">
         <OverviewStatsCard title="All tasks" count={allTasks.length} />
-        <OverviewStatsCard
-          title="Completed tasks"
-          count={completedTasks.length}
-        />
-        <OverviewStatsCard
-          title="Uncompleted tasks"
-          count={uncompletedTasks.length}
-        />
+        <OverviewStatsCard title="Completed tasks" count={allTasks.length} />
+        <OverviewStatsCard title="Uncompleted tasks" count={allTasks.length} />
       </section>
       <section className="overview-tasks">
-        <OverviewTasksBlock
+        {/* <OverviewTasksBlock
           title="Uncompleted tasks"
           tasks={mapTasksToComponents(uncompletedTasks)}
         />
         <OverviewTasksBlock
           title="Completed tasks"
           tasks={mapTasksToComponents(completedTasks)}
-        />
+        /> */}
       </section>
     </div>
   );

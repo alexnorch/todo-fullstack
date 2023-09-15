@@ -16,6 +16,8 @@ export const populateTask = async (taskId: string) => {
     {
       $project: {
         title: 1,
+        completed: 1,
+        color: 1,
         category: {
           $arrayElemAt: ["$categoryInfo.title", 0],
         },

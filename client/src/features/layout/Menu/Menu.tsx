@@ -14,11 +14,14 @@ import {
 } from "react-icons/io";
 
 const Menu = () => {
-  const { data } = useSelector((state: RootState) => state.app);
+  const categories = useSelector(
+    (state: RootState) => state.categories.allCategories
+  );
+
   const navigate = useNavigate();
 
   const renderCategories = () => {
-    if (!data || data.length === 0) {
+    if (!categories || categories.length === 0) {
       return (
         <button onClick={() => navigate("/settings")} className="add-category">
           <IoMdAddCircleOutline className="add-category__icon" />
@@ -30,7 +33,7 @@ const Menu = () => {
     return (
       <ol className="menu-categories__list">
         <p className="menu__text">My categories:</p>
-        {data.map(({ categoryName, _id, color }) => (
+        {categories.map(({ title, _id, color }) => (
           <li key={_id} className="menu-categories__item">
             <span
               style={{ backgroundColor: color }}
@@ -38,9 +41,9 @@ const Menu = () => {
             ></span>
             <Link
               className="menu-categories__link"
-              to={`tasks/${categoryName?.toLocaleLowerCase()}`}
+              to={`tasks/${title?.toLocaleLowerCase()}`}
             >
-              {capitalizeFirstLetter(categoryName)}
+              {capitalizeFirstLetter(title)}
             </Link>
           </li>
         ))}

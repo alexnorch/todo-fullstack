@@ -4,10 +4,8 @@ import { RootState } from "../../../redux/store";
 import { FileUploader, Button } from "../../ui";
 import "./UserPhoto.scss";
 
-import { IoExitOutline } from "react-icons/io5";
-
 const UserPhoto = () => {
-  const user = useSelector((state: RootState) => state.app.user);
+  const user = useSelector((state: RootState) => state.user);
 
   const dispatch = useDispatch();
 

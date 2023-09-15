@@ -5,7 +5,7 @@ import { TextField, Button } from "../../ui";
 import { ChangeEvent } from "../../../types";
 
 const UserDetails = () => {
-  const user = useSelector((state: RootState) => state.app.user);
+  const user = useSelector((state: RootState) => state.user);
   const [userName, setUserName] = useState(user!.name);
   const [userEmail, setUserEmail] = useState(user!.email);
 

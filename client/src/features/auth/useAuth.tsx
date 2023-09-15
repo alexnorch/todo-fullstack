@@ -1,8 +1,14 @@
 import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { loginUser, showAlert } from "../../redux/appSlice";
+import { showAlert } from "../../redux/appSlice";
 import { addToLocalStorage } from "../../helpers";
+
+// Redux actions
+import { initializeUser } from "@features/user/userSlice";
+import { initializeCategories } from "@features/categories/categorySlice";
+import { initializeTasks } from "@features/todos/todoSlice";
+import { setAccessToken } from "../../redux/appSlice";
 
 const useAuth = () => {
   const dispatch = useDispatch();
@@ -10,15 +16,19 @@ const useAuth = () => {
 
   const login = async (email: string, password: string) => {
     try {
-      const {
-        data: { result },
-      } = await axios.post("/api/user/login", {
-        email,
-        password,
+      const response = await axios.post("/api/user/login", {
+        email: "walbyel@gmail.com",
+        password: "walbyel123",
       });
 
-      dispatch(loginUser(result));
-      addToLocalStorage("accessToken", result.token);
+      const { user, token, data } = response.data.result;
+
+      dispatch(initializeUser(user));
+      dispatch(initializeCategories(data.categories));
+      dispatch(initializeTasks(data.tasks));
+      dispatch(setAccessToken(token));
+      // addToLocalStorage("accessToken", token);
+
       navigate("/");
     } catch (err) {
       if (err instanceof AxiosError) {

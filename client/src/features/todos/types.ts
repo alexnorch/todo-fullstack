@@ -11,7 +11,7 @@ export interface TaskItem {
 export interface CompletedTasksProps {
   tasks: TaskItem[];
   onToggle: () => void;
-  isActive: boolean;
+  isShown: boolean;
 }
 
 export interface TaskNavigationProps {
