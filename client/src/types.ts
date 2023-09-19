@@ -5,7 +5,6 @@ export type AlertTypes = "danger" | "success" | "info";
 
 export interface AppState {
   token: string | null;
-  data: UserData[];
   alertType: AlertTypes;
   alertText: string | null;
   isAlert: boolean;

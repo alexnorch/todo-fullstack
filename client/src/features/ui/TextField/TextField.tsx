@@ -5,6 +5,7 @@ export interface InputProps {
   placeholder: string;
   name?: string;
   type?: string;
+  disabled?: boolean;
   onChange: any;
   value: string;
   errorMessage?: string;
@@ -20,14 +21,18 @@ const TextField: React.FC<InputProps> = ({
   name,
   type,
   adornment,
+  disabled,
 }) => {
   let labelClass = "text-field__label";
+  let inputClasses = "text-field__input";
+
   if (value.length > 0) labelClass += " visible";
+  if (disabled) inputClasses += " disabled";
 
   return (
     <div className="text-field">
       <label className={labelClass}>{value.length > 0 && label}</label>
-      <div className="text-field__input">
+      <div className={inputClasses}>
         <input
           required
           type={type}

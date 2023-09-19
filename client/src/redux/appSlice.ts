@@ -5,7 +5,6 @@ import { AppState, AlertProps, CategoryInterface } from "../types";
 
 const initialState: AppState = {
   token: getFromLocalStorage("accessToken") || null,
-  data: getFromLocalStorage("userData") || [],
   alertType: "info",
   alertText: null,
   isAlert: false,
@@ -30,7 +29,6 @@ export const appSlice = createSlice({
 
     logoutUser: (state) => {
       state.token = null;
-      state.data = [];
     },
   },
 });

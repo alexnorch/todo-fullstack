@@ -8,7 +8,15 @@ const router = express.Router();
 
 router.route("/login").post(userController.loginUser);
 router.route("/register").post(userController.registerUser);
-router.route("/:id").patch(userController.updateUser);
+
+router
+  .route("/:id")
+  .patch(
+    authenticate,
+    userController.uploadPhoto,
+    userController.resizePhoto,
+    userController.updateUser
+  );
 
 router
   .route("/changePassword")

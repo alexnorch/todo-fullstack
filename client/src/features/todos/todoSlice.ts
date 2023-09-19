@@ -1,13 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { TaskItem } from "types";
+import { getFromLocalStorage } from "helpers";
 
 interface TasksState {
   allTasks: TaskItem[];
 }
 
 const initialState: TasksState = {
-  allTasks: [],
+  allTasks: getFromLocalStorage("tasks") || [],
 };
 
 const taskSlice = createSlice({
@@ -30,7 +31,9 @@ const taskSlice = createSlice({
       });
     },
     removeTask: (state, action: PayloadAction<TaskItem>) => {
-      state.allTasks.filter((item) => item._id !== action.payload._id);
+      state.allTasks = state.allTasks.filter(
+        (item) => item._id !== action.payload._id
+      );
     },
   },
 });

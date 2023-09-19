@@ -1,42 +1,16 @@
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { RootState } from "../redux/store";
-import { addZeroToNumber } from "../helpers";
-import { TodoReadOnly } from "../features/todos";
-import useTodoServices from "../features/todos/useTodoServices";
-import { TaskItem } from "../types";
 
-const OverviewStatsCard: React.FC<{ title: string; count: number }> = ({
-  title,
-  count,
-}) => {
-  return (
-    <div className="overview-stats__column">
-      <p className="overview-stats__count">{addZeroToNumber(count)}</p>
-      <h3 className="overview-stats__text">{title}</h3>
-    </div>
-  );
-};
-
-const OverviewTasksBlock: React.FC<{
-  title: string;
-  tasks: React.ReactNode;
-}> = ({ title, tasks }) => {
-  return (
-    <div className="overview-tasks__block">
-      <h2 className="overview-tasks__heading">{title}</h2>
-      <div className="overview-tasks__container">{tasks}</div>
-    </div>
-  );
-};
+import { OverviewStats, OverviewTasks } from "@features/overview";
 
 const Overview = () => {
   const currentDate = moment(Date.now()).format("MMMM Do");
   const user = useSelector((state: RootState) => state.user);
-  const allTasks = useSelector((state: RootState) => state.tasks.allTasks);
 
-  const mapTasksToComponents = (tasks: TaskItem[]) =>
-    tasks.map((task) => <TodoReadOnly key={task._id} {...task} />);
+  const allTasks = useSelector((state: RootState) => state.tasks.allTasks);
+  const completedTasks = allTasks.filter((task) => task.completed);
+  const incompleteTasks = allTasks.filter((task) => !task.completed);
 
   return (
     <div className="overview">
@@ -45,21 +19,16 @@ const Overview = () => {
         <h2 className="page-heading__subtitle">Today is {currentDate}</h2>
       </div>
 
-      <section className="overview-stats">
-        <OverviewStatsCard title="All tasks" count={allTasks.length} />
-        <OverviewStatsCard title="Completed tasks" count={allTasks.length} />
-        <OverviewStatsCard title="Uncompleted tasks" count={allTasks.length} />
-      </section>
-      <section className="overview-tasks">
-        {/* <OverviewTasksBlock
-          title="Uncompleted tasks"
-          tasks={mapTasksToComponents(uncompletedTasks)}
-        />
-        <OverviewTasksBlock
-          title="Completed tasks"
-          tasks={mapTasksToComponents(completedTasks)}
-        /> */}
-      </section>
+      <OverviewStats
+        allTasksCount={allTasks.length}
+        completedCount={completedTasks.length}
+        inCompleteCount={incompleteTasks.length}
+      />
+
+      <OverviewTasks
+        completedTasks={completedTasks}
+        incompleteTasks={incompleteTasks}
+      />
     </div>
   );
 };

@@ -1,12 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { getFromLocalStorage } from "helpers";
+
+const userObj = getFromLocalStorage("userDetails");
 
 const initialState = {
-  email: "",
-  id: "",
-  name: "",
-  photo: "",
-  //  isEmailConfirmed
+  email: userObj.email || "",
+  id: userObj.id || "",
+  name: userObj.name || "",
+  photo: userObj.photo || "",
+  isEmailConfirmed: true,
 };
 
 const userSlice = createSlice({
@@ -19,11 +22,12 @@ const userSlice = createSlice({
       state.name = action.payload.name;
       state.photo = action.payload.photo;
     },
+    confirmEmail: (state) => {
+      state.isEmailConfirmed = true;
+    },
   },
 });
 
-// confirmEmail, updateUser, setPhoto
-
-export const { initializeUser } = userSlice.actions;
+export const { initializeUser, confirmEmail } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -25,8 +25,6 @@ const useTodoServices = () => {
     );
   };
 
-  const fetchTasks = () => {};
-
   const onCreateTask = async (
     title: string,
     category: CategoryType,

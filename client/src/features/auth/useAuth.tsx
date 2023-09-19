@@ -27,7 +27,8 @@ const useAuth = () => {
       dispatch(initializeCategories(data.categories));
       dispatch(initializeTasks(data.tasks));
       dispatch(setAccessToken(token));
-      // addToLocalStorage("accessToken", token);
+
+      addToLocalStorage("accessToken", token);
 
       navigate("/");
     } catch (err) {

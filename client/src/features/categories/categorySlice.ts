@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { getFromLocalStorage } from "helpers";
 
 interface CategoriesState {
   allCategories: any[];
 }
 
 const initialState: CategoriesState = {
-  allCategories: [],
+  allCategories: getFromLocalStorage("categories") || [],
 };
 
 const categorySlice = createSlice({
@@ -16,6 +17,7 @@ const categorySlice = createSlice({
     initializeCategories: (state, action: PayloadAction<any>) => {
       state.allCategories = action.payload;
     },
+
     updateCategory: (state, action: any) => {
       state.allCategories = state.allCategories.map((item) => {
         if (item._id === action.payload._id) return action.payload;
@@ -26,6 +28,7 @@ const categorySlice = createSlice({
     addCategory: (state, action: any) => {
       state.allCategories.push(action.payload);
     },
+
     deleteCategory: (state, action: PayloadAction<string>) => {
       state.allCategories = state.allCategories.filter(
         (category) => category._id !== action.payload

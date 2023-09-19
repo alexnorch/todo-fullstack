@@ -69,76 +69,13 @@
   }
 }
 
-.overview-tasks {
-  @include flex(row, start, space-between);
-  gap: 30px;
+.adornment-icon {
+  @include flex();
+  color: green;
 
-  &__block {
-    flex-basis: 50%;
-  }
-
-  &__heading {
-    margin-bottom: 20px;
-  }
-
-  &__container {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 30px;
-  }
-
-  .task {
-    margin-bottom: 0;
-    flex-basis: calc(100% / 2 - 22.5px);
-    padding: 25px 15px;
-  }
-}
-
-.overview-stats {
-  display: flex;
-  gap: 30px;
-
-  &__column {
-    position: relative;
-    height: 200px;
-    width: 200px;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    overflow: hidden;
-    box-shadow: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
-
-    &:nth-of-type(1) {
-      background-color: $red-bright;
-    }
-
-    &:nth-of-type(2) {
-      background-color: $sky-bright;
-    }
-
-    &:nth-of-type(3) {
-      background-color: $blue-darken;
-    }
-  }
-
-  &__count {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-weight: 700;
-    font-size: 48px;
-    color: #fff;
-  }
-
-  &__text {
-    text-align: center;
-    font-size: 16px;
-    padding: 10px;
-    margin-top: auto;
-    background-color: #fff;
+  svg {
+    width: 25px;
+    height: 25px;
   }
 }
 
