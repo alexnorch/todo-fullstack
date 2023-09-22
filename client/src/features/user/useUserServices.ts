@@ -1,6 +1,7 @@
 import useCustomAxios from "@hooks/useCustomAxios";
 import { useDispatch } from "react-redux";
-import { showAlert } from "redux/appSlice";
+import { userUpdate } from "./userSlice";
+import useAlert from "@hooks/useAlert";
 
 interface onPasswordChangeParams {
   oldPassword: string;
@@ -8,25 +9,50 @@ interface onPasswordChangeParams {
   confirmPassword: string;
 }
 
+interface changeUserInfoParams {
+  email?: string,
+  name: string
+}
+
 const useUserServices = () => {
-  const { authAxios } = useCustomAxios();
   const dispatch = useDispatch();
+  const { authAxios } = useCustomAxios();
+  const { showSuccessAlert } = useAlert()
 
   const onPasswordChange = async (values: onPasswordChangeParams) => {
     const response = await authAxios.post("/api/user/changePassword", values);
 
     if (response.data) {
-      dispatch(
-        showAlert({
-          type: "success",
-          text: "Password was successfully changed",
-        })
-      );
+      showSuccessAlert('Password was successfully changed')
     }
   };
 
+  const changeUserInfo = async (values: changeUserInfoParams) => {
+    const response = await authAxios.patch('/api/user/profileDetails', values)
+
+    if (response.data) {
+      dispatch(userUpdate(response.data))
+      showSuccessAlert('User information was successfully changed')
+    }
+  }
+
+  const changeUserImage = async (file: any) => {
+    const formData = new FormData();
+    formData.append('photo', file)
+
+    const response = await authAxios.patch('/api/user/profilePicture', formData)
+
+    if (response.data) {
+      dispatch(userUpdate(response.data))
+      showSuccessAlert('Profile image was successfully changed')
+    }
+
+  }
+
   return {
     onPasswordChange,
+    changeUserImage,
+    changeUserInfo
   };
 };
 

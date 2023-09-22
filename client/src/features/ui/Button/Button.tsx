@@ -6,6 +6,7 @@ interface ButtonProps {
   variant: "outline" | "primary" | "transparent";
   children: React.ReactNode;
   size?: "sm" | "md" | "lg";
+  disabled?: boolean
 }
 
 const getButtonSize = (size: string) => {
@@ -23,10 +24,12 @@ const Button: React.FC<ButtonProps> = ({
   children,
   variant,
   onClick,
+  disabled,
   size = "sm",
 }) => {
   return (
     <button
+      disabled={disabled}
       style={getButtonSize(size)}
       onClick={onClick}
       className={getButtonClasses(variant)}

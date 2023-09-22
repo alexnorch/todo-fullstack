@@ -9,7 +9,7 @@ const initialState = {
   id: userObj.id || "",
   name: userObj.name || "",
   photo: userObj.photo || "",
-  isEmailConfirmed: true,
+  isEmailConfirmed: false,
 };
 
 const userSlice = createSlice({
@@ -22,12 +22,18 @@ const userSlice = createSlice({
       state.name = action.payload.name;
       state.photo = action.payload.photo;
     },
+    userUpdate: (state, action: PayloadAction<any>) => {
+      state.email = action.payload.email;
+      state.id = action.payload.id;
+      state.name = action.payload.name;
+      state.photo = action.payload.photo;
+    } ,
     confirmEmail: (state) => {
       state.isEmailConfirmed = true;
     },
   },
 });
 
-export const { initializeUser, confirmEmail } = userSlice.actions;
+export const { initializeUser, confirmEmail, userUpdate } = userSlice.actions;
 
 export default userSlice.reducer;

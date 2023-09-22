@@ -18,6 +18,7 @@ app.use(express.json());
 app.use("/api/user", userRouter);
 app.use("/api/task", authenticate, taskRouter);
 app.use("/api/category", authenticate, categoryRouter);
+app.use(express.static('public'));
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello world");

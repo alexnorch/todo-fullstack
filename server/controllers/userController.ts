@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import multer from "multer";
 import sharp from "sharp";
-import User from "../models/userModel";
+import User, { IUser } from "../models/userModel";
 import Task from "../models/taskModel";
 import AppError from "../utils/AppError";
 
@@ -148,9 +148,59 @@ const registerUser = async (
   }
 };
 
-const updateUser = (req: Request, res: Response) => {
-  if (req.file) console.log(req.file.filename);
-  res.send("Updated");
+const updateUserPhoto = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+
+  if (!req.file) {
+    return next(new AppError("Please upload an image", 400));
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(req.userId, {
+    photo: req.file.filename,
+  }, { new: true });
+
+  res.send(updatedUser);
+};
+
+const updateUser = async (req: Request, res: Response, next: NextFunction) => {
+  const { email, name } = req.body;
+  const user = (await User.findById(req.userId)) as IUser;
+  const isEmailAlreadyExists = (await User.findOne({ email })) as IUser;
+
+  if (user.isEmailConfirmed) {
+    return next(
+      new AppError(
+        "You can't change email address, because it's already confirmed",
+        400
+      )
+    );
+  }
+
+  if (!name || !email) {
+    return next(new AppError("Please provide all values", 400));
+  }
+
+  if (isEmailAlreadyExists && email !== user.email) {
+    return next(
+      new AppError(
+        "The email address is already taken. Please choose another one.",
+        400
+      )
+    );
+  }
+
+  if (user.email !== email) {
+    user.email = email;
+  }
+
+  user.name = name;
+
+  const updatedUser = await user.save();
+
+  res.send(updatedUser);
 };
 
 const changePassword = async (
@@ -165,7 +215,7 @@ const changePassword = async (
       return next(new AppError("Please provide all values", 400));
     }
 
-    const user = await User.findById(req.userId);
+    const user = (await User.findById(req.userId)) as IUser;
     const isPasswordCorrect = await user?.comparePassword(
       oldPassword,
       user.password!
@@ -179,8 +229,8 @@ const changePassword = async (
       return next(new AppError("You provide an invalid old password", 400));
     }
 
-    user!.password = newPassword;
-    await user!.save();
+    user.password = newPassword;
+    await user.save();
 
     res.send(user);
   } catch (error) {
@@ -197,8 +247,6 @@ const confirmEmail = async (
   } catch (error) {}
 };
 
-// Controllers for admins: delete, update
-
 export default {
   loginUser,
   registerUser,
@@ -207,4 +255,5 @@ export default {
   confirmEmail,
   uploadPhoto,
   resizePhoto,
+  updateUserPhoto,
 };

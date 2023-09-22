@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 export interface IUser extends Document {
   name: string;
   email: string;
+  isEmailConfirmed: boolean;
   password: string | undefined;
   photo: string;
   categories: Types.ObjectId[];
@@ -22,6 +23,11 @@ const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, "Email is required"],
+    unique: true,
+  },
+  isEmailConfirmed: {
+    type: Boolean,
+    default: false,
   },
   password: {
     type: String,
@@ -38,7 +44,9 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.pre("save", async function () {
+
   if (!this.isModified("password")) return;
+  
   const password = this.password || "";
 
   this.password = await bcrypt.hash(password, 10);

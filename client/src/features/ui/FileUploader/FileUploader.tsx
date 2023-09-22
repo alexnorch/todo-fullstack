@@ -1,10 +1,21 @@
 import "./FileUploader.scss";
+import { ChangeEvent } from "types";
 
-const FileUploader: React.FC<{ text: string }> = ({ text }) => {
+interface FileUploaderProps {
+  text: string,
+  onChange: (e: any) => void;
+  accepts: string
+}
+
+const FileUploader: React.FC<FileUploaderProps> = ({ text, onChange, accepts }) => {
   return (
     <label className="file-uploader">
       {text}
-      <input className="file-uploader__input" type="file" />
+      <input 
+        accept={accepts} 
+        onChange={onChange} 
+        className="file-uploader__input" 
+        type="file" />
     </label>
   );
 };
