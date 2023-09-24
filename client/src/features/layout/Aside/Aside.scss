@@ -1,6 +1,14 @@
 @import "assets/styles/variables";
+@import "assets/styles/mixins";
 
 .aside {
+  @include flex(column, start, space-between);
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 999;
   width: 90px;
   padding: 20px;
   background-color: $blue;
@@ -8,5 +16,6 @@
 
   &.active {
     width: 300px;
+    box-shadow: 999px 999px 999px 9999px rgba(0,0,0,0.3);
   }
 }

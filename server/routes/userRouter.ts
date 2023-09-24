@@ -11,24 +11,28 @@ router
 
 router
   .route("/register")
-  .post(userController.registerUser);
+    .post(userController.registerUser);
 
 router
   .route("/profileDetails")
-  .patch(authenticate, userController.updateUser);
+    .patch(authenticate, userController.updateUser);
 
 router
   .route("/profilePicture")
-  .patch(
-    authenticate,
-    userController.uploadPhoto,
-    userController.resizePhoto,
-    userController.updateUserPhoto
+    .patch(
+      authenticate,
+      userController.uploadPhoto,
+      userController.resizePhoto,
+      userController.updateUserPhoto
   );
 
 router
   .route("/changePassword")
-  .post(authenticate, userController.changePassword);
+    .post(authenticate, userController.changePassword);
+
+router
+    .route('/verificationEmail')
+      .post(authenticate, userController.verificationEmail)
 
 router
   .route("/confirmEmail")

@@ -20,9 +20,11 @@ const CategoryItem: React.FC<any> = ({ tasks, color, title, _id }) => {
   return (
     <>
       <div style={categoryStyles} className="category-column">
+        
         <div className="category-column__actions">
           <ActionsMenu onDelete={onDeleteBegin} onEdit={onEditBegin} />
         </div>
+
         <div className="category-column__body">
           <h3 className="category-column__title">
             {capitalizeFirstLetter(title)}

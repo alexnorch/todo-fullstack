@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { getFromLocalStorage } from "../helpers";
-import { AppState, AlertProps, CategoryInterface } from "../types";
+import { AppState, AlertProps } from "../types";
 
 const initialState: AppState = {
   token: getFromLocalStorage("accessToken") || null,
@@ -26,14 +26,13 @@ export const appSlice = createSlice({
       state.isAlert = false;
       state.alertText = null;
     },
-
-    logoutUser: (state) => {
+    logout: (state) => {
       state.token = null;
     },
   },
 });
 
-export const { setAccessToken, showAlert, hideAlert, logoutUser } =
+export const { setAccessToken, showAlert, hideAlert, logout } =
   appSlice.actions;
 
 export default appSlice.reducer;

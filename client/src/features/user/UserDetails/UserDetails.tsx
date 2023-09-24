@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import useAlert from "@hooks/useAlert";
 import useUserServices from "../useUserServices";
 import { RootState } from "../../../redux/store";
 import { TextField, Button } from "@features/ui";
@@ -11,23 +12,31 @@ const UserDetails = () => {
   const user = useSelector((state: RootState) => state.user);
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
-  const { changeUserInfo } = useUserServices()
+  const { changeUserInfo } = useUserServices();
+  const { showInfoAlert } = useAlert();
 
   const submitHandler = (e: any) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (name && email) {
-      changeUserInfo({ name, email })
+      changeUserInfo({ name, email });
     }
-  }
+  };
 
-  const emailInputAdornment = user.isEmailConfirmed 
-  ? (
+  const confirmHandler = () => {
+    showInfoAlert(
+      "Confirmation link was successfully sent to your e-mail address"
+    );
+  };
+
+  const emailInputAdornment = user.isEmailConfirmed ? (
     <div className="adornment-icon">
       <AiOutlineCheckCircle />
     </div>
   ) : (
-    <Button variant="transparent">Confirm</Button>
+    <Button type="button" onClick={confirmHandler} variant="transparent">
+      Confirm
+    </Button>
   );
 
   return (

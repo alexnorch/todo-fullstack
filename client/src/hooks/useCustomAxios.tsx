@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
-import { showAlert, logoutUser } from "../redux/appSlice";
+import { showAlert, logout } from "../redux/appSlice";
 
 const useCustomAxios = () => {
   const authAxios = axios.create();
@@ -26,7 +26,7 @@ const useCustomAxios = () => {
     },
     function (error) {
       if (error.request.status === 401) {
-        dispatch(logoutUser());
+        dispatch(logout());
       }
       dispatch(
         showAlert({ type: "danger", text: error.response.data.message })

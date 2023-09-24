@@ -2,12 +2,19 @@
 
 .file-uploader {
   min-width: 64px;
-  padding: 12px 24px;
+  padding: 9px 24px;
   font-size: 14px;
   border-radius: 7px;
-  color: $white;
-  background-color: $blue-darken;
+  color: $blue-darken;
+  background-color: transparent;
+  border: 2px solid $blue-darken;
   cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: #fff;
+    background-color: $blue-darken;
+  }
 
   &__input {
     display: none;

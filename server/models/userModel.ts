@@ -2,17 +2,21 @@ import mongoose from "mongoose";
 import { Document, Types } from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { v4 as uuidv4 } from 'uuid';
 
 export interface IUser extends Document {
   name: string;
   email: string;
   isEmailConfirmed: boolean;
+  confirmString: boolean;
   password: string | undefined;
   photo: string;
   categories: Types.ObjectId[];
   tasks: Types.ObjectId[];
   comparePassword: (candidate: string, hashed: string) => Promise<boolean>;
   generateToken: (userId: string) => Promise<object>;
+  generateConfirmString: () => string;
+  verifyConfirmString: (str: string) => boolean;
 }
 
 const UserSchema = new mongoose.Schema({
@@ -28,6 +32,10 @@ const UserSchema = new mongoose.Schema({
   isEmailConfirmed: {
     type: Boolean,
     default: false,
+  },
+  confirmString: {
+    type: String,
+    default: null
   },
   password: {
     type: String,
@@ -64,5 +72,24 @@ UserSchema.methods.generateToken = function (userId: string) {
     expiresIn: "24h",
   });
 };
+
+UserSchema.methods.generateConfirmString = async function () {
+  const confirmationStr = uuidv4()
+  this.confirmString = confirmationStr
+
+  await this.save()
+
+  console.log(this.confirmString)
+
+  return confirmationStr
+}
+
+UserSchema.methods.verifyConfirmString = function (str: string) {
+
+  console.log('provided string', str)
+  console.log('model string', this.confirmString)
+
+  return this.confirmString === str
+}
 
 export default mongoose.model<IUser>("User", UserSchema);

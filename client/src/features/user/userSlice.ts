@@ -5,10 +5,10 @@ import { getFromLocalStorage } from "helpers";
 const userObj = getFromLocalStorage("userDetails");
 
 const initialState = {
-  email: userObj.email || "",
-  id: userObj.id || "",
-  name: userObj.name || "",
-  photo: userObj.photo || "",
+  email: userObj?.email || "",
+  id: userObj?.id || "",
+  name: userObj?.name || "",
+  photo: userObj?.photo || "",
   isEmailConfirmed: false,
 };
 
@@ -27,7 +27,7 @@ const userSlice = createSlice({
       state.id = action.payload.id;
       state.name = action.payload.name;
       state.photo = action.payload.photo;
-    } ,
+    },
     confirmEmail: (state) => {
       state.isEmailConfirmed = true;
     },

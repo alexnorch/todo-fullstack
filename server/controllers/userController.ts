@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import multer from "multer";
 import sharp from "sharp";
+import nodemailer from "nodemailer";
 import User, { IUser } from "../models/userModel";
 import Task from "../models/taskModel";
 import AppError from "../utils/AppError";
@@ -22,6 +23,14 @@ const multerFilter = (
 const upload = multer({
   storage: multerStorage,
   fileFilter: multerFilter,
+});
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "taskifyfree@gmail.com",
+    pass: process.env.APP_PASSWORD,
+  },
 });
 
 const resizePhoto = async (req: Request, res: Response, next: NextFunction) => {
@@ -153,14 +162,17 @@ const updateUserPhoto = async (
   res: Response,
   next: NextFunction
 ) => {
-
   if (!req.file) {
     return next(new AppError("Please upload an image", 400));
   }
 
-  const updatedUser = await User.findByIdAndUpdate(req.userId, {
-    photo: req.file.filename,
-  }, { new: true });
+  const updatedUser = await User.findByIdAndUpdate(
+    req.userId,
+    {
+      photo: req.file.filename,
+    },
+    { new: true }
+  );
 
   res.send(updatedUser);
 };
@@ -238,13 +250,42 @@ const changePassword = async (
   }
 };
 
+const verificationEmail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const user = (await User.findById(req.userId)) as IUser;
+  const confirmStr = await user.generateConfirmString();
+
+  const message = {
+    from: "taskifyfree@gmail.com",
+    to: "oleksandr.harashchenko@gmail.com",
+    subject: "Taskify Support | E-mail address confirmation",
+    text: `Confirmation string = ${confirmStr}`,
+  };
+
+  transporter.sendMail(message, (err, info) => {
+    console.log(err);
+    console.log(info);
+  });
+
+  res.send("OK");
+};
+
 const confirmEmail = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  try {
-  } catch (error) {}
+  const user = (await User.findById(req.userId)) as IUser;
+  const isStringValid = user.verifyConfirmString(req.body.confirmStr);
+
+  if (!isStringValid) {
+    return next(new AppError("Confirmation string is invalid", 400));
+  }
+
+  res.send("Confirmed!");
 };
 
 export default {
@@ -256,4 +297,5 @@ export default {
   uploadPhoto,
   resizePhoto,
   updateUserPhoto,
+  verificationEmail,
 };

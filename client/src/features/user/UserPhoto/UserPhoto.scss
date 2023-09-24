@@ -17,30 +17,7 @@
   }
 
   &__buttons {
-    @include flex(column);
+    @include flex();
     gap: 10px;
-  }
-
-  &__backdrop {
-    &:hover {
-      opacity: 1;
-    }
-    
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: rgba(255,255,255,0.3);
-    z-index: 10;
-    transition: all 0.3s ease;
-
-    .file-uploader {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%,-50%);
-    }
   }
 }

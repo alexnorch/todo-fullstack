@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { logoutUser } from "../../../redux/appSlice";
 import { RootState } from "../../../redux/store";
 import { FileUploader, Button } from "../../ui";
 import useUserServices from "../useUserServices";
@@ -44,11 +43,6 @@ const UserPhoto = () => {
     changeUserImage(newImage)
   }
 
-  const onLogoutUser = () => {
-    dispatch(logoutUser());
-    localStorage.removeItem("accessToken");
-  };
-
   return (
     <div className="user-left">
       <div className="user-image">
@@ -66,13 +60,6 @@ const UserPhoto = () => {
           disabled={!newImage} 
           onClick={onImageSubmit} 
           variant="primary">Change Image</Button>
-      </div>
-      <div className="user-left__logout">
-        <Button 
-          onClick={onLogoutUser} 
-          variant="transparent">
-          Log out
-        </Button>
       </div>
     </div>
   );
