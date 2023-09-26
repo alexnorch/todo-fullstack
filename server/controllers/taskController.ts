@@ -19,12 +19,17 @@ const getTasks = async (req: Request, res: Response, next: NextFunction) => {
 
   let query: IQuery = { user };
 
-  if (req.query.category) {
+  if (category) {
     const userCategory: any = await Category.findOne({ title: category, user });
+
+    if (!userCategory) {
+      return next(new AppError("Category wasn't found", 400));
+    }
+
     query.category = userCategory._id;
   }
 
-  if (req.query.isCompleted) {
+  if (isCompleted) {
     query.completed = Boolean(isCompleted);
   }
 

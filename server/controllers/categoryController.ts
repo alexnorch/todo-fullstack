@@ -81,12 +81,13 @@ const getCategories = async (
 ) => {
   try {
     const categories = await Category.find({ user: req.userId })
-      .select("categoryName color tasks")
+      .select("title color tasks")
       .populate({ path: "tasks", select: "completed title color" });
 
     if (!categories) {
       return next(new AppError("The category wasn't found", 404));
     }
+
     res.send(categories);
   } catch (error) {}
 };

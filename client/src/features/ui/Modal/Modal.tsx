@@ -45,9 +45,12 @@ const Modal: React.FC<ModalProps> = ({
           <Button onClick={onToggle} variant="outline">
             Cancel
           </Button>
-          <Button onClick={submitter} variant="primary">
-            Submit
-          </Button>
+
+          {submitter && (
+            <Button onClick={submitter} variant="primary">
+              Submit
+            </Button>
+          )}
         </div>
       </div>
     </div>

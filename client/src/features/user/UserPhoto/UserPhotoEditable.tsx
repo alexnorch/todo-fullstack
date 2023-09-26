@@ -10,9 +10,9 @@ const UserPhotoEditable: React.FC<UserPhotoEditableProps> = ({
   onNewPhoto,
 }) => {
   return (
-    <div className="user-photo-editor">
+    <div className="user-photo-editable">
       <UserPhotoDisplay />
-      <span onClick={onNewPhoto} className="user-photo-editor__icon">
+      <span onClick={onNewPhoto} className="user-photo-editable__icon">
         <AiOutlineCamera />
       </span>
     </div>

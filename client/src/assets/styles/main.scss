@@ -22,17 +22,20 @@
   flex-grow: 1;
   background-color: $white;
   overflow-y: scroll;
+  padding: 30px;
 }
 
 .page-heading {
   margin: 20px 0;
 
   &__title {
-    font-size: 28px;
+    font-size: 32px;
   }
 
   &__subtitle {
-    font-size: 20px;
+    font-size: 18px;
+    color: #333333b6;
+    font-weight: 500;
   }
 }
 
@@ -58,7 +61,6 @@
 // Todo Container
 
 .overview {
-  padding: 0 30px;
   width: 100%;
 
   section {
@@ -150,82 +152,46 @@
 }
 
 // Settings
+
 .settings {
-  background-color: #fbfafa;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
-  padding: 30px;
 
-  &__section {
-    margin-bottom: 20px;
-    width: 50%;
-  }
-}
-
-.settings-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  &__button {
-    text-align: end;
-    margin-top: 10px;
-  }
-}
-
-.settings-nav {
-  @include flex(row, flex-start, flex-start);
-  margin: 30px 0;
-  gap: 30px;
-
-  &__item {
-    list-style: none;
-    cursor: pointer;
-    font-size: 18px;
+  &__left {
+    flex-basis: 200px;
   }
 
-  &__link {
-    position: relative;
-
-    &::after {
-      position: absolute;
-      opacity: 0;
-      content: "";
-      width: 60%;
-      height: 3px;
-      background-color: $blue-darken;
-      left: 0;
-      top: 110%;
-      border-radius: 5px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
+  &__content {
+    display: flex;
+    gap: 40px;
   }
-
-  &__link_active {
-    color: $blue-darken;
-
-    &::after {
-      opacity: 1;
-    }
-  }
-}
-
-.profile {
-  display: flex;
-  gap: 30px;
 
   &__right {
     flex-grow: 1;
   }
 }
 
-.profile-nav {
-  @include flex(row, center, flex-start);
-  gap: 10px;
-  list-style: none;
-  margin: 10px 0;
+.settings-form {
+  width: 70%;
+
+  &.password {
+    width: 50%;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+
+    .text-field {
+      flex-basis: calc(100% / 2 - 15px);
+      flex-shrink: 0;
+    }
+  }
+
+  &__button {
+    text-align: end;
+    margin-top: 30px;
+  }
 }
 
 .new-category-btn {

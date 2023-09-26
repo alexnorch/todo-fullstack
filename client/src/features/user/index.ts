@@ -4,6 +4,8 @@ import UserPhoto from "./UserPhoto/UserPhoto";
 import UserPhotoDisplay from "./UserPhoto/UserPhotoDisplay";
 import UserPhotoEditable from "./UserPhoto/UserPhotoEditable";
 import UserPhotoModal from "./UserPhoto/UserPhotoModal";
+import UserNav from "./UserNav/UserNav";
+import UserInfo from "./UserInfo/UserInfo";
 import useUserServices from "./useUserServices";
 
 export {
@@ -11,7 +13,9 @@ export {
   UserDetails,
   UserPassword,
   UserPhoto,
+  UserInfo,
   UserPhotoDisplay,
   UserPhotoEditable,
   UserPhotoModal,
+  UserNav,
 };

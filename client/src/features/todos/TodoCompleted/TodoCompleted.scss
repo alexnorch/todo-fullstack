@@ -2,15 +2,8 @@
 @import "assets/styles/variables";
 
 .completed-tasks {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  border-radius: 15px;
-  min-height: 600px;
+  min-height: 450px;
   min-width: 800px;
-  box-shadow: $shadow-sm;
 
   &__title {
     color: $white;
@@ -20,12 +13,6 @@
     @include clearButtonStyles;
     font-size: 24px;
     color: $white;
-  }
-
-  &__top {
-    padding: 20px 30px;
-    background-color: $blue-darken;
-    @include flex(row, center, space-between);
   }
 
   &__text {
@@ -48,7 +35,6 @@
   }
 
   &__list {
-    padding: 30px;
     list-style: none;
   }
 }

@@ -1,8 +1,9 @@
 @import "assets/styles/mixins";
 @import "assets/styles/variables";
 
-.user-photo-editor {
+.user-photo-editable {
   position: relative;
+  max-width: 200px;
 
   &__icon {
     @include flex();

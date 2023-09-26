@@ -1,7 +1,7 @@
 import "./IconButton.scss";
 
 interface IconButtonProps {
-  onClick: () => void;
+  onClick: (e?: any) => void;
   children: React.ReactNode;
 }
 
