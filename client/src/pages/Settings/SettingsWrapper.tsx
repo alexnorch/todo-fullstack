@@ -25,7 +25,7 @@ const SettingsWrapper = () => {
     <div className="settings">
       <h1 className="page-title">Settings</h1>
       <ul className="settings-nav">
-        <NavItem to=".">Profile</NavItem>
+        <NavItem to="profile">Profile</NavItem>
         <NavItem to="categories">Categories</NavItem>
       </ul>
       <Outlet />

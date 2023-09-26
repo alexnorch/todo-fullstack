@@ -3,7 +3,6 @@ import { Input, Button } from "../../ui";
 
 const RegisterForm = () => {
   const { errors, values, onChange, validation } = useForm({
-    name: "",
     password: "",
     confirmPassword: "",
     email: "",
@@ -14,13 +13,6 @@ const RegisterForm = () => {
   };
   return (
     <form className="auth__form">
-      <Input
-        errorMessage={errors.name}
-        name="name"
-        placeholder="Your name"
-        value={values.name}
-        onChange={onChange}
-      />
       <Input
         errorMessage={errors.email}
         name="email"

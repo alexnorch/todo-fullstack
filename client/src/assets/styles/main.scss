@@ -14,7 +14,7 @@
 .app {
   height: 100vh;
   display: flex;
-  margin-left: 90px
+  margin-left: 90px;
 }
 
 .app-content {
@@ -212,17 +212,20 @@
   }
 }
 
-.user-container {
+.profile {
   display: flex;
   gap: 30px;
+
+  &__right {
+    flex-grow: 1;
+  }
 }
 
-.user-left {
-  @include flex(column, center, flex-start);
-}
-
-.user-right {
-  flex-grow: 1;
+.profile-nav {
+  @include flex(row, center, flex-start);
+  gap: 10px;
+  list-style: none;
+  margin: 10px 0;
 }
 
 .new-category-btn {

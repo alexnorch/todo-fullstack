@@ -1,0 +1,12 @@
+@import "assets/styles/mixins";
+
+.user-photo-modal {
+  @include flex();
+  min-width: 400px;
+  gap: 30px;
+
+  &__text {
+    font-size: 14px;
+    margin-top: 10px;
+  }
+}

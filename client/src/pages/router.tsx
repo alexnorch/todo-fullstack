@@ -10,9 +10,13 @@ import Tasks from "./Tasks";
 import Overview from "./Overview";
 import Auth from "./Auth";
 
+// Profile
+import ProfileWrapper from "./Profile/ProfileWrapper";
+import ProfilePassword from "./Profile/ProfilePassword";
+import ProfileDetails from "./Profile/ProfileDetails";
+
 // Settings
 import SettingsWrapper from "./Settings/SettingsWrapper";
-import Profile from "./Settings/Profile";
 import Categories from "./Settings/Categories";
 
 // Protection
@@ -40,8 +44,12 @@ const router = createBrowserRouter(
             </ProtectedCategories>
           }
         />
+
         <Route path="settings" element={<SettingsWrapper />}>
-          <Route index element={<Profile />} />
+          <Route path="profile" element={<ProfileWrapper />}>
+            <Route index element={<ProfileDetails />} />
+            <Route path="password" element={<ProfilePassword />} />
+          </Route>
           <Route path="categories" element={<Categories />} />
         </Route>
       </Route>

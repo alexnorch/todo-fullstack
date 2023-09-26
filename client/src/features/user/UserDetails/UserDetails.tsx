@@ -44,6 +44,28 @@ const UserDetails = () => {
       <h3 className="section-heading">User Information</h3>
       <form onSubmit={submitHandler} className="settings-form">
         <TextField
+          label="First Name"
+          placeholder="First Name"
+          value="Oleksandr"
+          onChange={(e: ChangeEvent) => setName(e.target.value)}
+        />
+
+        <TextField
+          label="Last Name"
+          placeholder="Last Name"
+          value="Harashchenko"
+          onChange={(e: ChangeEvent) => setName(e.target.value)}
+        />
+
+        <TextField
+          type="text"
+          label="Gender"
+          placeholder="Gender"
+          value="male"
+          onChange={(e: ChangeEvent) => setEmail(e.target.value)}
+        />
+
+        <TextField
           disabled={user.isEmailConfirmed}
           type="email"
           label="E-mail address"
@@ -52,12 +74,7 @@ const UserDetails = () => {
           onChange={(e: ChangeEvent) => setEmail(e.target.value)}
           adornment={emailInputAdornment}
         />
-        <TextField
-          label="Full Name"
-          placeholder="Full Name"
-          value={name}
-          onChange={(e: ChangeEvent) => setName(e.target.value)}
-        />
+
         <div className="settings-form__button">
           <Button variant="outline">Submit changes</Button>
         </div>
