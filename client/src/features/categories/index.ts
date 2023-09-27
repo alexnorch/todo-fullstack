@@ -1,15 +1,17 @@
 import CategoryItem from "./CategoryItem/CategoryItem";
-import CategoriesList from "./CategoriesList/CategoriesList";
 import CategoryEditing from "./CategoryEditing/CategoryEditing";
 import CategoryDeleting from "./CategoryDeleting/CategoryDeleting";
 import CategoryForm from "./CategoryForm/CategoryForm";
 import useCategoryServices from "./useCategoryServices";
 import CategoryAdd from "./CategoryAdd/CategoryAdd";
+import CategoriesContainer from "./CategoriesContainer/CategoriesContainer";
+import CategoriesList from "./CategoriesList/CategoriesList";
 
 export {
+  CategoriesList,
+  CategoriesContainer,
   CategoryAdd,
   CategoryItem,
-  CategoriesList,
   CategoryEditing,
   CategoryDeleting,
   CategoryForm,

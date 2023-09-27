@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 
-import { OverviewStats, OverviewTasks } from "@features/overview";
+import { OverviewStats, OverviewTodos } from "@features/overview";
 
 const Overview = () => {
   const allTasks = useSelector((state: RootState) => state.tasks.allTasks);
@@ -21,10 +21,7 @@ const Overview = () => {
         inCompleteCount={incompleteTasks.length}
       />
 
-      <OverviewTasks
-        completedTasks={completedTasks}
-        incompleteTasks={incompleteTasks}
-      />
+      <OverviewTodos />
     </div>
   );
 };

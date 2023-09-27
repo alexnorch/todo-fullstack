@@ -1,9 +1,9 @@
-import { CategoriesList, CategoryAdd } from "@features/categories";
+import { CategoriesContainer, CategoryAdd } from "@features/categories";
 
 export default function Categories() {
   return (
     <>
-      <CategoriesList />
+      <CategoriesContainer />
       <CategoryAdd />
     </>
   );

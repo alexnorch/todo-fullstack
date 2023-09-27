@@ -1,6 +1,21 @@
-.categories-row {
-  display: flex;
-  gap: 30px;
-  flex-wrap: wrap;
-  margin-bottom: 30px;
+@import "assets/styles/mixins";
+@import "assets/styles/variables";
+
+.category-item-add {
+  margin-top: 5px;
+  @include flex(row, center, flex-start);
+  gap: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ffffffd4;
+  margin-left: -1px;
+
+  &__icon {
+    font-size: 25px;
+  }
+
+  span {
+    font-size: 16px;
+  }
 }
