@@ -1,7 +1,11 @@
-import { CheckboxProps } from "../../../types";
 import "./Checkbox.scss";
 
-const Checkbox: React.FC<CheckboxProps> = ({ checked, onCheck }) => {
+interface ICheckbox {
+  onCheck: () => void;
+  checked: boolean;
+}
+
+const Checkbox: React.FC<ICheckbox> = ({ checked, onCheck }) => {
   return (
     <div className="checkbox">
       <input

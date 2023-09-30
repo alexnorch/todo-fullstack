@@ -7,11 +7,8 @@ import { CompletedTasksProps } from "../types";
 // Hooks
 import useTaskServices from "../useTodoServices";
 
-const TodoCompleted: React.FC<CompletedTasksProps> = ({
-  isShown,
-  onToggle,
-  tasks,
-}) => {
+const TodoCompleted: React.FC<CompletedTasksProps> = (props) => {
+  const { isShown, onToggle, tasks } = props;
   const { onCompleteTask } = useTaskServices();
 
   const completedTasks = tasks?.map((item) => (

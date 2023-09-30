@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 import { Document, Types } from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { v4 as uuidv4 } from 'uuid';
 
 export interface IUser extends Document {
+  firstName: string;
+  lastName: string;
   name: string;
   email: string;
   isEmailConfirmed: boolean;
@@ -13,16 +14,20 @@ export interface IUser extends Document {
   photo: string;
   categories: Types.ObjectId[];
   tasks: Types.ObjectId[];
+  createdAt: Date;
   comparePassword: (candidate: string, hashed: string) => Promise<boolean>;
   generateToken: (userId: string) => Promise<object>;
-  generateConfirmString: () => string;
-  verifyConfirmString: (str: string) => boolean;
+  generateConfirmToken: (userId: string) => Promise<object>;
 }
 
 const UserSchema = new mongoose.Schema({
-  name: {
+  firstName: {
     type: String,
-    required: [true, "Name is required"],
+    required: [true, "First Name is required"],
+  },
+  lastName: {
+    type: String,
+    required: [true, "Last Name is required"],
   },
   email: {
     type: String,
@@ -32,10 +37,11 @@ const UserSchema = new mongoose.Schema({
   isEmailConfirmed: {
     type: Boolean,
     default: false,
+    required: true,
   },
   confirmString: {
     type: String,
-    default: null
+    default: null,
   },
   password: {
     type: String,
@@ -47,14 +53,17 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: "http://surl.li/jkwuu",
   },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
   categories: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
   tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }],
 });
 
 UserSchema.pre("save", async function () {
-
   if (!this.isModified("password")) return;
-  
+
   const password = this.password || "";
 
   this.password = await bcrypt.hash(password, 10);
@@ -73,23 +82,9 @@ UserSchema.methods.generateToken = function (userId: string) {
   });
 };
 
-UserSchema.methods.generateConfirmString = async function () {
-  const confirmationStr = uuidv4()
-  this.confirmString = confirmationStr
-
-  await this.save()
-
-  console.log(this.confirmString)
-
-  return confirmationStr
-}
-
-UserSchema.methods.verifyConfirmString = function (str: string) {
-
-  console.log('provided string', str)
-  console.log('model string', this.confirmString)
-
-  return this.confirmString === str
-}
-
+UserSchema.methods.generateConfirmToken = function (userId: string) {
+  return jwt.sign({ userId }, process.env.JWT_EMAIL_SECRET || "", {
+    expiresIn: "2h",
+  });
+};
 export default mongoose.model<IUser>("User", UserSchema);

@@ -49,6 +49,7 @@ const CategoriesList = () => {
       {categories.length === 0 && <CategoryItemAdd />}
       {categories.map((category) => (
         <CategoryItem
+          key={category._id}
           id={category._id}
           title={category.title}
           color={category.color}

@@ -2,10 +2,8 @@ import { HiCheckCircle } from "react-icons/hi";
 import { TaskNavigationProps } from "../types";
 import "./TodoNav.scss";
 
-const TodoNav: React.FC<TaskNavigationProps> = ({
-  showCompleted,
-  completedTasksLength,
-}) => {
+const TodoNav: React.FC<TaskNavigationProps> = (props) => {
+  const { showCompleted, completedTasksLength } = props;
   return (
     <div className="task-navigation">
       <button onClick={showCompleted} className="task-navigation__btn">

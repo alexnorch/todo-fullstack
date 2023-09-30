@@ -1,5 +1,4 @@
 import OverviewStats from "./OverviewStats/OverviewStats";
-import OverviewTabs from "./OverviewTabs/OverviewTabs";
-import OverviewTodos from "./OverviewTodos/OverviewTodos";
+import OverviewTasks from "./OverviewTasks/OverviewTasks";
 
-export { OverviewStats, OverviewTabs, OverviewTodos };
+export { OverviewStats, OverviewTasks };

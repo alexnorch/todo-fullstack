@@ -2,12 +2,18 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { capitalizeFirstLetter } from "../helpers";
-import useTaskServices from "@features/todos/useTodoServices";
-import { TodoNew, TodoNav, TodoCompleted, TodoList } from "@features/todos";
+import { PageHeading } from "@features/ui";
+import {
+  TodoNew,
+  TodoNav,
+  TodoCompleted,
+  TodoList,
+  useTodoServices,
+} from "@features/todos";
 
 export default function Tasks() {
   const [showCompleted, setShowCompeted] = useState<boolean>(false);
-  const { getTasksByCategory } = useTaskServices();
+  const { getTasksByCategory } = useTodoServices();
   const { category } = useParams();
 
   const onToggleCompletedTasks = () => setShowCompeted((prev) => !prev);
@@ -17,12 +23,10 @@ export default function Tasks() {
 
   return (
     <>
-      <div className="page-heading">
-        <p className="page-heading__subtitle">Current category</p>
-        <h1 className="page-heading__title">
-          {capitalizeFirstLetter(category!)}
-        </h1>
-      </div>
+      <PageHeading
+        title={capitalizeFirstLetter(category!)}
+        subtitle="Current category"
+      />
       <TodoNew />
       <TodoList tasks={inCompletedTasks} />
       <TodoNav

@@ -3,13 +3,13 @@ import { TaskItem } from "../types";
 import { ChangeEvent } from "../../../types";
 import "./TodoItem.scss";
 
-import useTaskServices from "../useTodoServices";
+import { useTodoServices, TodoEditing } from "@features/todos";
 
 // Components
 import {
   ConfirmDialog,
   Modal,
-  Input,
+  TextField,
   Checkbox,
   ActionsMenu,
 } from "@features/ui";
@@ -19,14 +19,14 @@ const TodoItem: React.FC<TaskItem> = ({ _id, title, completed, color }) => {
   const [newTitle, setNewTitle] = useState<string>(title);
   const [isDeletingTask, setIsDeletingTask] = useState<boolean>(false);
 
-  const { onUpdateTask, onDeleteTask, onCompleteTask } = useTaskServices();
+  const { onUpdateTask, onDeleteTask, onCompleteTask } = useTodoServices();
 
   const onEditBegin = () => setIsEditing(true);
   const onEditToggle = () => setIsEditing((prev) => !prev);
   const onComplete = () => onCompleteTask(_id, { title, completed });
   const onDeleteStart = () => setIsDeletingTask(true);
 
-  const onSubmit = () => {
+  const onEditTodo = () => {
     onUpdateTask(_id, { title: newTitle, completed });
     setIsEditing(false);
   };
@@ -54,18 +54,13 @@ const TodoItem: React.FC<TaskItem> = ({ _id, title, completed, color }) => {
         text="Are you sure you want to delete this task?"
       />
 
-      <Modal
-        submitter={onSubmit}
+      <TodoEditing
+        onChange={(e: ChangeEvent) => setNewTitle(e.target.value)}
+        onTodoEdit={onEditTodo}
         onToggle={onEditToggle}
-        title="Editing the task"
-        isOpen={isEditing}
-      >
-        <Input
-          placeholder="New title"
-          value={newTitle}
-          onChange={(e: ChangeEvent) => setNewTitle(e.target.value)}
-        />
-      </Modal>
+        isEditing={isEditing}
+        value={newTitle}
+      />
     </>
   );
 };

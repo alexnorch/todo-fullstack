@@ -7,11 +7,8 @@ interface CategoryDeletingProps {
   onConfirmToggle: () => void;
 }
 
-const CategoryDeleting: React.FC<CategoryDeletingProps> = ({
-  id,
-  isDeleting,
-  onConfirmToggle,
-}) => {
+const CategoryDeleting: React.FC<CategoryDeletingProps> = (props) => {
+  const { id, isDeleting, onConfirmToggle } = props;
   const { onDeleteCategory } = useCategoryServices();
 
   return (

@@ -1,12 +1,9 @@
 import { getButtonClasses } from "../../../helpers";
 import "./Button.scss";
 
-interface ButtonProps {
-  onClick?: () => void;
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant: "outline" | "primary" | "transparent";
-  children: React.ReactNode;
   size?: "sm" | "md" | "lg";
-  disabled?: boolean;
   type?: "reset" | "submit" | "button";
 }
 

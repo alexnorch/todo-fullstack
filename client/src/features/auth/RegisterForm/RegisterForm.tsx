@@ -1,5 +1,5 @@
 import useForm from "../useForm";
-import { Input, Button } from "../../ui";
+import { TextField, Button } from "../../ui";
 
 const RegisterForm = () => {
   const { errors, values, onChange, validation } = useForm({
@@ -13,26 +13,26 @@ const RegisterForm = () => {
   };
   return (
     <form className="auth__form">
-      <Input
+      <TextField
         errorMessage={errors.email}
         name="email"
-        placeholder="Your email"
+        label="E-Mail address"
         value={values.email}
         onChange={onChange}
       />
-      <Input
+      <TextField
         errorMessage={errors.password}
         type="password"
         name="password"
-        placeholder="Your password"
+        label="Password"
         value={values.password}
         onChange={onChange}
       />
-      <Input
+      <TextField
         errorMessage={errors.confirmPassword}
         type="password"
         name="confirmPassword"
-        placeholder="Confirm password"
+        label="Confirm password"
         value={values.confirmPassword}
         onChange={onChange}
       />

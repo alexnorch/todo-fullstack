@@ -1,27 +1,38 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 
-import { OverviewStats, OverviewTodos } from "@features/overview";
+import { OverviewStats, OverviewTasks } from "@features/overview";
+import { TodoFilter } from "@features/todos";
+import { filterTasks } from "@features/todos/utils";
+import { PageHeading } from "@features/ui";
+
+const filterOptions = [
+  { name: "All tasks", dataTab: "all" },
+  { name: "Completed tasks", dataTab: "completed" },
+  { name: "Incomplete tasks", dataTab: "incomplete" },
+];
 
 const Overview = () => {
+  const [activeFilter, setActiveFilter] = useState("all");
   const allTasks = useSelector((state: RootState) => state.tasks.allTasks);
-  const completedTasks = allTasks.filter((task) => task.completed);
-  const incompleteTasks = allTasks.filter((task) => !task.completed);
+  const filteredTasks = filterTasks(allTasks, activeFilter);
+
+  const onChangeFilter = (e: any) => {
+    const targetFilter = e.target.getAttribute("data-tabName");
+    setActiveFilter(targetFilter);
+  };
 
   return (
     <div className="overview">
-      <div className="page-heading">
-        <h1 className="page-heading__title">Overview</h1>
-        <h2 className="page-heading__subtitle">Seeing it All in One Place</h2>
-      </div>
-
-      <OverviewStats
-        allTasksCount={allTasks.length}
-        completedCount={completedTasks.length}
-        inCompleteCount={incompleteTasks.length}
+      <PageHeading title="Overview" subtitle="Seeing it All in One Place" />
+      <OverviewStats />
+      <TodoFilter
+        activeFilter={activeFilter}
+        onChangeFilter={onChangeFilter}
+        filters={filterOptions}
       />
-
-      <OverviewTodos />
+      <OverviewTasks tasks={filteredTasks} />
     </div>
   );
 };

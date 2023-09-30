@@ -66,8 +66,3 @@ export interface AlertProps {
 export interface ContainerProps {
   children: React.ReactNode;
 }
-
-export interface CheckboxProps {
-  onCheck: () => void;
-  checked: boolean;
-}

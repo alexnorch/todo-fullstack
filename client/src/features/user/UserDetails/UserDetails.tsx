@@ -1,51 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
-import useAlert from "@hooks/useAlert";
-import useUserServices from "../useUserServices";
 import { RootState } from "../../../redux/store";
 import { TextField, Button } from "@features/ui";
 import { ChangeEvent } from "../../../types";
+import { UserEmailConfirmation, useUserServices } from "@features/user";
 
 import { AiOutlineCheckCircle } from "react-icons/ai";
-
-const initialTimeout = localStorage.getItem("emailTimeout") || "";
 
 const UserDetails = () => {
   const user = useSelector((state: RootState) => state.user);
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
-  const [isEmailConfirming, setIsEmailConfirming] = useState(
-    Boolean(initialTimeout)
-  );
 
   const { changeUserInfo } = useUserServices();
-  const { showInfoAlert } = useAlert();
-
-  useEffect(() => {
-    let timeout: NodeJS.Timeout;
-
-    const savedTimeout = localStorage.getItem("emailTimeout");
-
-    if (savedTimeout) {
-      const time = parseInt(savedTimeout) - Date.now();
-
-      if (time > 0) {
-        timeout = setTimeout(() => {
-          setIsEmailConfirming(false);
-          localStorage.removeItem("emailTimeout");
-        }, time);
-      } else {
-        setIsEmailConfirming(false);
-        localStorage.removeItem("emailTimeout");
-      }
-    } else {
-      setIsEmailConfirming(false);
-    }
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, []);
 
   const submitHandler = (e: any) => {
     e.preventDefault();
@@ -55,30 +22,13 @@ const UserDetails = () => {
     }
   };
 
-  const confirmHandler = () => {
-    const timeoutTime = (Date.now() + 1000 * 10).toString();
+  const onChangeName = (e: ChangeEvent) => setName(e.target.value);
+  const onChangeEmail = (e: ChangeEvent) => setEmail(e.target.value);
 
-    showInfoAlert(
-      "Confirmation link was successfully sent to your e-mail address"
-    );
-
-    localStorage.setItem("emailTimeout", timeoutTime);
-    setIsEmailConfirming(true);
-  };
-
-  const emailInputAdornment = user.isEmailConfirmed ? (
+  const emailAdornment = (
     <div className="adornment-icon">
       <AiOutlineCheckCircle />
     </div>
-  ) : (
-    <Button
-      disabled={isEmailConfirming}
-      type="button"
-      onClick={confirmHandler}
-      variant="transparent"
-    >
-      Confirm
-    </Button>
   );
 
   return (
@@ -89,15 +39,15 @@ const UserDetails = () => {
           <TextField
             label="First Name"
             placeholder="First Name"
-            value="Oleksandr"
-            onChange={(e: ChangeEvent) => setName(e.target.value)}
+            value={name}
+            onChange={onChangeName}
           />
 
           <TextField
             label="Last Name"
             placeholder="Last Name"
-            value="Harashchenko"
-            onChange={(e: ChangeEvent) => setName(e.target.value)}
+            value={name}
+            onChange={onChangeName}
           />
 
           <TextField
@@ -105,18 +55,26 @@ const UserDetails = () => {
             label="Gender"
             placeholder="Gender"
             value="male"
-            onChange={(e: ChangeEvent) => setEmail(e.target.value)}
+            onChange={onChangeEmail}
           />
 
-          <TextField
-            disabled={user.isEmailConfirmed}
-            type="email"
-            label="E-mail address"
-            placeholder="E-mail address"
-            value={email}
-            onChange={(e: ChangeEvent) => setEmail(e.target.value)}
-            adornment={emailInputAdornment}
-          />
+          {user.isEmailConfirmed ? (
+            <TextField
+              disabled={user.isEmailConfirmed}
+              type="email"
+              label="E-mail address"
+              placeholder="E-mail address"
+              value={email}
+              onChange={onChangeEmail}
+              adornment={emailAdornment}
+            />
+          ) : (
+            <UserEmailConfirmation
+              onChange={onChangeEmail}
+              email={email}
+              isEmailConfirmed={user.isEmailConfirmed}
+            />
+          )}
         </div>
         <div className="settings-form__button">
           <Button variant="outline">Update info</Button>

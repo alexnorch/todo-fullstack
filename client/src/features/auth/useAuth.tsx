@@ -23,6 +23,8 @@ const useAuth = () => {
 
       const { user, token, data } = response.data.result;
 
+      console.log(user);
+
       dispatch(initializeUser(user));
       dispatch(initializeCategories(data.categories));
       dispatch(initializeTasks(data.tasks));

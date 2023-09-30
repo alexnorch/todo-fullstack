@@ -5,6 +5,7 @@ import nodemailer from "nodemailer";
 import User, { IUser } from "../models/userModel";
 import Task from "../models/taskModel";
 import AppError from "../utils/AppError";
+import jwt from "jsonwebtoken";
 
 const multerStorage = multer.memoryStorage();
 
@@ -45,6 +46,18 @@ const resizePhoto = async (req: Request, res: Response, next: NextFunction) => {
     .toFile(`public/uploads/user_photos/${req.file.filename}`);
 
   next();
+};
+
+const getUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const user = await User.findById(req.userId);
+
+    if (!user) {
+      return next(new AppError("User not found", 404));
+    }
+
+    res.send(user);
+  } catch (error) {}
 };
 
 const uploadPhoto = upload.single("photo");
@@ -107,6 +120,7 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
       user: {
         name: user.name,
         email: user.email,
+        isEmailConfirmed: user.isEmailConfirmed,
         photo: user.photo,
         id: user._id,
       },
@@ -166,11 +180,11 @@ const updateUserPhoto = async (
     return next(new AppError("Please upload an image", 400));
   }
 
+  const photo = req.file.filename;
+
   const updatedUser = await User.findByIdAndUpdate(
     req.userId,
-    {
-      photo: req.file.filename,
-    },
+    { photo },
     { new: true }
   );
 
@@ -256,18 +270,19 @@ const verificationEmail = async (
   next: NextFunction
 ) => {
   const user = (await User.findById(req.userId)) as IUser;
-  const confirmStr = await user.generateConfirmString();
+  const confirmToken = user.generateConfirmToken(req.userId);
 
   const message = {
     from: "taskifyfree@gmail.com",
     to: "oleksandr.harashchenko@gmail.com",
     subject: "Taskify Support | E-mail address confirmation",
-    text: `Confirmation string = ${confirmStr}`,
+    text: `Confirmation string = http://localhost:5000/api/user/confirmEmail?token=${confirmToken}`,
   };
 
   transporter.sendMail(message, (err, info) => {
-    console.log(err);
-    console.log(info);
+    if (!err) {
+      console.log("Successfully sent");
+    }
   });
 
   res.send("OK");
@@ -278,14 +293,26 @@ const confirmEmail = async (
   res: Response,
   next: NextFunction
 ) => {
-  const user = (await User.findById(req.userId)) as IUser;
-  const isStringValid = user.verifyConfirmString(req.body.confirmStr);
+  const token = req.query.token as string;
 
-  if (!isStringValid) {
-    return next(new AppError("Confirmation string is invalid", 400));
+  if (!token) {
+    return next(new AppError("Invalid link. Please try again", 404));
   }
 
-  res.send("Confirmed!");
+  const decoded: any = await jwt.verify(
+    token,
+    process.env.JWT_EMAIL_SECRET || ""
+  );
+  const user = await User.findById(decoded.userId);
+
+  if (!user) {
+    return next(new AppError("Invalid jwt token. Please try again later", 400));
+  }
+
+  user.isEmailConfirmed = true;
+  await user.save();
+
+  res.redirect("http://localhost:3000/settings");
 };
 
 export default {
@@ -298,4 +325,5 @@ export default {
   resizePhoto,
   updateUserPhoto,
   verificationEmail,
+  getUser,
 };

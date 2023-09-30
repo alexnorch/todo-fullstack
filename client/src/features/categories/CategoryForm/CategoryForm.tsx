@@ -9,12 +9,8 @@ interface CategoryFormProps {
   onColorChange: (e: ChangeEvent) => void;
 }
 
-const CategoryForm: React.FC<CategoryFormProps> = ({
-  title,
-  color,
-  onTitleChange,
-  onColorChange,
-}) => {
+const CategoryForm: React.FC<CategoryFormProps> = (props) => {
+  const { title, color, onTitleChange, onColorChange } = props;
   return (
     <div className="category-form">
       <TextField

@@ -12,13 +12,8 @@ interface CategoryEditProps {
   onModalToggle: () => void;
 }
 
-const CategoryEditing: React.FC<CategoryEditProps> = ({
-  categoryColor,
-  categoryName,
-  id,
-  isEditing,
-  onModalToggle,
-}) => {
+const CategoryEditing: React.FC<CategoryEditProps> = (props) => {
+  const { categoryColor, categoryName, id, isEditing, onModalToggle } = props;
   const [newTitle, setNewTitle] = useState<string>(categoryName);
   const [newColor, setNewColor] = useState<string>(categoryColor);
   const { onUpdateCategory } = useCategoryServices();

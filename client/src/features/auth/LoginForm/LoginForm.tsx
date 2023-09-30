@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Input, TextField, IconButton } from "../../ui";
+import { TextField, IconButton } from "../../ui";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 // Custom hooks
@@ -21,19 +21,18 @@ const LoginForm = () => {
   };
 
   return (
-    <form className="auth__form">
-      <Input
+    <form autoComplete="nope" className="auth__form">
+      <TextField
+        label="E-mail address"
         name="email"
-        errorMessage={errors.email}
-        placeholder="Your email"
         value={values.email}
         onChange={onChange}
       />
       <TextField
+        label="Password"
         type={showPassword ? "text" : "password"}
         name="password"
         errorMessage={errors.password}
-        placeholder="Your password"
         value={values.password}
         onChange={onChange}
         adornment={

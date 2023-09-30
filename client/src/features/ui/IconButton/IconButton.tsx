@@ -1,11 +1,11 @@
 import "./IconButton.scss";
 
-interface IconButtonProps {
+interface IIconButton {
   onClick: (e?: any) => void;
   children: React.ReactNode;
 }
 
-const IconButton: React.FC<IconButtonProps> = ({ onClick, children }) => {
+const IconButton: React.FC<IIconButton> = ({ onClick, children }) => {
   return (
     <button type="button" onClick={onClick} className="icon-btn">
       {children}
