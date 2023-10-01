@@ -1,3 +1,5 @@
+@import "./variables.scss";
+
 @mixin flex($direction: row, $align: center, $justify: center) {
   display: flex;
   flex-direction: $direction;
@@ -15,4 +17,36 @@
   border-radius: 50%;
   width: $size;
   height: $size;
+}
+
+@mixin media-query($breakpoint) {
+  @if $breakpoint == $breakpoint-xs {
+    @media only screen and (max-width: $breakpoint-sx) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == $breakpoint-sm {
+    @media only screen and (max-width: $breakpoint-sm) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == $breakpoint-md {
+    @media only screen and (max-width: $breakpoint-md) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == $breakpoint-lg {
+    @media only screen and (max-width: $breakpoint-lg) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == $breakpoint-xl {
+    @media only screen and (min-width: $breakpoint-xl) {
+      @content;
+    }
+  }
 }

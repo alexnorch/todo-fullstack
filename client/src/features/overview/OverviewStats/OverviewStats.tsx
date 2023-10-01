@@ -1,38 +1,20 @@
 import { useSelector } from "react-redux";
 import { RootState } from "redux/store";
-import { addZeroToNumber } from "helpers";
+import { OverviewStatsCard } from "@features/overview";
+
 import "./OverviewStats.scss";
-
-interface IOverviewStatsCard {
-  title: string;
-  count: number;
-}
-
-const OverviewStatsCard: React.FC<IOverviewStatsCard> = ({ title, count }) => {
-  return (
-    <div className="overview-stats__column">
-      <p className="overview-stats__count">{addZeroToNumber(count)}</p>
-      <h3 className="overview-stats__text">{title}</h3>
-    </div>
-  );
-};
 
 const OverviewStats = () => {
   const allTasks = useSelector((state: RootState) => state.tasks.allTasks);
-  const completedTasks = allTasks.filter((task) => task.completed);
-  const incompleteTasks = allTasks.filter((task) => !task.completed);
+  const allLength = allTasks.length;
+  const completedLength = allTasks.filter((task) => task.completed).length;
+  const incompleteLength = allTasks.filter((task) => !task.completed).length;
 
   return (
     <section className="overview-stats">
-      <OverviewStatsCard title="All tasks" count={allTasks.length} />
-      <OverviewStatsCard
-        title="Completed tasks"
-        count={completedTasks.length}
-      />
-      <OverviewStatsCard
-        title="Uncompleted tasks"
-        count={incompleteTasks.length}
-      />
+      <OverviewStatsCard title="All tasks" count={allLength} />
+      <OverviewStatsCard title="Completed tasks" count={completedLength} />
+      <OverviewStatsCard title="Uncompleted tasks" count={incompleteLength} />
     </section>
   );
 };

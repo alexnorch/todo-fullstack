@@ -14,8 +14,14 @@
   background-color: $blue;
   transition: all 0.3s ease;
 
+  @include media-query($breakpoint-lg) {
+    position: static;
+    width: 100%;
+    flex-direction: row;
+  }
+
   &.active {
     width: 300px;
-    box-shadow: 999px 999px 999px 9999px rgba(0,0,0,0.3);
+    box-shadow: 999px 999px 999px 9999px rgba(0, 0, 0, 0.3);
   }
 }

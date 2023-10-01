@@ -1,6 +1,9 @@
 import express from "express";
 import authenticate from "../middlewares/authenticate";
 
+// Utils
+import { uploadPhoto, resizePhoto } from "../middlewares/imageUpload";
+
 // Controllers
 import userController from "../controllers/userController";
 
@@ -18,8 +21,8 @@ router
   .route("/profilePicture")
   .patch(
     authenticate,
-    userController.uploadPhoto,
-    userController.resizePhoto,
+    uploadPhoto,
+    resizePhoto,
     userController.updateUserPhoto
   );
 

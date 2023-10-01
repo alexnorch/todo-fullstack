@@ -11,7 +11,8 @@ interface onPasswordChangeParams {
 
 interface changeUserInfoParams {
   email?: string;
-  name: string;
+  firstName: string;
+  lastName: string;
 }
 
 const useUserServices = () => {

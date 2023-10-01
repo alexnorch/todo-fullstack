@@ -1,0 +1,81 @@
+@import "assets/styles/variables";
+@import "assets/styles/mixins";
+
+.overview-card {
+  position: relative;
+  height: 250px;
+  width: 250px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 1px 2px 11px -2px rgba(0, 0, 0, 0.3);
+
+  @include media-query($breakpoint-lg) {
+    width: 200px;
+    height: 200px;
+  }
+
+  @include media-query($breakpoint-sm) {
+    width: 100%;
+    height: 100px;
+  }
+
+  &__count {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 700;
+    font-size: 90px;
+    color: #fff;
+
+    @include media-query($breakpoint-lg) {
+      font-size: 60px;
+    }
+
+    @include media-query($breakpoint-sm) {
+      font-size: 32px;
+      transform: translate(-50%, -70%);
+    }
+  }
+
+  &__text {
+    position: relative;
+    text-align: center;
+    font-size: 16px;
+    padding: 10px;
+    margin-top: auto;
+    background-color: inherit;
+    z-index: 5;
+    color: #3b3b3b;
+
+    @include media-query($breakpoint-sm) {
+      padding: 5px;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.5);
+      z-index: -1;
+    }
+  }
+
+  &:nth-of-type(1) {
+    background-color: $red-bright;
+  }
+
+  &:nth-of-type(2) {
+    background-color: $sky-bright;
+  }
+
+  &:nth-of-type(3) {
+    background-color: $blue-darken;
+  }
+}

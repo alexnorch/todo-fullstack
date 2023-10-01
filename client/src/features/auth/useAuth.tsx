@@ -21,9 +21,7 @@ const useAuth = () => {
         password: "walbyel123",
       });
 
-      const { user, token, data } = response.data.result;
-
-      console.log(user);
+      const { user, token, data } = response.data;
 
       dispatch(initializeUser(user));
       dispatch(initializeCategories(data.categories));
@@ -35,7 +33,12 @@ const useAuth = () => {
       navigate("/");
     } catch (err) {
       if (err instanceof AxiosError) {
-        const errorMessage = err.response?.data.message;
+        let errorMessage = err.response?.data.message;
+
+        if (err.response?.status === 500) {
+          errorMessage = "Something went wrong. Please try again later";
+        }
+
         dispatch(showAlert({ type: "danger", text: errorMessage }));
       } else {
         throw err;

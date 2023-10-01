@@ -6,10 +6,8 @@ import jwt from "jsonwebtoken";
 export interface IUser extends Document {
   firstName: string;
   lastName: string;
-  name: string;
   email: string;
   isEmailConfirmed: boolean;
-  confirmString: boolean;
   password: string | undefined;
   photo: string;
   categories: Types.ObjectId[];
@@ -38,10 +36,6 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
     required: true,
-  },
-  confirmString: {
-    type: String,
-    default: null,
   },
   password: {
     type: String,

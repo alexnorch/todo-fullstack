@@ -1,16 +1,12 @@
-import { Request, Response, NextFunction } from "express";
 import AppError from "../utils/AppError";
+import { RequestHandler } from "../types";
 
 // Models
 import Task from "../models/taskModel";
 import Category, { ICategory } from "../models/categoryModel";
 import User, { IUser } from "../models/userModel";
 
-const createCategory = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const createCategory: RequestHandler = async (req, res, next) => {
   const { title, color } = req.body;
 
   if (!title || !color) {
@@ -43,11 +39,7 @@ const createCategory = async (
   res.send(createdCategory);
 };
 
-const deleteCategory = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const deleteCategory: RequestHandler = async (req, res, next) => {
   try {
     const id = req.params.id;
     const userId = req.userId;
@@ -74,11 +66,7 @@ const deleteCategory = async (
   }
 };
 
-const getCategories = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const getCategories: RequestHandler = async (req, res, next) => {
   try {
     const categories = await Category.find({ user: req.userId })
       .select("title color tasks")
@@ -92,11 +80,7 @@ const getCategories = async (
   } catch (error) {}
 };
 
-const updateCategory = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const updateCategory: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { title, color } = req.body;

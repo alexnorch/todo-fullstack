@@ -1,30 +1,10 @@
-import { Request, Response, NextFunction } from "express";
-import multer from "multer";
-import sharp from "sharp";
-import nodemailer from "nodemailer";
-import User, { IUser } from "../models/userModel";
-import Task from "../models/taskModel";
-import AppError from "../utils/AppError";
 import jwt from "jsonwebtoken";
-
-const multerStorage = multer.memoryStorage();
-
-const multerFilter = (
-  req: Request,
-  file: Express.Multer.File,
-  cb: Function
-) => {
-  if (!file.mimetype.startsWith("image")) {
-    return cb(new AppError("Only images are accepted", 400), false);
-  }
-
-  cb(null, true);
-};
-
-const upload = multer({
-  storage: multerStorage,
-  fileFilter: multerFilter,
-});
+import nodemailer from "nodemailer";
+import { Request, Response, NextFunction } from "express";
+import User, { IUser } from "../models/userModel";
+import AppError from "../utils/AppError";
+import { aggregateTask, formatUserData } from "../utils/helpers";
+import { RequestHandler } from "../types";
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -34,21 +14,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const resizePhoto = async (req: Request, res: Response, next: NextFunction) => {
-  if (!req.file) return next();
-
-  req.file.filename = `${req.userId}_${Date.now()}.jpeg`;
-
-  sharp(req.file.buffer)
-    .resize(500, 500)
-    .toFormat("jpeg")
-    .jpeg({ quality: 90 })
-    .toFile(`public/uploads/user_photos/${req.file.filename}`);
-
-  next();
-};
-
-const getUser = async (req: Request, res: Response, next: NextFunction) => {
+const getUser: RequestHandler = async (req, res, next) => {
   try {
     const user = await User.findById(req.userId);
 
@@ -60,9 +26,7 @@ const getUser = async (req: Request, res: Response, next: NextFunction) => {
   } catch (error) {}
 };
 
-const uploadPhoto = upload.single("photo");
-
-const loginUser = async (req: Request, res: Response, next: NextFunction) => {
+const loginUser: RequestHandler = async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
@@ -92,58 +56,16 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
     await user.populate("categories");
     await user.populate("tasks");
 
-    const tasksWithCategories = await Task.aggregate([
-      {
-        $match: {
-          _id: { $in: user.tasks },
-        },
-      },
-      {
-        $lookup: {
-          from: "categories",
-          localField: "category",
-          foreignField: "_id",
-          as: "categoryInfo",
-        },
-      },
-      {
-        $addFields: {
-          category: { $arrayElemAt: ["$categoryInfo.title", 0] },
-        },
-      },
-      {
-        $project: { categoryInfo: 0 },
-      },
-    ]);
+    const tasksWithCategories = await aggregateTask(user);
+    const formattedData = formatUserData(user, tasksWithCategories, token);
 
-    const formattedData = {
-      user: {
-        name: user.name,
-        email: user.email,
-        isEmailConfirmed: user.isEmailConfirmed,
-        photo: user.photo,
-        id: user._id,
-      },
-      data: {
-        tasks: tasksWithCategories,
-        categories: user.categories,
-      },
-      token,
-    };
-
-    res.json({
-      result: formattedData,
-    });
+    res.json(formattedData);
   } catch (error) {
     next(error);
   }
 };
 
-const registerUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const registerUser: RequestHandler = async (req, res, next) => {
   const { name, email, password, confirmPassword } = req.body;
 
   try {
@@ -171,11 +93,7 @@ const registerUser = async (
   }
 };
 
-const updateUserPhoto = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const updateUserPhoto: RequestHandler = async (req, res, next) => {
   if (!req.file) {
     return next(new AppError("Please upload an image", 400));
   }
@@ -191,8 +109,8 @@ const updateUserPhoto = async (
   res.send(updatedUser);
 };
 
-const updateUser = async (req: Request, res: Response, next: NextFunction) => {
-  const { email, name } = req.body;
+const updateUser: RequestHandler = async (req, res, next) => {
+  const { email, firstName, lastName } = req.body;
   const user = (await User.findById(req.userId)) as IUser;
   const isEmailAlreadyExists = (await User.findOne({ email })) as IUser;
 
@@ -205,7 +123,7 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
     );
   }
 
-  if (!name || !email) {
+  if (!lastName || !firstName || !email) {
     return next(new AppError("Please provide all values", 400));
   }
 
@@ -222,18 +140,15 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
     user.email = email;
   }
 
-  user.name = name;
+  user.firstName = firstName;
+  user.lastName = lastName;
 
   const updatedUser = await user.save();
 
   res.send(updatedUser);
 };
 
-const changePassword = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const changePassword: RequestHandler = async (req, res, next) => {
   try {
     const { oldPassword, newPassword, confirmPassword } = req.body;
 
@@ -264,11 +179,7 @@ const changePassword = async (
   }
 };
 
-const verificationEmail = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const verificationEmail: RequestHandler = async (req, res, next) => {
   const user = (await User.findById(req.userId)) as IUser;
   const confirmToken = user.generateConfirmToken(req.userId);
 
@@ -288,11 +199,7 @@ const verificationEmail = async (
   res.send("OK");
 };
 
-const confirmEmail = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const confirmEmail: RequestHandler = async (req, res, next) => {
   const token = req.query.token as string;
 
   if (!token) {
@@ -321,8 +228,6 @@ export default {
   updateUser,
   changePassword,
   confirmEmail,
-  uploadPhoto,
-  resizePhoto,
   updateUserPhoto,
   verificationEmail,
   getUser,

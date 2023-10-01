@@ -2,14 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { getFromLocalStorage } from "helpers";
 
-const userLocalStorage = getFromLocalStorage("userDetails");
+const userStorage = getFromLocalStorage("userDetails");
 
 const initialState = {
-  email: userLocalStorage?.email || "",
-  id: userLocalStorage?.id || "",
-  name: userLocalStorage?.name || "",
-  photo: userLocalStorage?.photo || "",
-  isEmailConfirmed: userLocalStorage?.isEmailConfirmed || false,
+  email: userStorage?.email || "",
+  id: userStorage?.id || "",
+  firstName: userStorage?.firstName || "",
+  lastName: userStorage?.lastName || "",
+  photo: userStorage?.photo || "",
+  registerDate: userStorage?.registerDate || "",
+  isEmailConfirmed: userStorage?.isEmailConfirmed || false,
 };
 
 const userSlice = createSlice({
@@ -17,18 +19,10 @@ const userSlice = createSlice({
   name: "user",
   reducers: {
     initializeUser: (state, action: PayloadAction<any>) => {
-      state.email = action.payload.email;
-      state.id = action.payload.id;
-      state.name = action.payload.name;
-      state.photo = action.payload.photo;
-      state.isEmailConfirmed = action.payload.isEmailConfirmed;
+      return { ...state, ...action.payload };
     },
     userUpdate: (state, action: PayloadAction<any>) => {
-      state.email = action.payload.email;
-      state.id = action.payload.id;
-      state.name = action.payload.name;
-      state.photo = action.payload.photo;
-      state.isEmailConfirmed = action.payload.isEmailConfirmed;
+      return { ...state, ...action.payload };
     },
   },
 });

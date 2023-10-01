@@ -1,10 +1,11 @@
-import { Request, Response, NextFunction } from "express";
-import AppError from "../utils/AppError";
-
 // models and interfaces
 import Task from "../models/taskModel";
 import Category, { ICategory } from "../models/categoryModel";
 import User, { IUser } from "../models/userModel";
+import { RequestHandler } from "../types";
+
+// utils
+import AppError from "../utils/AppError";
 import { populateTask } from "../utils/helpers";
 
 interface IQuery {
@@ -13,7 +14,7 @@ interface IQuery {
   user: string;
 }
 
-const getTasks = async (req: Request, res: Response, next: NextFunction) => {
+const getTasks: RequestHandler = async (req, res, next) => {
   const { category, isCompleted } = req.query;
   const user = req.userId;
 
@@ -38,7 +39,7 @@ const getTasks = async (req: Request, res: Response, next: NextFunction) => {
   res.send(tasks);
 };
 
-const createTask = async (req: Request, res: Response, next: NextFunction) => {
+const createTask: RequestHandler = async (req, res, next) => {
   const { title, category } = req.body;
 
   try {
@@ -85,7 +86,7 @@ const createTask = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const updateTask = async (req: Request, res: Response, next: NextFunction) => {
+const updateTask: RequestHandler = async (req, res, next) => {
   try {
     const { id: _id } = req.params;
     const { title, completed } = req.body;
@@ -112,7 +113,7 @@ const updateTask = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const deleteTask = async (req: Request, res: Response, next: NextFunction) => {
+const deleteTask: RequestHandler = async (req, res, next) => {
   try {
     const { id: _id } = req.params;
     const userId = req.userId;
@@ -134,7 +135,7 @@ const deleteTask = async (req: Request, res: Response, next: NextFunction) => {
   } catch (error) {}
 };
 
-const getTaskById = async (req: Request, res: Response, next: NextFunction) => {
+const getTaskById: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
     const task = await Task.findById(id);

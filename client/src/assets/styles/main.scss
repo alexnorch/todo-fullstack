@@ -15,6 +15,11 @@
   height: 100vh;
   display: flex;
   margin-left: 90px;
+
+  @include media-query($breakpoint-lg) {
+    margin-left: 0;
+    flex-direction: column;
+  }
 }
 
 .app-content {
@@ -37,6 +42,18 @@
     color: #333333b6;
     font-weight: 500;
   }
+}
+
+.mb-1 {
+  margin-bottom: 10px;
+}
+
+.mb-2 {
+  margin-bottom: 20px;
+}
+
+.mb-3 {
+  margin-bottom: 30px;
 }
 
 // Todo Container

@@ -1,8 +1,15 @@
+@import "assets/styles/variables";
+@import "assets/styles/mixins";
+
 .overview-tasks {
   padding: 20px 0;
   display: flex;
   align-items: center;
   gap: 20px;
+
+  @include media-query($breakpoint-lg) {
+    flex-wrap: wrap;
+  }
 
   .task {
     display: flex;
@@ -11,5 +18,9 @@
     flex-basis: calc(100% / 5);
     margin: 0;
     height: 90px;
+
+    @include media-query($breakpoint-lg) {
+      flex-basis: 100%;
+    }
   }
 }
