@@ -2,8 +2,8 @@
 @import "assets/styles/variables";
 
 .category-item-add {
-  margin-top: 5px;
   @include flex(row, center, flex-start);
+  margin-top: 5px;
   gap: 10px;
   background: none;
   border: none;
@@ -17,5 +17,46 @@
 
   span {
     font-size: 16px;
+  }
+}
+
+.menu-categories {
+  &__list {
+    align-items: flex-start;
+    position: absolute;
+    top: 90%;
+    left: 70px;
+    list-style: none;
+
+    @include media-query($breakpoint-lg) {
+      display: none;
+      left: 60px;
+      background-color: $blue;
+      z-index: 999;
+      padding: 20px;
+      border-radius: 20px;
+    }
+  }
+
+  &__link {
+    color: #fffffff9;
+  }
+
+  &__item {
+    @include flex(row, center, flex-start);
+
+    font-size: 18px;
+    font-weight: 400;
+
+    &:not(:last-of-type) {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__dot {
+    display: inline-block;
+    width: 10px;
+    height: 5px;
+    margin-right: 10px;
   }
 }

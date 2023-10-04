@@ -1,5 +1,10 @@
+@import "assets/styles/mixins";
+@import "assets/styles/variables";
+
 .logo {
   height: 60px;
+  width: 55px;
+  overflow: hidden;
 
   &__img {
     height: 100%;

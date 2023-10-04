@@ -3,7 +3,23 @@
 
 .completed-tasks {
   min-height: 450px;
-  min-width: 800px;
+  max-width: 800px;
+  width: 600px;
+
+  @include media-query($breakpoint-lg) {
+  }
+
+  @include media-query($breakpoint-md) {
+    width: 550px;
+  }
+
+  @include media-query($breakpoint-sm) {
+    width: 400px;
+  }
+
+  @include media-query($breakpoint-xs) {
+    width: 250px;
+  }
 
   &__title {
     color: $white;
@@ -23,6 +39,7 @@
   &__btn {
     @include clearButtonStyles;
     color: $orange;
+
     svg {
       width: 25px;
       height: 25px;

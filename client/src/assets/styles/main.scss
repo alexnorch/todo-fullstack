@@ -10,13 +10,18 @@
   text-decoration: none;
 }
 
+body {
+  background-color: #eee;
+}
+
 // App start
 .app {
   height: 100vh;
   display: flex;
-  margin-left: 90px;
+  margin-left: 110px;
 
   @include media-query($breakpoint-lg) {
+    margin-top: 80px;
     margin-left: 0;
     flex-direction: column;
   }
@@ -156,11 +161,21 @@
 
   &__left {
     flex-basis: 200px;
+
+    @include media-query($breakpoint-lg) {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
   }
 
   &__content {
     display: flex;
     gap: 40px;
+
+    @include media-query($breakpoint-lg) {
+      flex-direction: column;
+    }
   }
 
   &__right {

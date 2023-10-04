@@ -21,7 +21,7 @@
 
 @mixin media-query($breakpoint) {
   @if $breakpoint == $breakpoint-xs {
-    @media only screen and (max-width: $breakpoint-sx) {
+    @media only screen and (max-width: $breakpoint-xs) {
       @content;
     }
   }

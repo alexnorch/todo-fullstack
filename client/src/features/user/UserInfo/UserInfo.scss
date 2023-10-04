@@ -5,6 +5,10 @@
   margin: 20px 0;
   text-align: center;
 
+  @include media-query($breakpoint-md) {
+    flex-basis: 50%;
+  }
+
   &__name {
     font-size: 22px;
     font-weight: 600;

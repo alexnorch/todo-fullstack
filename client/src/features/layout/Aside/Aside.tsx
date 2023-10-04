@@ -1,14 +1,11 @@
 import { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
-import { logout } from "redux/appSlice";
 import Menu from "../Menu/Menu";
-import { Logo, IconButton } from "@features/ui";
-import { CiLogout } from 'react-icons/ci'
+import { Logo, Hamburger } from "@features/ui";
 import "./Aside.scss";
 
 const Aside: React.FC = () => {
   const asideRef = useRef<HTMLElement>(null);
-  const dispatch = useDispatch()
+  const width = window.innerWidth;
 
   useEffect(() => {
     const asideElem = asideRef.current!;
@@ -16,24 +13,30 @@ const Aside: React.FC = () => {
     const addActiveClass = () => asideElem.classList.add("active");
     const removeActiveClass = () => asideElem.classList.remove("active");
 
-    asideElem.addEventListener("mouseenter", addActiveClass);
-    asideElem.addEventListener("mouseleave", removeActiveClass);
+    if (width > 992) {
+      asideElem.addEventListener("mouseenter", addActiveClass);
+      asideElem.addEventListener("mouseleave", removeActiveClass);
+    }
 
     return () => {
       asideElem.removeEventListener("mouseenter", addActiveClass);
       asideElem.removeEventListener("mouseleave", removeActiveClass);
     };
-  }, []);
+  }, [width]);
 
-  const logoutHandler = () => dispatch(logout())
+  const onMenuToggle = () => {
+    if (asideRef.current) {
+      asideRef.current.classList.toggle("active-mobile");
+    }
+  };
 
   return (
     <aside ref={asideRef} className="aside">
-      <Logo />
+      <div className="aside__top">
+        <Logo />
+        <Hamburger onClick={onMenuToggle} />
+      </div>
       <Menu />
-      <IconButton onClick={logoutHandler}>
-        <CiLogout />
-      </IconButton>
     </aside>
   );
 };

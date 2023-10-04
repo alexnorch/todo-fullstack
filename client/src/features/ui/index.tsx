@@ -11,6 +11,7 @@ import IconButton from "./IconButton/IconButton";
 import ActionsMenu from "./ActionsMenu/ActionsMenu";
 import ConfirmDialog from "./ConfirmDialog/ConfirmDialog";
 import PageHeading from "./PageHeading/PageHeading";
+import Hamburger from "./Hamburger/Hamburger";
 
 export {
   PageHeading,
@@ -26,4 +27,5 @@ export {
   IconButton,
   ActionsMenu,
   ConfirmDialog,
+  Hamburger,
 };

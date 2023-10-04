@@ -2,23 +2,57 @@
 @import "assets/styles/variables";
 
 .menu {
+  position: relative;
+  @include flex(row, flex-start, center);
+  flex-direction: column;
   width: 300px;
   list-style: none;
+  flex-grow: 1;
+
+  @include media-query($breakpoint-lg) {
+    margin-top: 20px;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+    flex-grow: 0;
+  }
 
   &__item {
-    margin-bottom: 20px;
     @include flex(row, center, flex-start);
+    position: relative;
+    margin-bottom: 20px;
     gap: 20px;
 
     @include media-query($breakpoint-lg) {
       gap: 10px;
+
+      margin-bottom: 0px;
+    }
+
+    @include media-query($breakpoint-lg) {
+      flex-direction: column;
     }
   }
 
-  &__text,
-  &__link {
+  &__link,
+  &__text {
     color: $white;
+  }
+
+  &__text {
     font-size: 22px;
+
+    @include media-query($breakpoint-lg) {
+      font-size: 18px;
+    }
+
+    @include media-query($breakpoint-md) {
+      font-size: 16px;
+    }
+
+    @include media-query($breakpoint-sm) {
+      font-size: 14px;
+    }
   }
 
   &__icon {
@@ -29,7 +63,7 @@
     flex-shrink: 0;
     width: 50px;
     height: 50px;
-    border-radius: 10px;
+    border-radius: 50%;
     background-color: $white;
 
     svg {
@@ -40,27 +74,17 @@
   }
 }
 
+.menu-settings {
+  position: absolute;
+  bottom: 0;
+
+  @include media-query($breakpoint-lg) {
+    position: static;
+  }
+}
+
 .menu-categories {
-  align-items: flex-start;
-
-  &__list {
-    list-style: none;
-  }
-
-  &__link {
-    color: #fff;
-  }
-
-  &__item {
-    margin-top: 10px;
-    font-size: 18px;
-  }
-
-  &__dot {
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    margin-right: 10px;
+  &:hover &__list {
+    display: block;
   }
 }

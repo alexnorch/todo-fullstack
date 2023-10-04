@@ -3,9 +3,9 @@
 
 .category-column {
   position: relative;
-  height: 250px;
-  width: 250px;
-  border-radius: 15px;
+  height: 200px;
+  width: 200px;
+  border-radius: 20px;
   background-color: #fff;
   box-shadow: $shadow-sm;
   @include flex();

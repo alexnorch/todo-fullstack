@@ -45,7 +45,6 @@ const CategoriesList = () => {
 
   return (
     <ol className="menu-categories__list">
-      <p className="menu__text">My categories:</p>
       {categories.length === 0 && <CategoryItemAdd />}
       {categories.map((category) => (
         <CategoryItem

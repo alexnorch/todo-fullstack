@@ -2,26 +2,50 @@
 @import "assets/styles/mixins";
 
 .aside {
-  @include flex(column, start, space-between);
+  @include flex(column, start, start);
+  border-radius: 40px;
   position: fixed;
-  overflow: hidden;
   top: 0;
   left: 0;
   bottom: 0;
   z-index: 999;
   width: 90px;
+  min-height: 80px;
   padding: 20px;
-  background-color: $blue;
+  background-color: #3083e3;
   transition: all 0.3s ease;
+  overflow: hidden;
+  margin: 15px;
+
+  &__top {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   @include media-query($breakpoint-lg) {
-    position: static;
-    width: 100%;
-    flex-direction: row;
+    height: 80px;
+    width: calc(100% - 20px);
+    padding: 10px 20px;
   }
 
   &.active {
     width: 300px;
+    width: 300px;
     box-shadow: 999px 999px 999px 9999px rgba(0, 0, 0, 0.3);
+  }
+
+  &.active-mobile {
+    border-radius: 35px;
+    min-height: 400px;
+  }
+
+  .hamburger {
+    display: none;
+
+    @include media-query($breakpoint-lg) {
+      display: flex;
+    }
   }
 }
