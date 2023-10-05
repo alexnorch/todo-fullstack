@@ -45,7 +45,7 @@
   }
 
   @if $breakpoint == $breakpoint-xl {
-    @media only screen and (min-width: $breakpoint-xl) {
+    @media only screen and (max-width: $breakpoint-xl) {
       @content;
     }
   }

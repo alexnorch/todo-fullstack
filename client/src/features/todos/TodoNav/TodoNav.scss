@@ -3,12 +3,18 @@
 
 .task-navigation {
   position: fixed;
+  z-index: 999;
   top: 50%;
   right: 30px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   transform: translateY(-50%);
+
+  @include media-query($breakpoint-md) {
+    top: 95%;
+    right: 5%;
+  }
 
   &__btn {
     @include clearButtonStyles;

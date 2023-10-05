@@ -62,3 +62,13 @@
     flex-shrink: 0;
   }
 }
+
+.adornment-icon {
+  @include flex();
+  color: green;
+
+  svg {
+    width: 25px;
+    height: 25px;
+  }
+}

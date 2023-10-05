@@ -1,47 +1,48 @@
 import { Link } from "react-router-dom";
-import { CategoriesList } from "@features/categories";
-import { Hamburger } from "@features/ui";
-
 import "./Menu.scss";
 
 // Icons
 import { IoMdSettings, IoIosList } from "react-icons/io";
 import { AiOutlineHome } from "react-icons/ai";
 
-const Menu = () => {
+const links = [
+  { path: "/", title: "Overview", icon: <AiOutlineHome /> },
+  { path: "/categories", title: "My tasks", icon: <IoIosList /> },
+  { path: "/settings", title: "Settings", icon: <IoMdSettings /> },
+];
+
+interface IMenuItem {
+  path: string;
+  icon: React.ReactNode;
+  title: string;
+  onClick: () => void;
+}
+
+const MenuItem: React.FC<IMenuItem> = (props) => {
+  const { path, icon, title, onClick } = props;
+
+  let classes = "menu__item";
+
+  if (title.toLowerCase() === "settings") {
+    classes += " menu-settings";
+  }
+
   return (
-    <ul className="menu">
-      <li className="menu__item">
-        <span className="menu__icon">
-          <AiOutlineHome />
-        </span>
-        <p className="menu__text">
-          <Link className="menu__link" to="/">
-            Overview
-          </Link>
-        </p>
-      </li>
-
-      <li className="menu__item menu-categories">
-        <span className="menu__icon">
-          <IoIosList />
-        </span>
-        <p className="menu__text">My categories</p>
-        <CategoriesList />
-      </li>
-
-      <li className="menu__item menu-settings">
-        <span className="menu__icon">
-          <IoMdSettings />
-        </span>
-        <p className="menu__text">
-          <Link className="menu__link" to="/settings">
-            Settings
-          </Link>
-        </p>
-      </li>
-    </ul>
+    <li onClick={onClick} className={classes}>
+      <Link className="menu__link" to={path}>
+        <span className="menu__icon">{icon}</span>
+        <p className="menu__text">{title}</p>
+      </Link>
+    </li>
   );
+};
+
+const Menu: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
+  const renderedLinks = links.map((link, i) => (
+    <MenuItem onClick={onToggle} key={i} {...link} />
+  ));
+
+  return <ul className="menu">{renderedLinks}</ul>;
 };
 
 export default Menu;

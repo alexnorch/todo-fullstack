@@ -13,9 +13,6 @@ const TodoList: React.FC<{ tasks: TaskItem[] }> = ({ tasks }) => {
 
   return (
     <div className="task-wrapper">
-      <div className="task-wrapper__scrollbar">
-        <div className="task-wrapper__thumb"></div>
-      </div>
       <ul className="tasks">{renderTaskItems()}</ul>
     </div>
   );

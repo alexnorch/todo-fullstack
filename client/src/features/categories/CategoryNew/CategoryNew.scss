@@ -1,0 +1,19 @@
+@import "assets/styles/mixins";
+@import "assets/styles/variables";
+
+.new-category-btn {
+  @include flex();
+  @include rounded(70px);
+  cursor: pointer;
+  background-color: $blue;
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  color: #fff;
+  box-shadow: $shadow-sm;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+}

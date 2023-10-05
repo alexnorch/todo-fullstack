@@ -62,6 +62,16 @@ export const addZeroToNumber = (n: number) => {
   return n <= 9 && n !== 0 ? `0${n}` : n;
 };
 
+export const hexToRgba = (hex: string, opacity: number = 1) => {
+  hex = hex.replace(/^#/, "");
+
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+
+  return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+};
+
 export const capitalizeFirstLetter = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };

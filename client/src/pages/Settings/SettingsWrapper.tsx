@@ -4,19 +4,21 @@ import { PageHeading } from "@features/ui";
 
 const SettingsWrapper = () => {
   return (
-    <div className="settings">
+    <>
       <PageHeading title="Settings" subtitle="Adjust Your Profile" />
-      <div className="settings__content">
+      <div className="settings">
         <div className="settings__left">
-          <UserPhoto />
-          <UserInfo />
+          <div className="user-details">
+            <UserPhoto />
+            <UserInfo />
+          </div>
           <UserNav />
         </div>
         <div className="settings__right">
           <Outlet />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

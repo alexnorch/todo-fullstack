@@ -38,9 +38,9 @@ const UserPassword = () => {
   };
 
   return (
-    <section className="settings__section">
-      <h3 className="settings_heading mb-1">Change Password</h3>
-      <form onSubmit={onSubmit} className="settings-form password">
+    <div className="settings-section">
+      <h3 className="settings-section__heading">Change Password</h3>
+      <form onSubmit={onSubmit} className="settings-section__form passwords">
         <TextField
           type={isVisible.old ? "text" : "password"}
           label="Old Password"
@@ -79,11 +79,11 @@ const UserPassword = () => {
             </IconButton>
           }
         />
-        <div className="settings-form__button">
+        <div className="settings-section__bottom">
           <Button variant="outline">Change password</Button>
         </div>
       </form>
-    </section>
+    </div>
   );
 };
 

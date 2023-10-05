@@ -19,7 +19,6 @@ const CategoriesContainer = () => {
 
   return (
     <div className="categories-container">
-      <h3>My categories</h3>
       <div className="categories-row">
         {categories.map((item) => (
           <CategoryItem key={item._id} {...item} />

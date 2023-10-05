@@ -2,16 +2,21 @@
 @import "assets/styles/variables";
 
 .category-column {
+  @include flex(row, flex-end);
   position: relative;
-  height: 200px;
-  width: 200px;
+  height: 120px;
+  width: 600px;
   border-radius: 20px;
-  background-color: #fff;
-  box-shadow: $shadow-sm;
-  @include flex();
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: $shadow-sm;
+  }
 
   &__title {
-    font-size: 24px;
+    font-size: 20px;
+    font-weight: 400;
   }
 
   &__text {
@@ -21,7 +26,10 @@
 
   &__body {
     text-align: center;
-    padding: 10px;
+    padding: 5px;
+    background-color: #ffffff;
+    flex-grow: 1;
+    border-radius: 0px 0px 10px 10px;
   }
 
   &__actions {

@@ -23,6 +23,12 @@
     padding-left: 140px;
     font-size: 18px;
     border-bottom: 3px solid $blue-darken;
+
+    @include media-query($breakpoint-md) {
+      padding-left: 20px;
+      padding-right: 10px;
+      border-radius: 15px;
+    }
   }
 
   &__span {
@@ -33,6 +39,10 @@
     height: 20px;
     width: 20px;
     border-radius: 50%;
+
+    @include media-query($breakpoint-md) {
+      display: none;
+    }
 
     &:nth-of-type(1) {
       background-color: $red;

@@ -114,7 +114,7 @@ const updateUser: RequestHandler = async (req, res, next) => {
   const user = (await User.findById(req.userId)) as IUser;
   const isEmailAlreadyExists = (await User.findOne({ email })) as IUser;
 
-  if (user.isEmailConfirmed) {
+  if (user.isEmailConfirmed && email !== user.email) {
     return next(
       new AppError(
         "You can't change email address, because it's already confirmed",

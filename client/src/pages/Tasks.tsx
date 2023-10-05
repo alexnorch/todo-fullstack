@@ -27,6 +27,7 @@ export default function Tasks() {
         title={capitalizeFirstLetter(category!)}
         subtitle="Current category"
       />
+
       <TodoNew />
       <TodoList tasks={inCompletedTasks} />
       <TodoNav

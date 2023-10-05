@@ -1,10 +1,14 @@
 import { GiHamburgerMenu } from "react-icons/gi";
 import "./Hamburger.scss";
 
-const Hamburger: React.FC<{ onClick: () => void }> = ({ onClick }) => {
+interface IHamburger {
+  onToggle: () => void;
+}
+
+const Hamburger: React.FC<IHamburger> = ({ onToggle }) => {
   return (
-    <div className="hamburger">
-      <GiHamburgerMenu onClick={onClick} />
+    <div onClick={onToggle} className="hamburger">
+      <GiHamburgerMenu />
     </div>
   );
 };

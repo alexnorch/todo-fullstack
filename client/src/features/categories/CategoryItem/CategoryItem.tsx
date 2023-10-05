@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { capitalizeFirstLetter } from "../../../helpers";
+import { useNavigate } from "react-router-dom";
+import { capitalizeFirstLetter, hexToRgba } from "../../../helpers";
 import "./CategoryItem.scss";
 
 import { CategoryEditing, CategoryDeleting } from "@features/categories";
@@ -9,13 +10,15 @@ const CategoryItem: React.FC<any> = ({ tasks, color, title, _id }) => {
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
+  const navigate = useNavigate();
   const onDeleteBegin = () => setIsDeleting(true);
   const onEditBegin = () => setIsEditing(true);
 
   const onConfirmToggle = () => setIsDeleting((isDeleting) => !isDeleting);
   const onModalToggle = () => setIsEditing((prevState) => !prevState);
+  const onNavigate = () => navigate(`/categories/${title}`);
 
-  const categoryStyles = { borderBottom: `10px solid ${color}` };
+  const categoryStyles = { backgroundColor: hexToRgba(color, 0.5) };
 
   return (
     <>
@@ -24,11 +27,10 @@ const CategoryItem: React.FC<any> = ({ tasks, color, title, _id }) => {
           <ActionsMenu onDelete={onDeleteBegin} onEdit={onEditBegin} />
         </div>
 
-        <div className="category-column__body">
-          <h3 className="category-column__title">
+        <div onClick={onNavigate} className="category-column__body">
+          <h4 className="category-column__title">
             {capitalizeFirstLetter(title)}
-          </h3>
-          <hr />
+          </h4>
         </div>
       </div>
 

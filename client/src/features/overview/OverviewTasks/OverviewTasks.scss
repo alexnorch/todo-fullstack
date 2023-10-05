@@ -17,7 +17,7 @@
     justify-content: flex-start;
     flex-basis: calc(100% / 5);
     margin: 0;
-    height: 90px;
+    min-height: 90px;
 
     @include media-query($breakpoint-lg) {
       flex-basis: 100%;

@@ -1,10 +1,17 @@
-import { CategoriesContainer, CategoryAdd } from "@features/categories";
+import { CategoriesContainer, CategoryNew } from "@features/categories";
+import { PageHeading } from "@features/ui";
 
-export default function Categories() {
+const Categories = () => {
   return (
     <>
+      <PageHeading
+        title="Categories"
+        subtitle="Please choose or create the category"
+      />
       <CategoriesContainer />
-      <CategoryAdd />
+      <CategoryNew />
     </>
   );
-}
+};
+
+export default Categories;

@@ -3,14 +3,12 @@ import CategoryEditing from "./CategoryEditing/CategoryEditing";
 import CategoryDeleting from "./CategoryDeleting/CategoryDeleting";
 import CategoryForm from "./CategoryForm/CategoryForm";
 import useCategoryServices from "./useCategoryServices";
-import CategoryAdd from "./CategoryAdd/CategoryAdd";
+import CategoryNew from "./CategoryNew/CategoryNew";
 import CategoriesContainer from "./CategoriesContainer/CategoriesContainer";
-import CategoriesList from "./CategoriesList/CategoriesList";
 
 export {
-  CategoriesList,
   CategoriesContainer,
-  CategoryAdd,
+  CategoryNew,
   CategoryItem,
   CategoryEditing,
   CategoryDeleting,

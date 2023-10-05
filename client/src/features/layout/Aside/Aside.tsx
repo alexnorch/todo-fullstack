@@ -1,14 +1,20 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Menu from "../Menu/Menu";
 import { Logo, Hamburger } from "@features/ui";
 import "./Aside.scss";
 
-const Aside: React.FC = () => {
+const Aside = () => {
+  const [width, setWidth] = useState(window.innerWidth);
   const asideRef = useRef<HTMLElement>(null);
-  const width = window.innerWidth;
 
   useEffect(() => {
     const asideElem = asideRef.current!;
+
+    const onResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", onResize);
 
     const addActiveClass = () => asideElem.classList.add("active");
     const removeActiveClass = () => asideElem.classList.remove("active");
@@ -21,6 +27,7 @@ const Aside: React.FC = () => {
     return () => {
       asideElem.removeEventListener("mouseenter", addActiveClass);
       asideElem.removeEventListener("mouseleave", removeActiveClass);
+      window.removeEventListener("resize", onResize);
     };
   }, [width]);
 
@@ -34,9 +41,9 @@ const Aside: React.FC = () => {
     <aside ref={asideRef} className="aside">
       <div className="aside__top">
         <Logo />
-        <Hamburger onClick={onMenuToggle} />
+        <Hamburger onToggle={onMenuToggle} />
       </div>
-      <Menu />
+      <Menu onToggle={onMenuToggle} />
     </aside>
   );
 };

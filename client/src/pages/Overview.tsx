@@ -24,7 +24,7 @@ const Overview = () => {
   };
 
   return (
-    <div className="overview">
+    <>
       <PageHeading title="Overview" subtitle="Seeing it All in One Place" />
       <OverviewStats />
       <TodoFilter
@@ -33,7 +33,7 @@ const Overview = () => {
         filters={filterOptions}
       />
       <OverviewTasks tasks={filteredTasks} />
-    </div>
+    </>
   );
 };
 
