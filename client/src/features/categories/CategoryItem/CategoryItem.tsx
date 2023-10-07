@@ -1,51 +1,65 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { capitalizeFirstLetter, hexToRgba } from "../../../helpers";
+import { ChangeEvent } from "types";
 import "./CategoryItem.scss";
 
-import { CategoryEditing, CategoryDeleting } from "@features/categories";
-import { ActionsMenu } from "@features/ui";
+import {
+  CategoryItemContent,
+  CategoryItemDeleting,
+  CategoryItemEditing,
+  useCategoryServices,
+} from "@features/categories";
 
-const CategoryItem: React.FC<any> = ({ tasks, color, title, _id }) => {
+const CategoryItem: React.FC<any> = ({ color, title, _id }) => {
+  const { onUpdateCategory, onDeleteCategory } = useCategoryServices();
+
+  const [newTitle, setNewTitle] = useState(title);
+  const [newColor, setNewColor] = useState(color);
+
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
-  const navigate = useNavigate();
-  const onDeleteBegin = () => setIsDeleting(true);
-  const onEditBegin = () => setIsEditing(true);
+  const onDeletingToggle = () => setIsDeleting(!isDeleting);
+  const onEditingToggle = () => setIsEditing(!isEditing);
 
-  const onConfirmToggle = () => setIsDeleting((isDeleting) => !isDeleting);
-  const onModalToggle = () => setIsEditing((prevState) => !prevState);
-  const onNavigate = () => navigate(`/categories/${title}`);
+  const onChangeTitle = (e: ChangeEvent) => setNewTitle(e.target.value);
+  const onChangeColor = (e: ChangeEvent) => setNewColor(e.target.value);
 
-  const categoryStyles = { backgroundColor: hexToRgba(color, 0.5) };
+  const handleUpdateCategory = () => {
+    onUpdateCategory(_id, {
+      title: newTitle,
+      color: newColor,
+    });
+
+    onEditingToggle();
+  };
+
+  const handleDeleteCategory = () => {
+    onDeleteCategory(_id);
+  };
 
   return (
     <>
-      <div style={categoryStyles} className="category-column">
-        <div className="category-column__actions">
-          <ActionsMenu onDelete={onDeleteBegin} onEdit={onEditBegin} />
-        </div>
-
-        <div onClick={onNavigate} className="category-column__body">
-          <h4 className="category-column__title">
-            {capitalizeFirstLetter(title)}
-          </h4>
-        </div>
-      </div>
-
-      <CategoryDeleting
-        id={_id}
-        onConfirmToggle={onConfirmToggle}
-        isDeleting={isDeleting}
+      <CategoryItemContent
+        color={color}
+        title={title}
+        onDeleting={onDeletingToggle}
+        onEditing={onEditingToggle}
       />
 
-      <CategoryEditing
-        id={_id}
-        onModalToggle={onModalToggle}
-        categoryName={title}
-        categoryColor={color}
+      <CategoryItemDeleting
+        isDeleting={isDeleting}
+        onDeletingToggle={onDeletingToggle}
+        onDelete={handleDeleteCategory}
+      />
+
+      <CategoryItemEditing
+        newTitle={newTitle}
+        newColor={newColor}
         isEditing={isEditing}
+        onEditTodo={handleUpdateCategory}
+        onEditingToggle={onEditingToggle}
+        onChangeColor={onChangeColor}
+        onChangeTitle={onChangeTitle}
       />
     </>
   );

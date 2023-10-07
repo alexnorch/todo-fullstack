@@ -15,6 +15,7 @@ const useCategoryServices = () => {
   const onDeleteCategory = async (categoryId: string) => {
     await authAxios.delete(`${_baseURL}/${categoryId}`);
     dispatch(deleteCategory(categoryId));
+    showSuccessAlert("The category was successfully deleted");
   };
 
   const onAddCategory = async (categoryData: {
@@ -44,7 +45,6 @@ const useCategoryServices = () => {
 
     if (result.data) {
       dispatch(updateCategory(result.data));
-
       showSuccessAlert("The category was successfully updated");
     }
   };

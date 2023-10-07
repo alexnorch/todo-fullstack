@@ -23,6 +23,7 @@ const Main = () => {
         classNames="alert-transition"
         timeout={500}
         in={isAlert}
+        unmountOnExit
       >
         <Alert />
       </CSSTransition>

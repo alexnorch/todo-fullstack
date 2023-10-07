@@ -14,7 +14,11 @@ const CategoryNew = () => {
   const toggleModal = () => setIsModal((prev) => !prev);
   const onColorChange = (e: ChangeEvent) => setColor(e.target.value);
   const onTitleChange = (e: ChangeEvent) => setTitle(e.target.value);
-  const onSubmit = () => onAddCategory({ title, color });
+
+  const onSubmit = () => {
+    onAddCategory({ title, color });
+    toggleModal();
+  };
 
   return (
     <>

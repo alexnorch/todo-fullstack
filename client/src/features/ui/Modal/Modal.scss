@@ -33,6 +33,15 @@
       transform: translate(-50%, -50%);
       transition: all 0.3s ease;
     }
+
+    &.fade-up-exit {
+      transform: translate(-50%, -40%);
+      transition: all 0.3s ease;
+    }
+
+    &.fade-up-exit-active {
+      opacity: 0;
+    }
   }
 
   &__header {

@@ -13,26 +13,21 @@ interface ModalProps {
   submitter?: () => void;
 }
 
-const Modal: React.FC<ModalProps> = ({
-  children,
-  isOpen,
-  onToggle,
-  title,
-  submitter,
-}) => {
+const Modal: React.FC<ModalProps> = (props) => {
+  const { children, isOpen, onToggle, title, submitter } = props;
+
   const nodeRef = useRef<HTMLDivElement>(null);
 
-  const modalContent = (
-    <div
-      className="modal"
-      onClick={(e: React.MouseEvent<HTMLDivElement>) => {
-        const targetElement = e.target as HTMLElement;
+  const onModalClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const targetElement = e.target as HTMLElement;
 
-        if (targetElement.classList.contains("modal")) {
-          onToggle();
-        }
-      }}
-    >
+    if (targetElement.classList.contains("modal")) {
+      onToggle();
+    }
+  };
+
+  const modalContent = (
+    <div className="modal" onClick={onModalClick}>
       <div ref={nodeRef} className="modal__inner">
         <div className="modal__header">
           <h3>{title}</h3>
@@ -60,10 +55,11 @@ const Modal: React.FC<ModalProps> = ({
     <CSSTransition
       in={isOpen}
       nodeRef={nodeRef}
-      timeout={500}
+      timeout={300}
       classNames="fade-up"
+      unmountOnExit
     >
-      <>{isOpen ? modalContent : null}</>
+      {modalContent}
     </CSSTransition>,
     document.getElementById("root")!
   );

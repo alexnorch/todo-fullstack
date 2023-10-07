@@ -6,10 +6,15 @@ import TodoNew from "./TodoNew/TodoNew";
 import TodoReadOnly from "./TodoReadOnly/TodoReadOnly";
 import useTodoServices from "./useTodoServices";
 import TodoFilter from "./TodoFilter/TodoFilter";
-import TodoEditing from "./TodoEditing/TodoEditing";
+
+import TodoItemEditing from "./TodoItem/TodoItemEditing";
+import TodoItemDeleting from "./TodoItem/TodoItemDeleting";
+import TodoItemContent from "./TodoItem/TodoItemContent";
 
 export {
-  TodoEditing,
+  TodoItemContent,
+  TodoItemDeleting,
+  TodoItemEditing,
   TodoFilter,
   TodoCompleted,
   TodoItem,

@@ -1,11 +1,6 @@
 import { Modal, TextField } from "@features/ui";
 import { ChangeEvent } from "types";
 
-// onTodoEdit={onEditTodo}
-// onToggle={onEditToggle}
-// isEditing={isEditing}
-// value={newTitle}
-
 interface ITodoEditing {
   onTodoEdit: () => void;
   onToggle: () => void;
@@ -14,7 +9,7 @@ interface ITodoEditing {
   value: string;
 }
 
-const TodoEditing: React.FC<ITodoEditing> = (props) => {
+const TodoItemEditing: React.FC<ITodoEditing> = (props) => {
   const { value, isEditing, onToggle, onTodoEdit, onChange } = props;
   return (
     <Modal
@@ -28,4 +23,4 @@ const TodoEditing: React.FC<ITodoEditing> = (props) => {
   );
 };
 
-export default TodoEditing;
+export default TodoItemEditing;

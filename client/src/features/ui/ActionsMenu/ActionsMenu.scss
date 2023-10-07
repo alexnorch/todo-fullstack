@@ -2,18 +2,19 @@
 @import "assets/styles/variables";
 
 .actions-menu {
-  position: relative;
+  position: absolute;
   z-index: 15;
 
   &__list {
-    list-style: none;
+    display: flex;
     position: absolute;
+    list-style: none;
     background-color: $white;
-    left: 150%;
-    top: 0;
     box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     overflow: hidden;
+    right: -10px;
+    top: -50px;
   }
 
   &__item {
