@@ -7,12 +7,6 @@ import { TodoFilter } from "@features/todos";
 import { filterTasks } from "@features/todos/utils";
 import { PageHeading } from "@features/ui";
 
-const filterOptions = [
-  { name: "All tasks", dataTab: "all" },
-  { name: "Completed tasks", dataTab: "completed" },
-  { name: "Incomplete tasks", dataTab: "incomplete" },
-];
-
 const Overview = () => {
   const [activeFilter, setActiveFilter] = useState("all");
   const allTasks = useSelector((state: RootState) => state.tasks.allTasks);
@@ -27,11 +21,7 @@ const Overview = () => {
     <>
       <PageHeading title="Overview" subtitle="Seeing it All in One Place" />
       <OverviewStats />
-      <TodoFilter
-        activeFilter={activeFilter}
-        onChangeFilter={onChangeFilter}
-        filters={filterOptions}
-      />
+      <TodoFilter activeFilter={activeFilter} onChangeFilter={onChangeFilter} />
       <OverviewTasks tasks={filteredTasks} />
     </>
   );

@@ -23,30 +23,28 @@ const ActionsMenu: React.FC<ActionsMenuProps> = ({ onDelete, onEdit }) => {
     onHide,
   });
 
+  const handleDelete = () => {
+    onDelete();
+    onHide();
+  };
+
+  const handleEdit = () => {
+    onEdit();
+    onHide();
+  };
+
   return (
-    <div className="actions-menu">
+    <div onClick={(e) => e.stopPropagation()} className="actions-menu">
       <button onClick={onToggle} className="actions-menu__btn">
         <BsThreeDotsVertical />
       </button>
       {isShown && (
         <ul ref={nodeRef} className="actions-menu__list">
-          <li
-            className="actions-menu__item"
-            onClick={() => {
-              onDelete();
-              onHide();
-            }}
-          >
+          <li className="actions-menu__item" onClick={handleDelete}>
             Delete
             <BsTrashFill />
           </li>
-          <li
-            className="actions-menu__item"
-            onClick={() => {
-              onEdit();
-              onHide();
-            }}
-          >
+          <li className="actions-menu__item" onClick={handleEdit}>
             Edit
             <AiOutlineEdit />
           </li>

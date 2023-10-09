@@ -3,14 +3,19 @@ import "./TodoFilter.scss";
 interface ITodoFilter {
   activeFilter: string;
   onChangeFilter: (e: any) => void;
-  filters: any[];
 }
 
+const filterOptions = [
+  { name: "All tasks", dataTab: "all" },
+  { name: "Completed tasks", dataTab: "completed" },
+  { name: "Incomplete tasks", dataTab: "incomplete" },
+];
+
 const TodoFilter: React.FC<ITodoFilter> = (props) => {
-  const { activeFilter, filters, onChangeFilter } = props;
+  const { activeFilter, onChangeFilter } = props;
 
   const renderFilterOptions = () => {
-    return filters.map(({ name, dataTab }, i) => {
+    return filterOptions.map(({ name, dataTab }, i) => {
       let classes = "todo-filter__option";
 
       if (activeFilter === dataTab) {

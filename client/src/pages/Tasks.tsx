@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import { IoIosArrowDropleft } from "react-icons/io";
 
 import { capitalizeFirstLetter } from "../helpers";
 import { PageHeading } from "@features/ui";
@@ -23,6 +24,13 @@ export default function Tasks() {
 
   return (
     <>
+      <Link className="page-link" to="/categories">
+        <span className="page-link__icon">
+          <IoIosArrowDropleft />
+        </span>
+        <span className="page-link__text">Categories</span>
+      </Link>
+
       <PageHeading
         title={capitalizeFirstLetter(category!)}
         subtitle="Current category"

@@ -1,5 +1,5 @@
-import { TodoReadOnly } from "@features/todos";
 import { TaskItem } from "types";
+import { TodoItem } from "@features/todos";
 import "./OverviewTasks.scss";
 
 const OverviewTasks: React.FC<{ tasks: TaskItem[] }> = ({ tasks }) => {
@@ -7,7 +7,14 @@ const OverviewTasks: React.FC<{ tasks: TaskItem[] }> = ({ tasks }) => {
     <div className="overview-tasks">
       {tasks.length === 0 && <p>There is no tasks</p>}
       {tasks.map((item) => (
-        <TodoReadOnly {...item} />
+        <TodoItem
+          _id={item._id}
+          key={item._id}
+          completed={item.completed}
+          title={item.title}
+          color={item.color}
+          category={item.category}
+        />
       ))}
     </div>
   );

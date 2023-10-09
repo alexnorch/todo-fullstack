@@ -10,11 +10,20 @@ interface ITodoItemContent {
   onEditing: () => void;
 }
 
-const TodoItemContent = (props: ITodoItemContent, ref: any) => {
-  const { title, color, isCompleted, handleCheckTodo, onDeleting, onEditing } =
-    props;
-
+const TodoItemContent = (
+  {
+    title,
+    color,
+    isCompleted,
+    handleCheckTodo,
+    onDeleting,
+    onEditing,
+  }: ITodoItemContent,
+  ref: any
+) => {
   const taskStyles = { borderLeft: `7px solid ${color}` };
+
+  console.log("TodoItemContent", isCompleted);
 
   return (
     <li ref={ref} style={taskStyles} className="task">

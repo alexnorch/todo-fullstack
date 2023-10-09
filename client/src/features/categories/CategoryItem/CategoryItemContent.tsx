@@ -14,15 +14,17 @@ const CategoryItemContent: React.FC<ICategoryItemContent> = (props) => {
 
   const navigate = useNavigate();
   const onNavigate = () => navigate(`/categories/${title}`);
+
   const categoryStyles = { backgroundColor: hexToRgba(color, 0.5) };
+  const headingStyles = { color: color };
 
   return (
-    <div style={categoryStyles} className="category-column">
-      <div className="category-column__actions">
+    <div onClick={onNavigate} className="category-item">
+      <div className="category-item__actions">
         <ActionsMenu onDelete={onDeleting} onEdit={onEditing} />
       </div>
-      <div onClick={onNavigate} className="category-column__body">
-        <h4 className="category-column__title">
+      <div style={categoryStyles} className="category-item__body">
+        <h4 style={headingStyles} className="category-item__title">
           {capitalizeFirstLetter(title)}
         </h4>
       </div>

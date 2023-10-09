@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import CategoryItem from "../CategoryItem/CategoryItem";
-import "./CategoriesContainer.scss";
+import "./CategoriesList.scss";
 
 const CategoriesContainer = () => {
   const categories = useSelector(
@@ -18,12 +18,10 @@ const CategoriesContainer = () => {
   }
 
   return (
-    <div className="categories-container">
-      <div className="categories-row">
-        {categories.map((item) => (
-          <CategoryItem key={item._id} {...item} />
-        ))}
-      </div>
+    <div className="categories">
+      {categories.map((item) => (
+        <CategoryItem key={item._id} {...item} />
+      ))}
     </div>
   );
 };

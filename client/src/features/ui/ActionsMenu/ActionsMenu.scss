@@ -4,6 +4,8 @@
 .actions-menu {
   position: absolute;
   z-index: 15;
+  width: 15px;
+  height: 15px;
 
   &__list {
     display: flex;

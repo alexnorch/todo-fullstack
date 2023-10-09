@@ -29,8 +29,8 @@ const TodoItem = (props: TaskItem, ref: Ref<any>) => {
   };
 
   const handleCheckTodo = () => {
-    setIsCompleted(true);
     onCompleteTask(_id, { title, completed });
+    setIsCompleted((prevState) => !prevState);
   };
 
   const handleDeleteTodo = () => {

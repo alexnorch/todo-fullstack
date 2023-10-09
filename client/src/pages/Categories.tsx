@@ -1,4 +1,4 @@
-import { CategoriesContainer, CategoryNew } from "@features/categories";
+import { CategoriesList, CategoryNew } from "@features/categories";
 import { PageHeading } from "@features/ui";
 
 const Categories = () => {
@@ -8,7 +8,7 @@ const Categories = () => {
         title="Categories"
         subtitle="Please choose or create the category"
       />
-      <CategoriesContainer />
+      <CategoriesList />
       <CategoryNew />
     </>
   );
