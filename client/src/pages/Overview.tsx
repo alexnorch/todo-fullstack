@@ -6,22 +6,28 @@ import { OverviewStats, OverviewTasks } from "@features/overview";
 import { TodoFilter } from "@features/todos";
 import { filterTasks } from "@features/todos/utils";
 import { PageHeading } from "@features/ui";
+import { FilterType, IFilterOptions } from "@features/todos/types";
+
+const filterOptions: IFilterOptions[] = [
+  { title: "All tasks", filterType: "all" },
+  { title: "Completed tasks", filterType: "completed" },
+  { title: "Incomplete tasks", filterType: "incomplete" },
+];
 
 const Overview = () => {
-  const [activeFilter, setActiveFilter] = useState("all");
+  const [activeFilter, setActiveFilter] = useState<FilterType>("all");
   const allTasks = useSelector((state: RootState) => state.tasks.allTasks);
   const filteredTasks = filterTasks(allTasks, activeFilter);
-
-  const onChangeFilter = (e: any) => {
-    const targetFilter = e.target.getAttribute("data-tabName");
-    setActiveFilter(targetFilter);
-  };
 
   return (
     <>
       <PageHeading title="Overview" subtitle="Seeing it All in One Place" />
       <OverviewStats />
-      <TodoFilter activeFilter={activeFilter} onChangeFilter={onChangeFilter} />
+      <TodoFilter
+        filterOptions={filterOptions}
+        activeFilter={activeFilter}
+        setActiveFilter={setActiveFilter}
+      />
       <OverviewTasks tasks={filteredTasks} />
     </>
   );

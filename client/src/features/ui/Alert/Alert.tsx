@@ -1,28 +1,38 @@
-import { forwardRef, Ref } from "react";
+import { forwardRef, Ref, useRef } from "react";
 import { createPortal } from "react-dom";
 import { hideAlert } from "../../../redux/appSlice";
 import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 
+import { CSSTransition } from "react-transition-group";
+
 import "./Alert.scss";
 
 // helpers
-import { getAlertComponentClass } from "../../../helpers";
+import { getAlertComponentClass } from "helpers";
 
 // Icons
 import { AiOutlineCheckCircle, AiOutlineClose } from "react-icons/ai";
 
-const Alert = (props: {}, ref: Ref<HTMLDivElement>) => {
+const Alert = () => {
+  const nodeRef = useRef(null);
   const dispatch = useDispatch();
+
   const { alertText, alertType, isAlert } = useSelector(
     (state: RootState) => state.app
   );
 
   const classes = getAlertComponentClass("alert", alertType);
 
-  if (isAlert) {
-    return createPortal(
-      <div ref={ref} className={classes}>
+  return createPortal(
+    <CSSTransition
+      nodeRef={nodeRef}
+      classNames="alert-transition"
+      in={isAlert}
+      timeout={500}
+      unmountOnExit
+    >
+      <div ref={nodeRef} className={classes}>
         <div className="alert__inner">
           <AiOutlineCheckCircle />
           <p>{alertText}</p>
@@ -31,12 +41,10 @@ const Alert = (props: {}, ref: Ref<HTMLDivElement>) => {
             onClick={() => dispatch(hideAlert())}
           />
         </div>
-      </div>,
-      document.getElementById("root") as HTMLElement
-    );
-  } else {
-    return null;
-  }
+      </div>
+    </CSSTransition>,
+    document.getElementById("root") as HTMLElement
+  );
 };
 
-export default forwardRef<HTMLDivElement>(Alert);
+export default Alert;

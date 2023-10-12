@@ -6,7 +6,11 @@ import "./TodoList.scss";
 
 const TodoList: React.FC<{ tasks: TaskItem[] }> = ({ tasks }) => {
   if (tasks.length === 0) {
-    return <p>Please create your first task</p>;
+    return (
+      <div className="text-center">
+        <p>Please create your first task</p>
+      </div>
+    );
   }
 
   return (

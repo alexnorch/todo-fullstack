@@ -23,8 +23,6 @@ const TodoItemContent = (
 ) => {
   const taskStyles = { borderLeft: `7px solid ${color}` };
 
-  console.log("TodoItemContent", isCompleted);
-
   return (
     <li ref={ref} style={taskStyles} className="task">
       <div className="task__content">

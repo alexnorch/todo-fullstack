@@ -37,9 +37,9 @@ const RegisterForm = () => {
         onChange={onChange}
       />
       <div className="auth__bottom">
-        <button type="button" onClick={onSubmit} className="auth__btn">
+        <Button variant="primary" type="button" onClick={onSubmit}>
           Submit
-        </button>
+        </Button>
       </div>
     </form>
   );

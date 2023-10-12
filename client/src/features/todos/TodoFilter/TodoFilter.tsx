@@ -1,35 +1,30 @@
 import "./TodoFilter.scss";
+import { IFilterOptions, FilterType } from "../types";
 
 interface ITodoFilter {
-  activeFilter: string;
-  onChangeFilter: (e: any) => void;
+  filterOptions: IFilterOptions[];
+  activeFilter: FilterType;
+  setActiveFilter: any;
 }
 
-const filterOptions = [
-  { name: "All tasks", dataTab: "all" },
-  { name: "Completed tasks", dataTab: "completed" },
-  { name: "Incomplete tasks", dataTab: "incomplete" },
-];
-
 const TodoFilter: React.FC<ITodoFilter> = (props) => {
-  const { activeFilter, onChangeFilter } = props;
+  const { activeFilter, filterOptions, setActiveFilter } = props;
+
+  const onChangeFilter = (filterIndex: number) => {
+    setActiveFilter(filterOptions[filterIndex].filterType);
+  };
 
   const renderFilterOptions = () => {
-    return filterOptions.map(({ name, dataTab }, i) => {
+    return filterOptions.map(({ title, filterType }, i) => {
       let classes = "todo-filter__option";
 
-      if (activeFilter === dataTab) {
+      if (activeFilter === filterType) {
         classes += " todo-filter__option_active";
       }
 
       return (
-        <li
-          className={classes}
-          data-tabName={dataTab}
-          onClick={onChangeFilter}
-          key={i}
-        >
-          {name}
+        <li key={i} className={classes} onClick={() => onChangeFilter(i)}>
+          {title}
         </li>
       );
     });

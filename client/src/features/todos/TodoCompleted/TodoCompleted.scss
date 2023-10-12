@@ -6,19 +6,12 @@
   max-width: 800px;
   width: 600px;
 
-  @include media-query($breakpoint-lg) {
-  }
-
   @include media-query($breakpoint-md) {
-    width: 550px;
+    width: 500px;
   }
 
   @include media-query($breakpoint-sm) {
-    width: 400px;
-  }
-
-  @include media-query($breakpoint-xs) {
-    width: 250px;
+    width: 100%;
   }
 
   &__title {

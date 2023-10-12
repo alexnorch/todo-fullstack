@@ -4,7 +4,7 @@
 .user-photo {
   width: 200px;
   height: 200px;
-  flex-basis: 50%;
+  flex-shrink: 0;
 
   &__img {
     width: 100%;

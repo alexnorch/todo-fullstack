@@ -8,6 +8,13 @@ export interface TaskItem {
   color: string;
 }
 
+export type FilterType = "all" | "completed" | "incomplete";
+
+export interface IFilterOptions {
+  title: string;
+  filterType: FilterType;
+}
+
 export interface CompletedTasksProps {
   tasks: TaskItem[];
   onToggle: () => void;

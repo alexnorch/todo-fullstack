@@ -1,5 +1,6 @@
 import { Modal, TextField } from "@features/ui";
 import { ChangeEvent } from "types";
+import "./TodoItemEditing.scss";
 
 interface ITodoEditing {
   onTodoEdit: () => void;
@@ -11,6 +12,7 @@ interface ITodoEditing {
 
 const TodoItemEditing: React.FC<ITodoEditing> = (props) => {
   const { value, isEditing, onToggle, onTodoEdit, onChange } = props;
+
   return (
     <Modal
       submitter={onTodoEdit}
@@ -18,7 +20,9 @@ const TodoItemEditing: React.FC<ITodoEditing> = (props) => {
       title="Editing the task"
       isOpen={isEditing}
     >
-      <TextField label="New Title" value={value} onChange={onChange} />
+      <div className="todo-editing">
+        <TextField label="New Title" value={value} onChange={onChange} />
+      </div>
     </Modal>
   );
 };

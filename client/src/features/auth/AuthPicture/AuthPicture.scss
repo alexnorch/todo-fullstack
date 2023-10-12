@@ -1,0 +1,23 @@
+@import "assets/styles/mixins";
+@import "assets/styles/variables";
+
+.auth-picture {
+  background: $blue;
+  flex-basis: 50%;
+  flex-shrink: 0;
+  @include flex(row, center, center);
+
+  @include media-query($breakpoint-lg) {
+    height: 350px;
+  }
+
+  @include media-query($breakpoint-md) {
+    flex-basis: 300px;
+  }
+
+  &__img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+  }
+}

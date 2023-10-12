@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TextField, IconButton } from "../../ui";
+import { TextField, IconButton, Button } from "@features/ui";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 // Custom hooks
@@ -42,9 +42,9 @@ const LoginForm = () => {
         }
       />
       <div className="auth__bottom">
-        <button type="button" onClick={onSubmit} className="auth__btn">
+        <Button variant="primary" type="button" onClick={onSubmit}>
           Submit
-        </button>
+        </Button>
       </div>
     </form>
   );

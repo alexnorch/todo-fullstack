@@ -1,10 +1,11 @@
 import backgroundImage from "../../../assets/images/auth.svg";
+import "./AuthPicture.scss";
 
 const AuthBackground = () => {
   return (
-    <div className="auth__left">
+    <div className="auth-picture">
       <img
-        className="auth__image"
+        className="auth-picture__img"
         src={backgroundImage}
         alt="background image"
       />

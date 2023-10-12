@@ -1,0 +1,10 @@
+@import "assets/styles/mixins";
+@import "assets/styles/variables";
+
+.todo-editing {
+  width: 300px;
+
+  @include media-query($breakpoint-sm) {
+    width: 100%;
+  }
+}

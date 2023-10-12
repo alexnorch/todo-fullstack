@@ -1,21 +1,20 @@
 import { useState } from "react";
-// Components
+import "./AuthContent.scss";
 import { AuthHeading, RegisterForm, LoginForm } from "..";
 
 const AuthContent = () => {
   const [isLoginForm, setIsLoginForm] = useState<boolean>(true);
-  const renderedForm = isLoginForm ? <LoginForm /> : <RegisterForm />;
   const onToggleLoginForm = () => setIsLoginForm((prev) => !prev);
 
   return (
-    <div className="auth__content">
-      <div className="auth__heading">
+    <div className="auth-content">
+      <div className="auth-content__inner">
         <AuthHeading
           isLoginForm={isLoginForm}
           onToggleLoginForm={onToggleLoginForm}
         />
+        {isLoginForm ? <LoginForm /> : <RegisterForm />}
       </div>
-      {renderedForm}
     </div>
   );
 };

@@ -17,8 +17,10 @@ const useAuth = () => {
   const login = async (email: string, password: string) => {
     try {
       const response = await axios.post("/api/user/login", {
-        email: "walbyel@gmail.com",
-        password: "walbyel123",
+        // email: "walbyel@gmail.com",
+        // password: "walbyel123",
+        email,
+        password,
       });
 
       const { user, token, data } = response.data;
