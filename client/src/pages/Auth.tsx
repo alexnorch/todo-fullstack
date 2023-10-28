@@ -1,5 +1,5 @@
-import { AuthContent, AuthPicture } from "@features/auth";
-import { Alert } from "@features/ui";
+import { AuthContent, AuthPicture } from "@components/auth";
+import { Alert } from "@components/ui";
 
 const Auth = () => {
   return (

@@ -6,3 +6,4 @@ declare module "@features/*";
 declare module "@ui";
 declare module "@layout";
 declare module "@hooks";
+declare module "@store";

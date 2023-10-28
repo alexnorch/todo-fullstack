@@ -3,14 +3,14 @@ import { useParams, Link } from "react-router-dom";
 import { IoIosArrowDropleft } from "react-icons/io";
 
 import { capitalizeFirstLetter } from "../helpers";
-import { PageHeading } from "@features/ui";
+import { PageHeading } from "@components/ui";
 import {
   TodoNew,
   TodoNav,
   TodoCompleted,
   TodoList,
   useTodoServices,
-} from "@features/todos";
+} from "@components/todos";
 
 export default function Tasks() {
   const [showCompleted, setShowCompeted] = useState<boolean>(false);

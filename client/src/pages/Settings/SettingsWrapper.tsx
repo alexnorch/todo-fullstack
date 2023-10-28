@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import { UserPhoto, UserNav, UserInfo } from "@features/user";
-import { PageHeading } from "@features/ui";
+import { UserPhoto, UserNav, UserInfo } from "@components/user";
+import { PageHeading } from "@components/ui";
 
 const SettingsWrapper = () => {
   return (

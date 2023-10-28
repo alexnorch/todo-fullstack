@@ -1,8 +1,6 @@
 import { Outlet } from "react-router-dom";
-
-// Components
-import Aside from "../features/layout/Aside/Aside";
-import { Alert } from "@features/ui";
+import { Aside } from "@layout";
+import { Alert } from "@components/ui";
 
 const Main = () => {
   return (

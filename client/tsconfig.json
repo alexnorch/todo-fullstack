@@ -30,12 +30,11 @@
     // "moduleResolution": "node10",                     /* Specify how TypeScript looks up a file from a given module specifier. */
     "baseUrl": "./src" /* Specify the base directory to resolve non-relative module names. */,
     "paths": {
-      "@features/*": ["./features/*"],
-      "@ui/*": ["./features/ui/*"],
+      "@components/*": ["./components/*"],
       "@pages/*": ["./pages/*"],
-      "@layout/*": ["./features/layout/*"],
-      "@hooks/*": ["./hooks/*"]
-      // "@hooks/*": ["./hooks/*"],
+      "@layout/*": ["./layout/*"],
+      "@hooks/*": ["./hooks/*"],
+      "@store/*": ["./store/*"]
       // "@api/*": ["./api/*"],
       // "@utils/*": ["./utils/*"],
     },

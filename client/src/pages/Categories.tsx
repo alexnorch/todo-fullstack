@@ -1,5 +1,5 @@
-import { CategoriesList, CategoryNew } from "@features/categories";
-import { PageHeading } from "@features/ui";
+import { CategoriesList, CategoryNew } from "@components/categories";
+import { PageHeading } from "@components/ui";
 
 const Categories = () => {
   return (

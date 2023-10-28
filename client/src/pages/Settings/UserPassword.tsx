@@ -2,8 +2,8 @@ import { useState } from "react";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 import { ChangeEvent } from "types";
-import { TextField, IconButton, Button } from "@features/ui";
-import { useUserServices } from "@features/user";
+import { TextField, IconButton, Button } from "@components/ui";
+import { useUserServices } from "@components/user";
 
 interface IIsVisible {
   old: boolean;

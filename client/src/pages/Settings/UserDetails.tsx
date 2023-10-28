@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "redux/store";
-import { TextField, Button } from "@features/ui";
+import { RootState } from "@store/store";
+import { TextField, Button } from "@components/ui";
 import { ChangeEvent } from "types";
-import { UserEmailConfirmation, useUserServices } from "@features/user";
+import { UserEmailConfirmation, useUserServices } from "@components/user";
 
 import { AiOutlineCheckCircle } from "react-icons/ai";
 
