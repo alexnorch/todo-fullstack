@@ -12,15 +12,17 @@ interface ICategoryItemEditing {
   onChangeColor: (e: ChangeEvent) => void;
 }
 
-const CategoryItemEditing: React.FC<ICategoryItemEditing> = ({
-  newTitle,
-  newColor,
-  isEditing,
-  onEditingToggle,
-  onEditTodo,
-  onChangeColor,
-  onChangeTitle,
-}) => {
+const CategoryItemEditing: React.FC<ICategoryItemEditing> = (props) => {
+  const {
+    newTitle,
+    newColor,
+    isEditing,
+    onEditingToggle,
+    onEditTodo,
+    onChangeColor,
+    onChangeTitle,
+  } = props;
+
   return (
     <Modal
       isOpen={isEditing}

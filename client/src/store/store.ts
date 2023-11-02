@@ -9,7 +9,7 @@ import { localStorageMiddleware, autoHideAlertMiddleware } from "./middlewares";
 import userSlice from "@components/user/userSlice";
 import categorySlice from "@components/categories/categorySlice";
 import todoSlice from "@components/todos/todoSlice";
-import appSlice from "./appSlice";
+import appSlice from "./reducers/appReducer";
 
 // Redux saga
 

@@ -8,6 +8,7 @@ interface ICategoryItemDeleting {
 
 const CategoryItemDeleting: React.FC<ICategoryItemDeleting> = (props) => {
   const { isDeleting, onDeletingToggle, onDelete } = props;
+
   return (
     <ConfirmDialog
       onToggle={onDeletingToggle}

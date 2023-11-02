@@ -1,15 +1,17 @@
 import { useSelector } from "react-redux";
-import { RootState } from "@store/store";
 import "./UserPhotoDisplay.scss";
+import { user } from "@store/selectors/userSelectors";
 
 interface UserPhotoDisplayProps {
   newImageSrc?: string | null;
 }
 
 const UserPhotoDisplay: React.FC<UserPhotoDisplayProps> = ({ newImageSrc }) => {
-  const user = useSelector((state: RootState) => state.user);
+  const userDetails = useSelector(user);
 
-  const url = newImageSrc ? newImageSrc : `/uploads/user_photos/${user.photo}`;
+  const url = newImageSrc
+    ? newImageSrc
+    : `/uploads/user_photos/${userDetails.photo}`;
 
   return (
     <div className="user-photo">

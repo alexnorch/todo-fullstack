@@ -1,14 +1,15 @@
 import { useSelector } from "react-redux";
 import { RootState } from "@store/store";
 import { OverviewStatsCard } from "@components/overview";
+import { allTasks } from "@store/selectors/tasksSelectors";
 
 import "./OverviewStats.scss";
 
 const OverviewStats = () => {
-  const allTasks = useSelector((state: RootState) => state.tasks.allTasks);
-  const allLength = allTasks.length;
-  const completedLength = allTasks.filter((task) => task.completed).length;
-  const incompleteLength = allTasks.filter((task) => !task.completed).length;
+  const tasksList = useSelector(allTasks);
+  const allLength = tasksList.length;
+  const completedLength = tasksList.filter((task) => task.completed).length;
+  const incompleteLength = tasksList.filter((task) => !task.completed).length;
 
   return (
     <section className="overview-stats">

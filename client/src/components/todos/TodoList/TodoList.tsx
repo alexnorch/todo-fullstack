@@ -1,6 +1,6 @@
 import { createRef } from "react";
-import { TaskItem } from "../../../types";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { TaskItem } from "../../../types";
 import { TodoItem } from "@components/todos";
 import "./TodoList.scss";
 

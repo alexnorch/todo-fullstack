@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { getFromLocalStorage } from "../helpers";
-import { AppState, AlertProps } from "../types";
+import { getFromLocalStorage } from "../../helpers";
+import { AppState, AlertProps } from "../../types";
 
 const initialState: AppState = {
   token: getFromLocalStorage("accessToken") || null,
@@ -22,7 +22,7 @@ export const appSlice = createSlice({
       state.alertText = action.payload.text;
       state.alertType = action.payload.type;
     },
-    hideAlert: (state, action: PayloadAction) => {
+    hideAlert: (state) => {
       state.isAlert = false;
       state.alertText = null;
     },

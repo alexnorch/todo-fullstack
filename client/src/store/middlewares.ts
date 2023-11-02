@@ -1,5 +1,5 @@
 import { Middleware } from "@reduxjs/toolkit";
-import { showAlert, hideAlert } from "./appSlice";
+import { showAlert, hideAlert } from "./reducers/appReducer";
 import { addToLocalStorage } from "../helpers";
 
 export const localStorageMiddleware: Middleware =

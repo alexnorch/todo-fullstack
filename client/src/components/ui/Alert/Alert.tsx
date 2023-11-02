@@ -1,6 +1,6 @@
 import { forwardRef, Ref, useRef } from "react";
 import { createPortal } from "react-dom";
-import { hideAlert } from "../../../store/appSlice";
+import { hideAlert } from "../../../store/reducers/appReducer";
 import { RootState } from "../../../store/store";
 import { useDispatch, useSelector } from "react-redux";
 

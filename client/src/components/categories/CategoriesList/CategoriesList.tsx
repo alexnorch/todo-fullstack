@@ -1,12 +1,10 @@
 import { useSelector } from "react-redux";
-import { RootState } from "@store/store";
 import { CategoryItem } from "@components/categories";
 import "./CategoriesList.scss";
+import { allCategories } from "@store/selectors/categoriesSelectors";
 
 const CategoriesContainer = () => {
-  const categories = useSelector(
-    (state: RootState) => state.categories.allCategories
-  );
+  const categories = useSelector(allCategories);
 
   if (categories.length === 0) {
     return (

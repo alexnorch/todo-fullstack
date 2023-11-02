@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@store/store";
+import { useSelector } from "react-redux";
+import { allTasks } from "@store/selectors/tasksSelectors";
 
 import { OverviewStats, OverviewTasks } from "@components/overview";
 import { TodoFilter } from "@components/todos";
@@ -16,10 +16,8 @@ const filterOptions: IFilterOptions[] = [
 
 const Overview = () => {
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
-  const allTasks = useSelector((state: RootState) => state.tasks.allTasks);
-  const filteredTasks = filterTasks(allTasks, activeFilter);
-
-  const dispatch = useDispatch();
+  const tasksList = useSelector(allTasks);
+  const filteredTasks = filterTasks(tasksList, activeFilter);
 
   return (
     <>

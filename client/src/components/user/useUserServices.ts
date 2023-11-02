@@ -12,7 +12,7 @@ import useAlert from "@hooks/useAlert";
 import { initializeUser, userUpdate } from "@components/user/userSlice";
 import { initializeCategories } from "@components/categories/categorySlice";
 import { initializeTasks } from "@components/todos/todoSlice";
-import { setAccessToken } from "store/appSlice";
+import { setAccessToken } from "@store/reducers/appReducer";
 
 interface onPasswordChangeParams {
   oldPassword: string;
