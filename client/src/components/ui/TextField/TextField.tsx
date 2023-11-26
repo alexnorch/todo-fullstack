@@ -32,7 +32,7 @@ const TextField: React.FC<InputProps> = (props) => {
   return (
     <div className="text-field">
       <div className={inputClasses}>
-        <input type={type} {...register!(label, validationOptions)} />
+        <input type={type} />
         <label className={labelClasses}>{label}</label>
         {adornment && <div className="text-field__adornment">{adornment}</div>}
       </div>
