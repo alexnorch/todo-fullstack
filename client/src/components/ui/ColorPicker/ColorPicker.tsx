@@ -1,28 +1,21 @@
 import { ChangeEvent } from "../../../types";
 import "./ColorPicker.scss";
 
-interface ColorPickerProps {
-  setColor: (e: ChangeEvent) => void;
-  color: string;
-  labelText: string;
+export interface ColorPickerProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+  register?: any;
 }
-
-const ColorPicker: React.FC<ColorPickerProps> = ({
-  color,
-  setColor,
-  labelText,
-}) => {
+const ColorPicker: React.FC<ColorPickerProps> = ({ name, label, register }) => {
   return (
     <div className="color-picker">
-      <span>{labelText}</span>
+      <span>{label}</span>
       <label className="color-picker__label">
         <input
-          onChange={setColor}
-          value={color}
+          {...register(name)}
           className="color-picker__input"
           type="color"
         />
-        {color}
       </label>
     </div>
   );

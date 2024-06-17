@@ -1,6 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { TextField, Button } from "@components/ui";
 import { validationOptions } from "../formValidationOptions";
+import { useUserServices } from "@components/user";
 
 const extendedValidationOptions = {
   ...validationOptions,
@@ -15,15 +16,17 @@ type RegisterFormInputs = {
   confirmPassword: string;
 };
 
-const RegisterForm = () => {
+const RegisterForm: React.FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterFormInputs>();
 
+  const { registerUser } = useUserServices();
+
   const onSubmit: SubmitHandler<RegisterFormInputs> = (data) => {
-    console.log(data);
+    registerUser(data);
   };
 
   return (

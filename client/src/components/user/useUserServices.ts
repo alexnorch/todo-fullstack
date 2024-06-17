@@ -64,8 +64,33 @@ const useUserServices = () => {
     }
   };
 
-  const registerUser = async () => {
-    console.log("Registered");
+  const registerUser = async (userData: any) => {
+    try {
+      const response = await axios.post("/api/user/register", userData);
+
+      const { user, token, data } = response.data;
+
+      dispatch(initializeUser(user));
+      dispatch(initializeCategories(data.categories));
+      dispatch(initializeTasks(data.tasks));
+      dispatch(setAccessToken(token));
+
+      addToLocalStorage("accessToken", token);
+
+      navigate("/");
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        let errorMessage = err.response?.data.message;
+
+        if (err.response?.status === 500) {
+          errorMessage = "Something went wrong. Please try again later";
+        }
+
+        showDangerAlert(errorMessage);
+      } else {
+        throw err;
+      }
+    }
   };
 
   const getUser = async () => {

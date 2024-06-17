@@ -30,12 +30,13 @@ const CategoryItemEditing: React.FC<ICategoryItemEditing> = (props) => {
       title="Editing the category"
       submitter={onEditTodo}
     >
-      <CategoryForm
+      {/* <CategoryForm
         title={newTitle}
         color={newColor}
         onTitleChange={onChangeTitle}
         onColorChange={onChangeColor}
-      />
+      /> */}
+      <div>Test</div>
     </Modal>
   );
 };

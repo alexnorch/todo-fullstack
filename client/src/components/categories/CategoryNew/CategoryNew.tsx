@@ -2,20 +2,20 @@ import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Modal } from "@components/ui";
 import { CategoryForm, useCategoryServices } from "@components/categories";
-import { ChangeEvent } from "types";
 import "./CategoryNew.scss";
 
-const CategoryNew = () => {
+interface ICategory {
+  title: string;
+  color: string;
+}
+
+const CategoryNew: React.FC = () => {
   const [isModal, setIsModal] = useState<boolean>(false);
-  const [title, setTitle] = useState<string>("");
-  const [color, setColor] = useState<string>("#000000");
   const { onAddCategory } = useCategoryServices();
 
   const toggleModal = () => setIsModal((prev) => !prev);
-  const onColorChange = (e: ChangeEvent) => setColor(e.target.value);
-  const onTitleChange = (e: ChangeEvent) => setTitle(e.target.value);
 
-  const onSubmit = () => {
+  const handleSubmit = ({ title, color }: ICategory) => {
     onAddCategory({ title, color });
     toggleModal();
   };
@@ -29,14 +29,8 @@ const CategoryNew = () => {
         title="Create new category"
         isOpen={isModal}
         onToggle={toggleModal}
-        submitter={onSubmit}
       >
-        <CategoryForm
-          onTitleChange={onTitleChange}
-          onColorChange={onColorChange}
-          title={title}
-          color={color}
-        />
+        <CategoryForm submitForm={handleSubmit} />
       </Modal>
     </>
   );

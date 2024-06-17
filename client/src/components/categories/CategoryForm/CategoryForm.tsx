@@ -1,30 +1,34 @@
 import { TextField, ColorPicker } from "@components/ui";
 import { ChangeEvent } from "types";
+import { useForm } from "react-hook-form";
 import "./CategoryForm.scss";
 
 interface CategoryFormProps {
-  title: string;
-  color: string;
-  onTitleChange: (e: ChangeEvent) => void;
-  onColorChange: (e: ChangeEvent) => void;
+  submitForm: (data: ICategory) => void;
 }
 
-const CategoryForm: React.FC<CategoryFormProps> = (props) => {
-  const { title, color, onTitleChange, onColorChange } = props;
+interface ICategory {
+  title: string;
+  color: string;
+}
+
+const CategoryForm: React.FC<CategoryFormProps> = ({ submitForm }) => {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<ICategory>();
+
+  const onSubmit = (data: ICategory) => {
+    submitForm(data);
+  };
+
   return (
-    <div className="category-form">
-      <TextField
-        label="New Category Name"
-        placeholder="New Category Name"
-        value={title}
-        onChange={onTitleChange}
-      />
-      <ColorPicker
-        labelText="New Category Color"
-        color={color}
-        setColor={onColorChange}
-      />
-    </div>
+    <form onSubmit={handleSubmit(onSubmit)} className="category-form">
+      <TextField name="title" label="New Category Name" register={register} />
+      <ColorPicker name="color" register={register} />
+      <button>Submit</button>
+    </form>
   );
 };
 

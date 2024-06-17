@@ -11,7 +11,7 @@ type Inputs = {
   password: string;
 };
 
-const LoginForm = () => {
+const LoginForm: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const {
     handleSubmit,
@@ -28,7 +28,7 @@ const LoginForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="auth__form">
       <TextField
-        label="email"
+        name="email"
         type="email"
         register={register}
         validationOptions={validationOptions.email}
@@ -36,7 +36,7 @@ const LoginForm = () => {
       />
 
       <TextField
-        label="password"
+        name="password"
         type="password"
         register={register}
         validationOptions={validationOptions.password}

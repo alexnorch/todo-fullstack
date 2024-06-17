@@ -69,7 +69,7 @@ const registerUser: RequestHandler = async (req, res, next) => {
   const { name, email, password, confirmPassword } = req.body;
 
   try {
-    if (!name || !email || !password || !confirmPassword) {
+    if (!email || !password || !confirmPassword) {
       return next(new AppError("Please provide all values", 400));
     }
 
