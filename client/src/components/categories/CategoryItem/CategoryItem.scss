@@ -22,7 +22,7 @@
     min-height: 100px;
     @include flex(row, center, center);
     box-shadow: $shadow-sm;
-    border-radius: 20px;
+    border-radius: 15px;
   }
 
   &__title {

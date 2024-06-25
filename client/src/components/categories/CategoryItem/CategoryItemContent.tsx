@@ -15,7 +15,7 @@ const CategoryItemContent: React.FC<ICategoryItemContent> = (props) => {
   const navigate = useNavigate();
   const onNavigate = () => navigate(`/categories/${title}`);
 
-  const categoryStyles = { backgroundColor: hexToRgba(color, 0.5) };
+  const categoryStyles = { border: `2px solid ${hexToRgba(color, 0.7)}` };
   const headingStyles = { color: color };
 
   return (

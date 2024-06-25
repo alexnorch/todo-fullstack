@@ -1,5 +1,4 @@
 import { TextField, ColorPicker } from "@components/ui";
-import { ChangeEvent } from "types";
 import { useForm } from "react-hook-form";
 import "./CategoryForm.scss";
 

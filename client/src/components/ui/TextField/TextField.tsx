@@ -18,6 +18,7 @@ const TextField: React.FC<InputProps> = ({
   register,
   errors,
   name,
+  onChange,
 }) => {
   let inputClasses = "text-field__input";
   let labelClasses = "text-field__label";
@@ -28,7 +29,11 @@ const TextField: React.FC<InputProps> = ({
   return (
     <div className="text-field">
       <div className={inputClasses}>
-        <input {...register(name)} type={type} />
+        {register ? (
+          <input {...register(name)} type={type} />
+        ) : (
+          <input value={value} type={type} onChange={onChange} />
+        )}
         <label className={labelClasses}>{label}</label>
         {adornment && <div className="text-field__adornment">{adornment}</div>}
       </div>
